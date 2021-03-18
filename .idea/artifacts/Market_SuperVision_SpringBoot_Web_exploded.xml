@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="Market_SuperVision_SpringBoot:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/Market_SuperVision_SpringBoot_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="Market_SuperVision_SpringBoot/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="Market_SuperVision_SpringBoot" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
