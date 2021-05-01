@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>待办事项</title>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style="margin-bottom: 10px;margin-top: 10px">
+            <form th:action="@{/work/BackLog}" th:method="post">
+                <div class="col-xs-7"></div>
+                <div class="col-xs-3 right" style="margin-left: 0;padding-right: 0">
+                    <input class="form-control" name="search"></input>
+                </div>
+                <div class="col-xs-2" style="padding-left: 0px">
+                    <button type="submit" class="btn btn-default">提交</button>
+                </div>
+            </form>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>任务名称</th>
+                <th>发布人员</th>
+                <th>要求完成人员</th>
+                <th>要求完成时间</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="backLog:${backLogs}">
+                <td th:text="${backLogStat.index+1}">1</td>
+                <td th:value="${backLog.workName}" ><a href="WorkDetail.html" target="_blank" th:href="@{/market/work/WorkDetail(workId=${backLog.workId},power=0)}">1</a></td>
+                <td th:text="${backLog.addWhoName}">1</td>
+                <td th:text="${backLog.workWhoName}">1</td>
+                <td th:text="${backLog.workEndTime}">1</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="text-center">
+            <ul class="pagination">
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=0)}" >首页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

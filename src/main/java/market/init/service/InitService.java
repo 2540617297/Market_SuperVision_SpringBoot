@@ -1,5 +1,6 @@
 package market.init.service;
 
+import com.sun.istack.internal.Nullable;
 import market.constant.UserInfo;
 import market.init.dao.InitDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,11 @@ public class InitService {
     @Autowired
     private InitDao initDao;
 
-    public UserInfo login(){
-        return initDao.login();
+    public UserInfo login(String username,@Nullable String password){
+        return initDao.login(username,password);
+    }
+
+    public int register(UserInfo userInfo){
+        return initDao.register(userInfo);
     }
 }

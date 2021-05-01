@@ -10,4 +10,9 @@
       </profile>
     </annotationProcessing>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Market_SuperVision_SpringBoot" options="-bootclasspath &quot;C:/Program Files (x86)/Java/jdk1.8.0_51/jre\lib\rt.jar;C:/Program Files (x86)/Java/jdk1.8.0_51/jre\lib\jce.jar&quot; -Xlint:deprecation" />
+    </option>
+  </component>
 </project>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>工作详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../dateControls/WdatePicker.js"></script>
+    <link href="../dateControls/skin/WdatePicker.css" rel="stylesheet" type="text/css"/>
+<!--    <script language="javascript" type="text/javascript" src="file:///D:/Desktop/My97DatePicker/WdatePicker.js"></script>-->
+<!--    <link href="file:///D:/Desktop/My97DatePicker/skin/WdatePicker.css" rel="stylesheet" type="text/css"/>-->
+
+    <style>
+        .control-label{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1 style="text-align: center;margin-bottom: 15px">任务详情</h1>
+        </div>
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="workId" class="col-xs-3 control-label">任务号</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control disabled" id="workId"  ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workName" class="col-xs-3 control-label">任务名称</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" id="workName" ></input>
+                </div>
+            </div>
+            <input type="input" class="form-control" id="addWho"  ></input>
+            <div class="form-group">
+                <label for="workWho" class="col-xs-3 control-label">主要负责人</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" id="workWho"  ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workEndTime" class="col-xs-3 control-label">任务结束时间</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" id="workEndTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workDetails" class="col-xs-3 control-label">任务详情</label>
+                <div class="col-xs-9">
+                    <textarea  class="form-control" rows="5" id="workDetails" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="solveDetails" class="col-xs-3 control-label" >解决办法</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" rows="5" id="solveDetails" />
+                </div>
+            </div>
+            <div style="text-align: center">
+                <button class=" btn btn-default">保存</button>
+                <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+            </div>
+
+        </form>
+    </div>
+</body>
+</html>
