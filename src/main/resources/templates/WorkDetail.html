@@ -26,47 +26,57 @@
     <div class="container">
         <div>
             <h1 style="text-align: center;margin-bottom: 15px">任务详情</h1>
+            <h3 style="color: red;text-align: center;margin-bottom: 10px" th:value="${saveStatus}">
+            </h3>
         </div>
-        <form class="form-horizontal" role="form">
+        <form class="form-horizontal" action="/market/work/saveTask" method="post" role="form">
             <div class="form-group">
                 <label for="workId" class="col-xs-3 control-label">任务号</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control disabled" id="workId" th:value="${workDetail.workId}" ></input>
+                    <input type="input" class="form-control disabled" id="workId" name="workId" th:value="${workDetail.workId}" readonly="readonly"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workName" class="col-xs-3 control-label">任务名称</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workName" th:value="${workDetail.workName}"></input>
+                    <input type="input" class="form-control" name="workName" id="workName" th:value="${workDetail.workName}"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="addWho" class="col-xs-3 control-label">发布人员</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="addWho" th:value="${workDetail.addWho}" ></input>
+                    <input type="input" class="form-control" id="addWho" disabled="disabled" th:value="${workDetail.addWhoName}" ></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workEndTime" class="col-xs-3 control-label">任务结束时间</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workEndTime" th:value="${workDetail.workEndTime}"/>
+                    <input type="input" class="form-control" id="workEndTime" name="workEndTime" th:value="${workDetail.workEndTime}"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workStatus" class="control-label col-xs-3">执行状态</label>
+                <div class="col-xs-9">
+                    <select class="form-control" name="workStatus" id="workStatus" >
+                        <option th:each="workStatus:${workStatuses}"  th:selected="${workStatus.statusId==workDetail.workStatus}" th:value="${workStatus.statusId}" th:text="${workStatus.workStatus}">1</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workDetails" class="col-xs-3 control-label">任务详情</label>
                 <div class="col-xs-9">
-                    <textarea  class="form-control" rows="5" id="workDetails" th:text="${workDetail.workDetails}"/>
+                    <textarea  class="form-control" rows="5" id="workDetails" name="workDetails" th:utext="${workDetail.workDetails}"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="solveDetails" class="col-xs-3 control-label" >解决办法</label>
                 <div class="col-xs-9">
-                    <textarea class="form-control" rows="5" id="solveDetails" th:text="${workDetail.solveDetails}"/>
+                    <textarea class="form-control" rows="5" id="solveDetails" name="solveDetails" th:utext="${workDetail.solveDetails}"/>
                 </div>
             </div>
             <div style="text-align: center">
-                <button class=" btn btn-default">保存</button>
-                <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+                <button type="submit" class=" btn btn-default">保存</button>
+                <button type="button" class=" btn btn-default"> 返回</button>
             </div>
 
         </form>

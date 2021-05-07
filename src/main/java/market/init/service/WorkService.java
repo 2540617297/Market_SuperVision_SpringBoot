@@ -1,6 +1,8 @@
 package market.init.service;
 
+import market.constant.EnterPriseInfo;
 import market.constant.WorkDetails;
+import market.constant.WorkStatus;
 import market.init.dao.WorkDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,15 @@ public class WorkService {
         return workDao.allNum(workDetails);
     }
 
+    public int saveTask(WorkDetails workDetails){
+        return workDao.saveTask(workDetails);
+    }
 
+    public List<WorkStatus> getWorkStatus(){
+        return workDao.getWorkStatus();
+    }
 
-
+    public int updateTask(WorkDetails workDetails){
+        return workDao.updateTask(workDetails);
+    }
 }

@@ -26,53 +26,71 @@
             text-align: center;
         }
     </style>
+    <script>
+        function callAndroid(){
+            // 由于对象映射，所以调用question对象等于调用Android映射的对象
+            //question ： 约定好的一个name（只要一致即ok）
+            //over ： 约定好的方法名（只要一致即ok）
+            activity.over();
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <div>
-            <h1 style="text-align: center;margin-bottom: 15px">任务详情</h1>
+            <h1 style="text-align: center;margin-bottom: 5px">任务详情</h1>
+            <h3 style="color: red;text-align: center;margin-bottom: 10px" th:text="${saveStatus}"></h3>
         </div>
-        <form class="form-horizontal" role="form">
+
+        <form class="form-horizontal" th:action="@{/work/saveTask(userId=${userInfo.userId})}" method="post" role="form">
             <div class="form-group">
                 <label for="workId" class="col-xs-3 control-label">任务号</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control disabled" id="workId"  ></input>
+                    <input type="input" class="form-control disabled" id="workId" disabled="disabled"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workName" class="col-xs-3 control-label">任务名称</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workName" ></input>
+                    <input type="input" class="form-control" id="workName" name="workName" th:text="${workDetails?.workName}"></input>
                 </div>
             </div>
-            <input type="input" class="form-control" id="addWho"  ></input>
+            <input type="hidden" class="form-control" id="addWho"  name="addWho" th:value="${userInfo.userId}"></input>
             <div class="form-group">
                 <label for="workWho" class="col-xs-3 control-label">主要负责人</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workWho"  ></input>
+                    <input type="input" class="form-control" id="workWho" name="workWho" th:text="${workDetails?.workWhoName}"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workEndTime" class="col-xs-3 control-label">任务结束时间</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workEndTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                    <input type="input" class="form-control" id="workEndTime" name="workEndTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="workStatus" class="control-label col-xs-3">执行状态</label>
+                <div class="col-xs-9">
+                    <select class="form-control" name="workStatus" id="workStatus" >
+                        <option th:each="workStatus:${workStatuses}" th:value="${workStatus.statusId}" th:text="${workStatus.workStatus}">1</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
                 <label for="workDetails" class="col-xs-3 control-label">任务详情</label>
                 <div class="col-xs-9">
-                    <textarea  class="form-control" rows="5" id="workDetails" />
+                    <textarea  class="form-control" rows="5" name="workDetails" id="workDetails" th:text="${workDetails?.workDetails}"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="solveDetails" class="col-xs-3 control-label" >解决办法</label>
                 <div class="col-xs-9">
-                    <textarea class="form-control" rows="5" id="solveDetails" />
+                    <textarea class="form-control" rows="5" name="solveDetails" id="solveDetails" th:text="${workDetails?.solveDetails}"/>
                 </div>
             </div>
             <div style="text-align: center">
                 <button class=" btn btn-default">保存</button>
-                <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+                <button type="button" class=" btn btn-default" onclick="callAndroid()"> 返回</button>
             </div>
 
         </form>

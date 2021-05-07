@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 
 
 //@RestController
@@ -62,4 +64,39 @@ public class InitController {
         return "注册失败";
     }
 
+    @RequestMapping("/updateUserInfo")
+    @ResponseBody
+    public String updateUserInfo(UserInfo userInfo, @RequestParam(required = false,value = "power")String power){
+        System.out.println(userInfo);
+        System.out.println("power"+power);
+        List<UserInfo> userInfoQuery=initService.findUser(userInfo.getUserName());
+        if(userInfoQuery.size()>1){
+            return "用户名已存在，请重新填写";
+        }
+        if("0".equals(power)){
+            if(!userInfo.getRoleId().equals("用户")){
+                return "无权限修改身份";
+            }
+        }else {
+            if (userInfo.getRoleId().equals("用户") || userInfo.getRoleId().equals("管理员")) {
+                if (userInfo.getRoleId().equals("用户")) {
+                    userInfo.setRoleId("0");
+                } else {
+                    userInfo.setRoleId("1");
+                }
+            } else {
+                return "身份:请填写‘管理员’or‘用户’";
+            }
+        }
+        System.out.println(userInfo);
+        int updateStatus=initService.updateUserInfo(userInfo);
+        return "修改信息成功！";
+    }
+
+    @ResponseBody
+    @RequestMapping("/searchUser")
+    public List<UserInfo> searchUser(Model model, String search){
+        List<UserInfo> userInfos=initService.searchUser(search);
+        return userInfos;
+    }
 }

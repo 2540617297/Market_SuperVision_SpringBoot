@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>监督性检查单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 10px">监督性检查</h1>
+        <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+    </div>
+
+    <form class="form-horizontal" role="form" th:action="@{/mobileLaw/saveCheckList}" th:method="post">
+        <div class="form-group">
+            <label for="epName" class="col-xs-3 control-label" >企业名称</label>
+            <div class="col-xs-7">
+                <input type="input" class="form-control disabled" id="epName"></input>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-info" onclick="enterpriseInfo();">搜索</button>
+            </div>
+            <input type="hidden" name="checkEnterprise" id="checkEnterprise"></input>
+        </div>
+        <div class="form-group">
+            <label for="epLegalName" class="col-xs-3 control-label">法定代表人</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" id="epLegalName" disabled="disabled" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="checkKind" class="col-xs-3 control-label">检查类别</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" name="checkKind" id="checkKind" ></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="checkCase" class="col-xs-3 control-label">检查情况</label>
+            <div class="col-xs-9">
+                <textarea  class="form-control" rows="5" name="checkCase" id="checkCase" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="checkOpion" class="col-xs-3 control-label">检查人意见</label>
+            <div class="col-xs-9">
+                <textarea  class="form-control" rows="5" name="checkOpion" id="checkOpion" />
+            </div>
+        </div>
+        <input type="hidden" name="checkUser" th:value="${userInfo.userId}"/>
+        <div class="form-group">
+            <label for="userName" class="col-xs-3 control-label">检查人</label>
+            <div class="col-xs-9">
+                <input type="input"  class="form-control" th:value="${userInfo.userName}"  id="userName" />
+            </div>
+        </div>
+        <div style="text-align: center">
+            <button type="submit" class=" btn btn-default">保存</button>
+            <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+        </div>
+
+    </form>
+</div>
+</body>
+<script>
+    function enterpriseInfo(){
+        var enterpriseName=document.getElementById("epName").value;
+        $.ajax({
+            type: "post",
+            url: '/market/mobileLaw/enterpriseInfo',
+            // data:{user:userid,post:postid},
+            data: {epName:enterpriseName},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                // if (data == "0") {
+                //     $("#log").removeClass("glyphicon-star-empty");
+                //     $("#log").addClass("glyphicon-star");
+                //     $("#log").html("已收藏");
+                //     alert("已收藏")
+                // } else {
+                //     $("#log").removeClass("glyphicon-star");
+                //     $("#log").addClass("glyphicon-star-empty");
+                //     $("#log").html("收藏");
+                //     alert("已取消收藏")
+                // }
+                if(data==null||data==""){
+                    alert("请输入合法企业名称");
+                }else {
+
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+
+                    // var o = eval(o)
+                    // var o = eval(o)
+                    // alert(o)
+                    // var obj = JSON.parse(o);
+                    // alert(obj)
+                    // alert(obj.epLegalName)
+                    document.getElementById("epLegalName").value=obj.epLegalName;
+                    document.getElementById("checkEnterprise").value=obj.epId;
+
+                }
+                // alert(obj.epLegalName);
+
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
+</html>

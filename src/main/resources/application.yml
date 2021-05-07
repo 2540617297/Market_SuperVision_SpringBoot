@@ -1,5 +1,7 @@
 server:
   port: 12345
+  tomcat:
+    uri-encoding: UTF-8
 
 spring:
   datasource:
@@ -9,6 +11,11 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
     cache: false
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
 #  mvc:
 #    static-path-pattern: /**
 
@@ -19,5 +26,6 @@ spring:
 #showSql
 logging:
   level.market.init.dao : debug
+
 
 

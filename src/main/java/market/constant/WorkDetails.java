@@ -12,6 +12,7 @@ public class WorkDetails {
     private String addWhoName;
     private String workWhoName;
     private String search;
+    private String workSaveTime;
     private PageInfo pageInfo;
 
     @Override
@@ -28,8 +29,17 @@ public class WorkDetails {
                 ", addWhoName='" + addWhoName + '\'' +
                 ", workWhoName='" + workWhoName + '\'' +
                 ", search='" + search + '\'' +
+                ", workSaveTime='" + workSaveTime + '\'' +
                 ", pageInfo=" + pageInfo +
                 '}';
+    }
+
+    public String getWorkSaveTime() {
+        return workSaveTime;
+    }
+
+    public void setWorkSaveTime(String workSaveTime) {
+        this.workSaveTime = workSaveTime;
     }
 
     public String getSearch() {
