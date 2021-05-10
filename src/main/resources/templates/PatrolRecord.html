@@ -42,7 +42,9 @@
             <tr th:each="routeInfo:${routeInfos}">
                 <td ><a th:text="${routeInfo.routeId}" th:href="@{/mobileLaw/patrolRecord}"></a> </td>
                 <td th:text="${routeInfo.userNameCN}"></td>
-                <td th:text="${routeInfo.addTime}">1</td>
+<!--                <td th:text="${routeInfo.addTime}">1</td>-->
+                <td th:text="${routeInfo.addTime!=null?#strings.substring(routeInfo.addTime,0,10):routeInfo.addTime}">1</td>
+
             </tr>
 
             </tbody>

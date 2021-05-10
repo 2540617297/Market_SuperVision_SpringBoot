@@ -8,7 +8,34 @@ public class CheckInfo {
     private String checkOpion;
     private String checkUser;
     private String checkTime;
+    private UserInfo userInfo;
     private EnterPriseInfo enterPriseInfo;
+    private PageInfo pageInfo;
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
 
     public EnterPriseInfo getEnterPriseInfo() {
         return enterPriseInfo;

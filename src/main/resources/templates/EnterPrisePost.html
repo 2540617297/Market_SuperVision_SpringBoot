@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!--    <script language="javascript">-->
+<!--        history.pushState(null,null, document.URL);-->
+<!--        window.addEventListener('popstate',function(){-->
+<!--            history.pushState(null,null, document.URL);-->
+<!--        });-->
+<!--    </script>-->
+
+
+</head>
+<body>
+    <div class="container">
+        <div>
+            <h1 style="text-align: center;margin-bottom: 5px">企业信息</h1>
+            <h3 style="color: red;text-align: center;margin-bottom: 10px" id="Status"></h3>
+        </div>
+
+        <form class="form-horizontal" id="EnterPrise"  role="form">
+            <input type="hidden" name="userId" th:value="${userId}"></input>
+            <input type="hidden" name="epId" th:value="${enterPriseInfo!=null&amp;&amp; enterPriseInfo.epId!=null}?${enterPriseInfo.epId}:''"></input>
+            <div class="form-group">
+                <label for="epName" class="col-xs-3 control-label">企业名称</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control disabled" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" id="epName" th:value="${enterPriseInfo!=null&amp;&amp; enterPriseInfo.epName!=null}?${enterPriseInfo.epName}:''" name="epName"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epLegalName" class="col-xs-3 control-label" >法定代表人</label>
+                <div class="col-xs-9">
+                    <input class="form-control" id="epLegalName" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epLegalName!=null}?${enterPriseInfo.epLegalName}:''" name="epLegalName" ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epAddress" class="col-xs-3 control-label">企业地址</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epAddress!=null}?${enterPriseInfo.epAddress}:''" id="epAddress" name="epAddress" ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epArea" class="col-xs-3 control-label">企业面积</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epArea!=null}?${enterPriseInfo.epArea}:''" id="epArea" name="epArea"></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epCredit" class="col-xs-3 control-label">信誉登记</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epCredit!=null}?${enterPriseInfo.epCredit}:''" id="epCredit" name="epCredit" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epKind" class="col-xs-3 control-label">企业类型</label>
+                <div class="col-xs-9">
+                    <input  class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epKind!=null}?${enterPriseInfo.epKind}:''"  name="epKind" id="epKind" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epRegisterAssets" class="col-xs-3 control-label">注册资本</label>
+                <div class="col-xs-9">
+                    <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epRegisterAssets!=null}?${enterPriseInfo.epRegisterAssets}:''" id="epRegisterAssets" name="epRegisterAssets" ></input>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="epBusinessScop" class="col-xs-3 control-label">经营范围</label>
+                <div class="col-xs-9">
+                    <textarea rows="5"  th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false"  th:utext="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epBusinessScop!=null}?${enterPriseInfo.epBusinessScop}:''" class="form-control" id="epBusinessScop" name="epBusinessScop" ></textarea>
+                </div>
+            </div>
+            <div style="text-align: center">
+                <button type="button"  th:onclick="|saveEnterprise(${power})|" class=" btn btn-default">保存</button>
+                <button type="button" class=" btn btn-default" > 返回</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    function saveEnterprise(power){
+        if(power==1) {
+            $.ajax({
+                type: "post",
+                url: '/market/synQuery/updateEnterPrise',
+                // data:{user:userid,post:postid},
+                data: $('#EnterPrise').serialize(),
+                async: false,
+                success: function (data) {
+                    if (data == null || data == "") {
+                        alert("请输入合法企业名称");
+                    } else {
+
+                        var o = JSON.stringify(data);
+                        var obj = JSON.parse(o);
+                        // alert(obj)
+                        document.getElementById("Status").innerHTML=obj;
+                        // document.getElementById("checkEnterprise").value=obj.epId;
+
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }else{
+            alert('暂无更新权限');
+        }
+    }
+</script>
+<!--<script language="javascript">-->
+<!--    history.pushState(null,null, document.URL);-->
+<!--    window.addEventListener('popstate',function(){-->
+<!--        history.pushState(null,null, document.URL);-->
+<!--    });-->
+<!--</script>-->
+</html>

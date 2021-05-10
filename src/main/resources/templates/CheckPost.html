@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 10px">监督性检查单</h1>
+    </div>
+    <form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label for="epName" class="col-xs-3 control-label" >企业名称</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control disabled" id="epName" readonly="readonly" th:value="${checkInfo.enterPriseInfo.epName}"></input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="epLegalName" class="col-xs-3 control-label">法定代表人</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control" id="epLegalName" th:value="${checkInfo.enterPriseInfo.epLegalName}" readonly="readonly" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="epAddress" class="col-xs-3 control-label">公司地址</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control" id="epAddress" th:value="${checkInfo.enterPriseInfo.epAddress}" readonly="readonly" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="epArea" class="col-xs-3 control-label">占地面积</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control" id="epArea" th:value="${checkInfo.enterPriseInfo.epArea}" readonly="readonly" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="epKind" class="col-xs-3 control-label">企业类型</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control" id="epKind" th:value="${checkInfo.enterPriseInfo.epKind}" readonly="readonly" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="checkKind" class="col-xs-3 control-label">检查类别</label>
+        <div class="col-xs-9">
+            <input type="input" class="form-control" name="checkKind" th:value="${checkInfo.checkKind}" id="checkKind" readonly="readonly"></input>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="epBusinessScop" class="col-xs-3 control-label">经营范围</label>
+        <div class="col-xs-9">
+            <textarea rows="5"  class="form-control" id="epBusinessScop"  th:utext="${checkInfo.enterPriseInfo.epBusinessScop}" readonly="readonly" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="checkCase" class="col-xs-3 control-label">检查情况</label>
+        <div class="col-xs-9">
+            <textarea  class="form-control" rows="5" name="checkCase" th:utext="${checkInfo.checkCase}" id="checkCase" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="checkOpion" class="col-xs-3 control-label">检查人意见</label>
+        <div class="col-xs-9">
+            <textarea  class="form-control" rows="5" name="checkOpion" th:utext="${checkInfo.checkOpion}" id="checkOpion" readonly="readonly"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="userName" class="col-xs-3 control-label">检查人</label>
+        <div class="col-xs-9">
+            <input type="input"  class="form-control" th:value="${checkInfo.userInfo.userNameCN}"  readonly="readonly"  id="userName" />
+        </div>
+    </div>
+    </form>
+    <div style="text-align: center;margin-bottom: 50px;">
+        <a type="button" th:href="@{/synQuery/downloadCheck(checkId=${checkInfo.checkId})}"  class=" btn btn-primary">下载检查单电子版</a>
+        <button type="button" class=" btn btn-danger">返回</button>
+    </div>
+</div>
+</body>
+</html>

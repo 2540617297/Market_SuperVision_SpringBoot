@@ -43,11 +43,11 @@
             <tbody>
 
             <tr th:each="backLog:${backLogs}">
-                <td th:text="${backLogStat.index+1}">1</td>
+                <td th:text="${backLog.workId}">1</td>
                 <td  ><a th:text="${backLog.workName}"  target="_blank" th:href="@{/work/WorkDetail(workId=${backLog.workId},userId=${userId})}">1</a></td>
                 <td th:text="${backLog.addWhoName}">1</td>
                 <td th:text="${backLog.workWhoName}">1</td>
-                <td th:text="${backLog.workEndTime}">1</td>
+                <td th:text="${backLog.workEndTime!=null?#strings.substring(backLog.workEndTime,0,10):backLog.workEndTime}">1</td>
             </tr>
 
             </tbody>

@@ -9,6 +9,7 @@ import java.util.Date;
 
 public class CreateWord {
 
+
     public static void main(String[] args)throws Exception {
         String templatePath = "D:\\Desktop\\监督性检查单.doc";
         InputStream is = new FileInputStream(templatePath);

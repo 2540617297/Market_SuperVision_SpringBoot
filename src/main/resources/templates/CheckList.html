@@ -85,36 +85,16 @@
             dataType: "json",
             async: false,
             success: function (data) {
-                // if (data == "0") {
-                //     $("#log").removeClass("glyphicon-star-empty");
-                //     $("#log").addClass("glyphicon-star");
-                //     $("#log").html("已收藏");
-                //     alert("已收藏")
-                // } else {
-                //     $("#log").removeClass("glyphicon-star");
-                //     $("#log").addClass("glyphicon-star-empty");
-                //     $("#log").html("收藏");
-                //     alert("已取消收藏")
-                // }
                 if(data==null||data==""){
                     alert("请输入合法企业名称");
                 }else {
 
                     var o = JSON.stringify(data);
                     var obj = JSON.parse(o);
-
-                    // var o = eval(o)
-                    // var o = eval(o)
-                    // alert(o)
-                    // var obj = JSON.parse(o);
-                    // alert(obj)
-                    // alert(obj.epLegalName)
                     document.getElementById("epLegalName").value=obj.epLegalName;
                     document.getElementById("checkEnterprise").value=obj.epId;
 
                 }
-                // alert(obj.epLegalName);
-
             },
             error: function () {
                 alert("错误");

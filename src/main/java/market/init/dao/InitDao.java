@@ -22,6 +22,7 @@ public interface InitDao {
     @Insert("INSERT INTO `market_supervision`.`market_user` (`userId`, `userName`, `userPassword`, `roleId`, `phoneNo`, `email`,'userNameCN') VALUES (#{userId}, #{userName}, #{userPassword}, #{roleId}, #{phoneNo}, #{email},#{userNameCN});")
     public int register(UserInfo userInfo);
 
+    //根据用户Id查找用户信息
     @Select("select * from MARKET_USER where userId=#{userId}")
     public UserInfo getUserInfo(@Param("userId")String userId);
 

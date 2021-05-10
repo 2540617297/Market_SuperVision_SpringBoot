@@ -10,6 +10,24 @@ public class EnterPriseInfo {
     private String epLegalName;
     private String epRegisterAssets;
     private String epBusinessScop;
+    private String search;
+    private PageInfo pageInfo;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
 
     @Override
     public String toString() {

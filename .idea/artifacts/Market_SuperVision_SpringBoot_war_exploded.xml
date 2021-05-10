@@ -1,13 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Market_SuperVision_SpringBoot:war exploded">
-    <output-path>$PROJECT_DIR$/target/Market_SuperVision_SpringBoot-1.0-SNAPSHOT</output-path>
-    <properties id="maven-jee-properties">
-      <options>
-        <exploded>true</exploded>
-        <module>Market_SuperVision_SpringBoot</module>
-        <packaging>war</packaging>
-      </options>
-    </properties>
+    <output-path>$PROJECT_DIR$/out/artifacts/Market_SuperVision_SpringBoot_war_exploded</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -56,6 +49,7 @@
           <element id="library" level="project" name="Maven: org.apache.tomcat:tomcat-juli:8.5.23" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.3.13.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.3.13.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-configuration-processor:1.5.9.RELEASE" />
           <element id="library" level="project" name="Maven: com.vaadin.external.google:android-json:0.0.20131108.vaadin1" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-thymeleaf:1.5.9.RELEASE" />
           <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring4:2.1.6.RELEASE" />
@@ -74,13 +68,9 @@
           <element id="library" level="project" name="Maven: org.apache.ant:ant:1.8.1" />
           <element id="library" level="project" name="Maven: org.apache.ant:ant-launcher:1.8.1" />
           <element id="library" level="project" name="Maven: com.alibaba:fastjson:1.2.75" />
-          <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.6" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
         </element>
-      </element>
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/Market_SuperVision_SpringBoot-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="Market_SuperVision_SpringBoot/web/Web" />
     </root>
