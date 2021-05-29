@@ -18,8 +18,8 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row" style="margin-bottom: 10px;margin-top: 10px">
+    <div th:class="${admin==null}?'container':''" th:style="${admin==null}?'':'padding:20px'" th:fragment="backlog">
+        <div class="row" style="margin-bottom: 10px;margin-top: 10px" th:if="${admin==null}">
             <form th:action="@{/work/BackLog}" th:method="post">
                 <div class="col-xs-7"></div>
                 <div class="col-xs-3 right" style="margin-left: 0;padding-right: 0">
@@ -52,7 +52,7 @@
 
             </tbody>
         </table>
-        <div class="text-center">
+        <div class="text-center" th:if="${admin==null}">
             <ul class="pagination">
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=0)}" >首页</a></li>
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
@@ -60,6 +60,15 @@
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
             </ul>
         </div>
+        <div class="text-center" th:if="${admin!=null}">
+            <ul class="pagination">
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=0)}" >首页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+            </ul>
+        </div>
+
     </div>
 
 </body>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>管理端登录</title>
+    <!-- 新 Bootstrap4 核心 CSS 文件 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <style>
+        .carousel-indicators{
+            display: none;
+        }
+        #font{
+            color: #ffffff;
+        }
+        .main{
+            padding:0;
+            margin:0px;
+            width:100%;
+            height: 100%;
+
+        }
+        .main1{
+            background: #000000;
+            padding:0;
+            height: 130px;
+            text-align: center;
+            width: 100%;
+            color: #c0c0c0;
+        }
+        .tab{
+            position: absolute;
+            top:150px;
+            right:400px;
+            background: none;
+            text-align: center;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius:40px;
+            width: 500px;
+            height: 500px;
+            font-family: 华文宋体;
+
+        }
+        .glyphicon{
+            font-size: large;
+        }
+
+        .form-group{
+            margin: 40px;
+        }
+
+        #label{
+            font-weight:bolder;
+            font-size: 30px;
+        }
+        p{
+            font-size: medium;
+        }
+        img{
+            width: 100%!important;
+            height: calc(100vh - 188px)!important;
+        }
+        .item{
+            width: 100%!important;
+        }
+        .navbar{
+            margin: 0px;
+        }
+
+
+    </style>
+    <script>
+        function check() {
+            var username=$('#userName').val();
+            var password=$('#userPassword').val();
+            if(username == null || username==''){
+                alert("请输入用户名");
+                return false;
+            }
+            if (password == null || password=='') {
+                alert("请输入密码");
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: '/market/admin/login',
+                data:{'userName':username,'userPassword':password},
+                // data: $('#form').serialize(),
+                async: false,
+                success: function (data) {
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+                    if(obj.login==1){
+                        // alert("登录成功");
+                        // window.location.href="http://localhost:12345/market/admin/index";
+                        window.location.href ="/market/admin/index";
+                    }else{
+                        alert("登录失败");
+                    }
+                    // var obj = JSON.parse(o);
+                    // document.getElementById("Status").innerHTML=obj;
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="container main">
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="" class="navbar-brand">
+                    <p style="font-size: 20px">IT社区</p>
+                </a>
+                <button class="navbar-toggle collapsed" data-toggle="collapsed" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div id="mynavbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="font"><p class="navbar-text" style="font-size:18px; ">欢迎！</p></li>
+                </ul>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div  class="mian" >
+
+        <div id="mycarousel" data-ride="carousel" class="carousel slide" >
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="../images/1.jpg" ></img>
+                </div>
+                <div class="item">
+                    <img src="../images/2.jpg" ></img>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <ol class="carousel-indicators">
+        <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#mycarousel" data-slide-to="1"></li>
+    </ol>
+
+
+    <div class="tab">
+        <form  name="form" id="form" role="form" class="form-group-lg" method="post" >
+            <label id="label" style="padding-top:30px; letter-spacing: 10px;">用户登陆</label>
+            <div class="form-group  form-inline text1" style="margin-top: 50px;">
+                <label for="userName"><span class="glyphicon glyphicon-user"></span></label>
+                <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名" style="width: 300px; height: 50px;"></input>
+            </div>
+
+            <div class="form-group form-inline text2 " style="margin-top: 30px;">
+                <label for="userPassword"><span class="glyphicon glyphicon-lock"></span></label>
+                <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="请输入密码" style="width: 300px; height: 50px;"></input>
+            </div>
+            <button class="btn btn-default btn-lg" type="button" onclick="check();" style="width: 150px; font-weight: bolder;">登陆</button>
+
+            <div class="form-group" style="margin-top: 60px;">
+                <p><a href="" > 忘记密码</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="../userController/register"> 用户注册</a></p>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="container main1">
+        <div class="contaimer" style="margin-top: 20px;">
+            <p>
+                合肥学院(Hefei University)简称合院，是国家首批61所"卓越工程师教育培养计划"和首批52所"服务国家特殊需求人才培养项目"培养硕士专业学位研究生试点工作单位之一、<br/>
+                中德合作共建应用型人才培养示范高校、安徽省示范应用型本科高校、硕士学位授权单位、 全国应用型本科高校联盟副主任单位和安徽省应用型本科高校联盟常任主席单位，同时也是安徽省8所可接纳港澳台学生的高校之一<br/>2014年学校成为安徽省高等教育振兴计划"地方应用型高水平大学建设"高校。<br/>
+                地址：合肥 合肥市蜀山区锦绣大道99号<br/>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+</body>
+<script>
+
+    $("document").ready(function () {
+        $("#username").blur(function () {
+            if($("#username").val()=="") {
+                $(".text1").addClass("has-error");
+            }
+        });
+        $("#password").blur(function () {
+            if($("#password").val()=="") {
+                $(".text2").addClass("has-error");
+            }
+        });
+    });
+    $('.carousel').carousel({
+        interval: 3000
+    });
+
+</script>
+</html>

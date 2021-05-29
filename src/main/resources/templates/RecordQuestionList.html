@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row" style="margin-bottom: 10px;margin-top: 10px">
+        <form th:action="@{/mobileLaw/recordQuestionList}" th:method="post">
+            <div class="col-xs-7"></div>
+            <div class="col-xs-3 right" style="margin-left: 0;padding-right: 0">
+                <input class="form-control" name="search"></input>
+            </div>
+            <div class="col-xs-2" style="padding-left: 0px">
+                <button type="submit" class="btn btn-default">提交</button>
+            </div>
+        </form>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>询问笔录编号</th>
+            <th>被询问人</th>
+            <th>询问人</th>
+            <th>询问时间</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="recordQuestionInfo:${recordQuestionInfos}">
+            <td ><a th:text="${recordQuestionInfo.recordId}" th:href="@{/mobileLaw/recordQuestionWrite(userId=${userId},recordId=${recordQuestionInfo.recordId},method='get')}"></a> </td>
+            <td th:text="${recordQuestionInfo.BRDName}"></td>
+            <td th:text="${recordQuestionInfo.userInfo.userNameCN}"></td>
+            <!--                <td th:text="${routeInfo.addTime}">1</td>-->
+            <td th:text="${recordQuestionInfo.recordTime!=null?#strings.substring(recordQuestionInfo.recordTime,0,10):recordQuestionInfo.recordTime}">1</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+    <div class="text-center">
+        <ul class="pagination">
+            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/recordQuestionList(getnowpage=0)}" >首页</a></li>
+            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/recordQuestionList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/recordQuestionList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/recordQuestionList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+        </ul>
+    </div>
+</div>
+
+</body>
+</html>

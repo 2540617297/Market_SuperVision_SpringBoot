@@ -37,4 +37,8 @@ public class InitService {
     public List<UserInfo> searchUser(String search){
         return initDao.searchUser(search);
     }
+
+    public UserInfo adminLogin(UserInfo userInfo){
+        return initDao.adminLogin(userInfo);
+    }
 }

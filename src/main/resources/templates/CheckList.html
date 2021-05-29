@@ -24,7 +24,7 @@
         <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
     </div>
 
-    <form class="form-horizontal" role="form" th:action="@{/mobileLaw/saveCheckList}" th:method="post">
+    <form class="form-horizontal" role="form" th:action="@{/mobileLaw/saveCheckList}" enctype="multipart/form-data" th:method="post">
         <div class="form-group">
             <label for="epName" class="col-xs-3 control-label" >企业名称</label>
             <div class="col-xs-7">
@@ -63,7 +63,15 @@
         <div class="form-group">
             <label for="userName" class="col-xs-3 control-label">检查人</label>
             <div class="col-xs-9">
-                <input type="input"  class="form-control" th:value="${userInfo.userName}"  id="userName" />
+                <input type="input"  class="form-control" th:readonly="true" th:value="${userInfo.userName}"  id="userName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="userName" class="col-xs-3 control-label">检查人</label>
+            <div class="col-xs-9">
+                <input type="file"  accept="image/*" capture="camera" id="faceimage" name="faceimage"  />
+                <input type="file"  accept="video/*" capture="camera" id="video" name="video"  />
             </div>
         </div>
         <div style="text-align: center">

@@ -2,8 +2,10 @@ package market.init.service;
 
 import market.constant.CheckInfo;
 import market.constant.EnterPriseInfo;
+import market.constant.RecordQuestionInfo;
 import market.constant.RouteInfo;
 import market.init.dao.MobileLawDao;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,12 @@ public class MobileLawService {
     }
 
     public int saveRoutInfo(RouteInfo routeInfo){
+
         return mobileLawDao.saveRouteInfo(routeInfo);
+    }
+
+    public List<RouteInfo> getLatLng(String routeId){
+        return  mobileLawDao.getLatLng(routeId);
     }
 
     public RouteInfo removeRouteSame(RouteInfo routeInfo){
@@ -40,4 +47,23 @@ public class MobileLawService {
         return mobileLawDao.getRouteNum(routeInfo);
     }
 
+    public int saveRecordQUestion(RecordQuestionInfo questionInfo){
+        return mobileLawDao.saveRecordQUestion(questionInfo);
+    }
+
+    public List<RecordQuestionInfo> getRecordQuestions(RecordQuestionInfo recordQuestionInfo){
+        return mobileLawDao.getRecordQuestions(recordQuestionInfo);
+    }
+
+    public int getRecordQuestionNum(RecordQuestionInfo recordQuestionInfo){
+        return mobileLawDao.getRecordQuestionNum(recordQuestionInfo);
+    }
+
+    public RecordQuestionInfo getRecordQuestion(String recordId){
+        return mobileLawDao.getRecordQuestion(recordId);
+    }
+
+    public int updateRecordQuestion(RecordQuestionInfo recordQuestionInfo){
+        return mobileLawDao.updateRecordQuestion(recordQuestionInfo);
+    }
 }

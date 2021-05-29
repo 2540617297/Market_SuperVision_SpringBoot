@@ -1,10 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"></meta>
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script language="javascript" type="text/javascript" src="../dateControls/WdatePicker.js"></script>
+    <link href="../dateControls/skin/WdatePicker.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 5px">询问笔录</h1>
+        <h3 style="color: red;text-align: center;margin-bottom: 10px" id="Status"></h3>
+    </div>
 
+    <form class="form-horizontal" id="RecordQuestion"  role="form">
+        <input type="hidden" name="recordId" th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.recordId!=null}?${recordQuestionInfo.recordId}:''"></input>
+        <div class="form-group">
+            <label for="recordTime" class="col-xs-3 control-label">询问时间</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control disabled"  th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"  th:value="${recordQuestionInfo!=null &amp;&amp; recordQuestionInfo.recordTime!=null}?${recordQuestionInfo.recordTime}:''"
+                       id="recordTime"  name="recordTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="recordAddress" class="col-xs-3 control-label" >询问地址</label>
+            <div class="col-xs-9">
+                <input class="form-control" id="recordAddress" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                       th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.recordAddress!=null}?${recordQuestionInfo.recordAddress}:''"
+                       name="recordAddress" ></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="BRDName" class="col-xs-3 control-label">被询问人</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                       th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.BRDName!=null}?${recordQuestionInfo.BRDName}:''"
+                       id="BRDName" name="BRDName" ></input>
+            </div>
+        </div>
+        <input type="hidden" name="recordName" ></input>
+        <div class="form-group">
+            <label for="BRDSex" class="col-xs-3 control-label">被询问人性别</label>
+            <div class="col-xs-9">
+                <select class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false" name="BRDSex" id="BRDSex" >
+                    <option th:selected="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.BRDSex!=null&amp;&amp;recordQuestionInfo.BRDSex=='男'}" value="男">男</option>
+                    <option th:selected="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.BRDSex!=null&amp;&amp;recordQuestionInfo.BRDSex=='女'}" value="女">女</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="BRDIDCard" class="col-xs-3 control-label">被询问人身份证</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                       th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.BRDIDCard!=null}?${recordQuestionInfo.BRDIDCard}:''"
+                       id="BRDIDCard" name="BRDIDCard"  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="BRDPhone" class="col-xs-3 control-label">被询问人电话</label>
+            <div class="col-xs-9">
+                <input  class="form-control"  th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                        th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.BRDPhone!=null}?${recordQuestionInfo.BRDPhone}:''"
+                        name="BRDPhone" id="BRDPhone" />
+            </div>
+        </div>
+        <input type="hidden" name="recordName" th:value="${userId}"/>
+        <div class="form-group">
+            <label for="RQuestion1" class="col-xs-3 control-label">问题1</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                       th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.RQuestion1!=null}?${recordQuestionInfo.RQuestion1}:''"
+                       id="RQuestion1" name="RQuestion1" ></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="RAnswer1" class="col-xs-3 control-label">答案1</label>
+            <div class="col-xs-9">
+                <textarea rows="5"   class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                          th:utext="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.RAnswer1!=null}?${recordQuestionInfo.RAnswer1}:''"
+                          id="RAnswer1" name="RAnswer1" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="RQuestion2" class="col-xs-3 control-label">问题2</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                       th:value="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.RQuestion2!=null}?${recordQuestionInfo.RQuestion2}:''"
+                       id="RQuestion2" name="RQuestion2" ></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="RAnswer2" class="col-xs-3 control-label">答案2</label>
+            <div class="col-xs-9">
+                <textarea rows="5"   class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                          th:utext="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.RAnswer2!=null}?${recordQuestionInfo.RAnswer2}:''"
+                          id="RAnswer2" name="RAnswer2" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="other" class="col-xs-3 control-label">其它</label>
+            <div class="col-xs-9">
+                <textarea rows="7"   class="form-control" th:readonly="${userInfo.roleId=='0'&amp;&amp;method=='get'}?true:false"
+                          th:utext="${recordQuestionInfo!=null&amp;&amp; recordQuestionInfo.other!=null}?${recordQuestionInfo.other}:''"
+                          id="other" name="other" ></textarea>
+            </div>
+        </div>
+        <div style="text-align: center;margin-bottom: 20px;">
+            <span th:if="${recordQuestionInfo==null}">
+                <button type="button" onclick="saveRecordQuestion();"  class=" btn btn-danger">保存</button>
+            </span>
+            <span th:if="${recordQuestionInfo!=null}">
+                <button type="button" onclick="updateRecordQuestion();"  class=" btn btn-danger">保存</button>
+            </span >
+            <button type="button" class=" btn btn-default" > 返回</button>
+            <span th:if="${recordQuestionInfo!=null}">
+                <a  class=" btn btn-primary" type="button" th:hidden="${method=='get'}?false:true" th:href="@{/mobileLaw/downloadRecord(recordId=${recordQuestionInfo.recordId})}">下载询问笔录电子版</a>
+            </span>
+        </div>
+    </form>
+</div>
 </body>
+<script>
+    function saveRecordQuestion(){
+        $.ajax({
+            type: "post",
+            url: '/market/mobileLaw/saveRecordQuestion',
+            data: $('#RecordQuestion').serialize(),
+            async: false,
+            success: function (data) {
+                if (data == null || data == "") {
+                    alert("保存失败");
+                } else {
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+                    document.getElementById("Status").innerHTML=obj;
+                }
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+    function updateRecordQuestion(){
+        alert($('#RecordQuestion').serialize())
+        $.ajax({
+            type: "post",
+            url: '/market/mobileLaw/updateRecordQuestion',
+            data: $('#RecordQuestion').serialize(),
+            async: false,
+            success: function (data) {
+                if (data == null || data == "") {
+                    alert("保存失败");
+                } else {
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+                    document.getElementById("Status").innerHTML=obj;
+                }
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
 </html>

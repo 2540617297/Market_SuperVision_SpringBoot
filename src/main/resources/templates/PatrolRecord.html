@@ -15,6 +15,15 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>
+        function callAndroid(routeId){
+            // 由于对象映射，所以调用question对象等于调用Android映射的对象
+            //question ： 约定好的一个name（只要一致即ok）
+            //over ： 约定好的方法名（只要一致即ok）
+            alert(routeId);
+            activity.over(routeId);
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -40,7 +49,7 @@
             <tbody>
 
             <tr th:each="routeInfo:${routeInfos}">
-                <td ><a th:text="${routeInfo.routeId}" th:href="@{/mobileLaw/patrolRecord}"></a> </td>
+                <td ><a th:text="${routeInfo.routeId}"  th:onclick="|callAndroid('x'+${routeInfo.routeId})|"></a> </td>
                 <td th:text="${routeInfo.userNameCN}"></td>
 <!--                <td th:text="${routeInfo.addTime}">1</td>-->
                 <td th:text="${routeInfo.addTime!=null?#strings.substring(routeInfo.addTime,0,10):routeInfo.addTime}">1</td>

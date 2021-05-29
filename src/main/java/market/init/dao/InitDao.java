@@ -19,6 +19,15 @@ public interface InitDao {
             "and userPassword=#{password}","</if>","</script>"})
     public UserInfo login(@Param("username") String username, @Nullable @Param("password") String password);
 
+    @Select({"<script>","select * from MARKET_USER where 1=1 " ,
+            "<if test='userName != null and userName != \"\"'>",
+            " and userName=#{userName} " ,"</if>",
+            "<if test='roleId != null and roleId != \"\"'>",
+            " and roleId=#{roleId} " ,"</if>",
+            "<if test='userPassword != null and userPassword != \"\"'>",
+            "and userPassword=#{userPassword}","</if>","</script>"})
+    public UserInfo adminLogin(UserInfo userInfo);
+
     @Insert("INSERT INTO `market_supervision`.`market_user` (`userId`, `userName`, `userPassword`, `roleId`, `phoneNo`, `email`,'userNameCN') VALUES (#{userId}, #{userName}, #{userPassword}, #{roleId}, #{phoneNo}, #{email},#{userNameCN});")
     public int register(UserInfo userInfo);
 

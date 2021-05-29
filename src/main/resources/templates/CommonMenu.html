@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="autoheight" style="background-color: #222D32;" th:fragment="menu">
+    <div style="position: relative; height: 75px;width: 281.25px;background-color:#222D32">
+        <img src="../images/loginimg.jpg"
+             style="position: absolute;top:15px;left: 20px; border-radius: 25px;"></img>
+        <div id="loginimg">
+            <p>
+            </p>
+            <p>在线..</p>
+        </div>
+    </div>
+
+    <div id="mya">
+        <a style=" color:#B8C7CE; background-color: #1A2226; padding: 12px 5px 12px 15px;">菜单</a>
+        <a style="background-color: #1A2226;color: #ffffff;" href="/market/admin/index"><span
+                class="glyphicon glyphicon-book"></span>首页</a>
+
+    </div>
+
+    <div class="panel-group " id="panelgroup">
+        <div class="panel mypanel" id="firstpanel" style="border:none;" th:each="listss : ${lists}">
+            <a class="panel-heading active" id="firstpanelimpl" data-toggle="collapse" th:inline="text"
+               data-parent="#panelgroup"  th:attr="data-target='#panel'+${listss.get(0).getNavss().getNavsid()}" >
+                <span class="glyphicon glyphicon-book"></span>[[${listss.get(0).getNavfname()}]]
+                <span class="glyphicon glyphicon-chevron-left pull-right"></span>
+            </a>
+            <div class=" panel-collapse collapse" th:id="'panel'+${listss.get(0).getNavss().getNavsid()}">
+                <div class="panel-body" style=" border: none; padding:0px 15px 0px 5px;">
+                    <ul class="nav" th:each="list : ${listss}">
+                        <li>
+                            <a th:href="${list.getNavss().getNavsherf()}" th:inline="text">
+                                <span class="glyphicon glyphicon-record"></span>[[${list.getNavss().getNavsname()}]]
+                            </a></li>
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+</body>
+</html>

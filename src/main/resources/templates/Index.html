@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <style>
+
+        a, a:hover {
+            color: #B8C7CE;
+            text-decoration: none;
+        }
+
+        .panel-heading, .panel-body {
+            color: #B8C7CE;
+            background-color: #222D32;
+        }
+
+        .panel-heading, #mya a {
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            height: 40px;
+        }
+
+        .mypanel a:hover, a:focus, .nav li a:hover, a:focus, #mya a:hover, a:focus, a:active {
+            background-color: #1A2226;
+            color: #ffffff;
+        }
+
+        #daypost:hover, #daypost:focus, #daypost:active {
+            background-color: #1A2226 !important;
+            color: #ffffff;
+        }
+
+        #loginimg {
+            position: absolute;
+            top: 20px;
+            left: 80px;
+            color: #ffffff;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        #content-header, #content {
+            margin: 0px;
+            padding: 15px 15px 15px 15px;
+        }
+
+        .col-lg-10 {
+            background-color: #DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+
+        footer {
+            height: 50px;
+            border-top: #B8C7CE solid 1px;
+            position: absolute;
+            width: 100%;
+            padding-right: 15px;
+            bottom: 0;
+            background-color: #ffffff;
+            line-height: 50px;
+        }
+
+        .carousel-inner img {
+            margin: 0 auto;
+        }
+
+        .carousel-inner a {
+
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .caption p {
+            height: 80px;
+        }
+
+    </style>
+
+</head>
+<body>
+<div th:replace="CommonNav::nav"></div>
+
+<div style=" padding-left:0px;margin-left: 0px;margin-right: 0px;">
+    <div class="row" id="row" style="width: 100%; margin:0px; background-color: #222D32">
+        <div class="col-lg-2" style="padding:0px;">
+            <div th:replace="CommonMenu::menu"></div>
+        </div>
+
+        <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
+            <div id="content-header">
+                <h3 style="margin:0px;" class="page-header">
+                    IT社区
+                    <small>首页</small>
+                    <a href="#" class="pull-right" style="font-size: xx-small"><span
+                            class="glyphicon glyphicon-tag"></span> 首页</a>
+
+                </h3>
+            </div>
+
+            <div id="content" style="margin-bottom: 50px">
+                <div class="carousel slide" id="mycarousel">
+
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="../images/admincarousel1.jpg"></img>
+                        </div>
+                        <div class="item">
+                            <img src="../images/admincarousel2.jpg"></img>
+                        </div>
+                        <div class="item">
+                            <img src="../images/admincarousel3.jpg"></img>
+                        </div>
+                    </div>
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#mycarousel" data-slide-to="1"></li>
+                        <li data-target="#mycarousel" data-slide-to="2"></li>
+                    </ol>
+
+                    <a href="#mycarousel" style="margin-left: 76.250px"
+                       class="left carousel-control" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a href="#mycarousel" style="margin-right: 76.250px"
+                       class="right carousel-control" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+
+                </div>
+
+                <div class="row" style="padding:20px 75px;">
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin2.jpg"></img>
+                            <div class="caption">
+                                <h2> IT社区</h2>
+                                <p>为广大软件开发爱好者们提供学习、技术交流以及趣事分享等服务，打造一个更有针对性和时效性的网上大家园.</p>
+                                <a href="../navController/all_admin_index" class="btn btn-primary">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin1.jpg"></img>
+                            <div class="caption">
+                                <h2> 我要发帖</h2>
+                                <p>用户可以在此模块发布帖子，为了防止发帖刷分，半小时之内最多只能发布一个帖子。</p>
+                                <a href="../postController/post_write" class="btn btn-primary">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin5.jpg"></img>
+                            <div class="caption">
+                                <h2> 每日一贴</h2>
+                                <p>在每日一贴子模块，所有的用户都可以在此帖子中随意发言.</p>
+                                <a href="../postController/daypost" class="btn btn-primary">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin3.jpg"></img>
+                            <div class="caption">
+                                <h2> 个人信息</h2>
+                                <p>修改个人信息、用户名、密码等其他信息。</p>
+                                <a href="../userController/user_information" class="btn btn-primary">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin4.jpg"></img>
+                            <div class="caption">
+                                <h2> 论坛牛贴</h2>
+                                <p>论坛牛帖，是将所有的帖子中排名浏览量排名前十的帖子置顶。</p>
+                                <a href="../postController/postranking" class="btn btn-primary">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="thumbnail">
+                            <img src="../images/admin6.jpg"></img>
+                            <div class="caption">
+                                <h2> 社区公告</h2>
+                                <p>会发布很多关于IT社区的官方通知消息。</p>
+                                <a href="../adminController/noticeshow" class="btn btn-primary alimit">learn more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <footer class="main-footer">
+                <p style="margin-bottom: 0px; padding-left: 20px;"><big>欢迎登陆IT社区系统！</big>
+                    <small>Welcome to the It system.</small>
+                </p>
+            </footer>
+
+        </div>
+    </div>
+</div>
+<script>
+    window.onload = function () {
+        /*function refresh(){
+            var childPageH = $('#iframe').contents().find('body').height();
+            $('#iframe').height(childPageH);
+            console.log(childPageH);
+        }
+        refresh();
+        setInterval(refresh,100)*/
+    }
+    $(document).ready(function () {
+        var rowheight = $("#row").height();
+        $("#iframe").height(rowheight);
+    })
+</script>
+<script>
+    $(".leave a").click(function () {
+        $.removeCookie("username", {path: "/classdesign/pages"});
+    });
+    $('.collapse').each(function () {
+        $(this).on('show.bs.collapse', function () {
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-down");
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-left");
+        });
+    });
+    $('.collapse').each(function () {
+        $(this).on('hidden.bs.collapse', function () {
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-left");
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-down");
+        });
+    });
+    $('.carousel').carousel({
+        interval: 3000
+    });
+</script>
+</body>
+</html>

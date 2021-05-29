@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.sound.midi.Soundbank;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -80,11 +81,11 @@ public class Socket {
 
     @OnMessage
     public void sendToUser(String message) {
+        System.out.println("++++++++"+message);
         String sendUserno = message.split("[|]")[1];
-        String sendMessage = message.split("[|]")[0];
         try {
           if (webSocketSet.get(sendUserno) != null) {
-            webSocketSet.get(sendUserno).sendMessage(message+"|"+userId);
+            webSocketSet.get(sendUserno).sendMessage(message);
           } else {
             System.out.println("当前用户不在线");
           }
