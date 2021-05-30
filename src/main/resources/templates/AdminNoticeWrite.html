@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<!--    <script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>-->
+    <style>
+        .panel-group{
+            border: none ;
+        }
+        a,a:hover{
+            color: #B8C7CE;
+            text-decoration: none;
+        }
+
+        .panel-heading,.panel-body{
+            color:#B8C7CE;background-color:#222D32;
+        }
+        .panel-heading,#mya a{
+            text-decoration: none;display: block; height: 40px; width: 100%;padding:10px 15px;
+        }
+        .mypanel a:hover,a:focus,.nav li a:hover,a:focus,#mya a:hover,a:focus,a:active{
+            background-color: #1A2226;
+            color: #ffffff;
+        }
+
+        #loginimg{
+            position: absolute;
+            top: 20px;
+            left: 80px;
+            color: #ffffff;
+            font-weight:600;
+            line-height: 1;
+        }
+        #content-header , #content{
+            margin:0px;
+            padding:15px 15px 15px 15px;
+        }
+        .col-lg-10{
+            background-color:#DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+        footer{
+            height: 50px;
+            border-top: #B8C7CE solid 1px;
+            position: absolute;
+            width: 100%;
+            padding-right: 15px;
+            bottom: 0;
+            background-color: #ffffff;
+            line-height: 50px;
+        }
+        .carousel-inner img{
+            margin:0 auto;
+        }
+        .carousel-inner a{
+
+        }
+        h1{
+            margin: 0;
+        }
+        .caption p{
+            height: 80px;
+        }
+        .title{
+            background-color: #ECECEC;
+            line-height: 34px;
+            padding: 3px 12px;
+            border: #B8C7CE 1px solid;
+            text-align: center;
+        }
+        .col-lg-10{
+            background-color:#DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+        .data{
+            padding:3px 12px;
+            border: #B8C7CE 1px solid;
+        }
+        label{
+            height: 29px;
+        }
+        .col-md-1{
+            height: 42px;
+        }
+        .headline{
+            text-align: center;
+        }
+        .headline p{
+            font-size: xx-large;
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+        .w-e-toolbar{
+            height: 50px;
+            padding:10px !important;
+            font-size: 18px;
+
+        }
+        .posttitle{
+            padding:0px 13px;
+        }
+        .w-e-text-container{
+            height: 430px !important;/*!important是重点，因为原div是行内样式设置的高度300px*/
+        }
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+<div th:replace="CommonNav::nav"></div>
+
+<div style=" padding-left:0px;margin-left: 0px;margin-right: 0px;">
+    <div class="row" id="row" style="width: 100%; margin:0px; background-color: #222D32">
+        <div class="col-lg-2" style="padding:0px;">
+            <div th:replace="CommonMenu::menu"></div>
+        </div>
+
+        <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
+            <div id="content-header">
+                <h3 style="margin:0px;" class="page-header">
+                    Post管理
+                    <small>管理</small>
+                    <a href="#" class="pull-right" style="font-size: xx-small"><span
+                            class="glyphicon glyphicon-tag"></span>Post管理</a>
+                </h3>
+            </div>
+
+            <div id="content" style="margin-bottom: 50px;height: 800px;">
+                <div style="background-color: #ffffff;border-bottom: #F4F4F4 solid 1px; padding: 10px;">
+                    <h4>列表</h4>
+                </div>
+
+                <form action="serviceadd" class="form-group-lg" method="post">
+                    <div class="row posttitle">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-addon">标题</span>
+                            <input  class="form-control" type="text" name="servicetitle" />
+                            <span class="input-group-btn">
+						                    <button class="btn btn-danger" type="submit" >公告发布</button>
+					                    </span>
+                        </div>
+                    </div>
+
+                    <div id="editor">
+                        <p>欢迎使用IT社区！</p>
+                    </div>
+                    <input type="hidden" name="serviceuser" value=""/>
+
+                    <textarea  id="postcontent" name="servicecontent" style="display: none"></textarea>
+                </form>
+
+            </div>
+
+
+            <footer class="main-footer">
+                <p style="margin-bottom: 0px; padding-left: 20px;"><big>欢迎登陆IT社区系统！</big>
+                    <small>Welcome to the IT system.</small>
+                </p>
+            </footer>
+
+        </div>
+    </div>
+</div>
+<!--<script src="//unpkg.com/wangeditor/release/wangEditor.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor
+    var $postcontent=$("#postcontent")
+    var editor = new E('#editor')  // 两个参数也可以传入 elem 对象，class 选择器
+    // editor.customConfig.uploadImgServer = 'uploadImg'
+    // editor.customConfig.uploadFileName = 'myFileName'
+    // editor.customConfig.uploadImgShowBase64 = true;
+    this.editor.customConfig = this.editor.customConfig ? this.editor.customConfig : this.editor.config;
+    editor.customConfig.uploadImgServer = 'http://test91.ykmimi.com/upload/newspic/0';
+    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
+    editor.config.height = 1500
+    editor.customConfig.height = 1500
+    // editor.customConfig.uploadImgTimeout = 30000   //默认10秒
+    // 关闭粘贴样式的过滤
+    editor.customConfig.pasteFilterStyle = false
+    // 忽略粘贴内容中的图片
+    editor.customConfig.pasteIgnoreImg = true
+    // 自定义处理粘贴的文本内容
+    editor.customConfig.pasteTextHandle = function (content) {
+        // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+        return content
+    }
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $postcontent.val(html)
+    }
+    editor.create();
+    $postcontent.val(editor.txt.html());
+
+</script>
+<script>
+    $(document).ready(function () {
+        var rowheight = $("#row").height();
+        $("#iframe").height(rowheight);
+    })
+</script>
+<script>
+    $(".leave a").click(function () {
+        $.removeCookie("username", {path: "/classdesign/pages"});
+    });
+    $('.collapse').each(function () {
+        $(this).on('show.bs.collapse', function () {
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-down");
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-left");
+        });
+    });
+    $('.collapse').each(function () {
+        $(this).on('hidden.bs.collapse', function () {
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-left");
+            $(this).prev('a').children(".pull-right").toggleClass("glyphicon-chevron-down");
+        });
+    });
+    $('.carousel').carousel({
+        interval: 3000
+    });
+</script>
+</body>
+</html>

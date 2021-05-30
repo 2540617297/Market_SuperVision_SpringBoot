@@ -2,6 +2,7 @@ package market.init.dao;
 
 import market.constant.NavF;
 import market.constant.NavS;
+import market.constant.PostInformation;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -39,4 +40,7 @@ public interface AdminDao {
             @Result(column="ns_herf", property="navsherf"),
     })
     public List<NavS> findKind(int nfid);
+
+    @Insert("insert into service(service_title,service_content,service_time,service_admin) values(#{posttitle},#{postcontent},#{posttime},#{postuser})")
+    public int serviceAdd(PostInformation postInformation);
 }
