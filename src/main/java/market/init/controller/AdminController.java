@@ -3,6 +3,7 @@ package market.init.controller;
 import market.constant.*;
 import market.init.service.AdminService;
 import market.init.service.InitService;
+import market.init.service.SynthesizeQueryService;
 import market.init.service.WorkService;
 import market.util.Calpage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class AdminController {
     private InitService initService;
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private SynthesizeQueryService synthesizeQueryService;
 
 
     @RequestMapping("/begin")
@@ -46,6 +49,7 @@ public class AdminController {
         UserInfo resultUserInfo=initService.adminLogin(userInfo);
         if(resultUserInfo!=null){
             session.setAttribute("userInfo",resultUserInfo);
+            session.setAttribute("userId",resultUserInfo.getUserId());
             hashMap.put("login","1");
         }else{
             hashMap.put("login","0");
@@ -61,16 +65,9 @@ public class AdminController {
         return "/Index";
     }
 
-    @RequestMapping("/userList")
-    public String userList(Model model){
-        List<List<NavF>> lists = adminService.findAll();
-        model.addAttribute("lists",lists);
-        return "/AdminUserList";
-    }
-
-    @RequestMapping("/backlog")
+    @RequestMapping("/index/backlog")
     public String backLog(Model model, @RequestParam(value = "search", required = false) String search, HttpServletRequest request,
-                          @RequestParam(value = "getnowpage", required = false) Integer getNowPage, String userId){
+                          @RequestParam(value = "getnowpage", required = false) Integer getNowPage, HttpSession httpSession){
         WorkDetails workDetails=new WorkDetails();
         workDetails.setSearch(search);
         //分页查询
@@ -83,19 +80,24 @@ public class AdminController {
         List<List<NavF>> lists = adminService.findAll();
         model.addAttribute("lists",lists);
         model.addAttribute("backLogs",backLogs);
-        model.addAttribute("userId",userId);
+        model.addAttribute("userId",httpSession.getAttribute("userId"));
+        System.out.println(httpSession.getAttribute("userId"));
         model.addAttribute("pageInfo",pageInfo);
         model.addAttribute("admin","admin");
         return "/AdminBackLog";
     }
 
-    @RequestMapping("/noticeWrite")
-    public String noticeWrite(){
+    @RequestMapping("/index/noticeWrite")
+    public String noticeWrite(HttpSession httpSession,Model model){
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+        model.addAttribute("userId",httpSession.getAttribute("userId"));
         return "/AdminNoticeWrite";
     }
 
-    @RequestMapping("/serviceAdd")
-    public String serviceAdd(String username, String servicetitle, String servicecontent, int serviceuser) {
+    @RequestMapping("/index/serviceAdd")
+    @ResponseBody
+    public Map<String,String> serviceAdd(HttpSession httpSession, String servicetitle, String servicecontent, Integer serviceuser) {
         //插入post数据
         Date nowtime = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
@@ -106,7 +108,50 @@ public class AdminController {
         postInformation.setPosttime(servicetime);
         postInformation.setPostuser(serviceuser);
         adminService.serviceAdd(postInformation);
-        return "redirect:/adminController/serviceedit";
+        Map<String,String> status=new HashMap<String,String>();
+        status.put("status","1");
+        return status;
+    }
+
+    @RequestMapping("/index/userList")
+    public String userList(HttpSession httpSession,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                           @RequestParam(value = "search", required = false) String search){
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+        UserInfo userInfo=new UserInfo();
+        userInfo.setSearch(search);
+        //分页查询
+        int allNum=adminService.searchUserNum(userInfo);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        userInfo.setPageInfo(pageInfo);
+        //返回查询数据
+        List<UserInfo> userInfos=adminService.searchUser(userInfo);
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("userInfos",userInfos);
+        model.addAttribute("userId",httpSession.getAttribute("userId"));
+        return "AdminUserList";
+    }
+
+    @RequestMapping("/index/enterPriseList")
+    public String enterPriseList(HttpSession httpSession,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                           @RequestParam(value = "search", required = false) String search){
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+        EnterPriseInfo enterPriseInfo=new EnterPriseInfo();
+        enterPriseInfo.setSearch(search);
+        //分页查询
+        int allNum=synthesizeQueryService.EPallNum(search);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        enterPriseInfo.setPageInfo(pageInfo);
+
+        List<EnterPriseInfo> enterPriseInfos=synthesizeQueryService.getEPList(enterPriseInfo);
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("enterPriseInfos",enterPriseInfos);
+        model.addAttribute("userId",httpSession.getAttribute("userId"));
+        model.addAttribute("admin","admin");
+        return "AdminEnterPriseList";
     }
 
 }

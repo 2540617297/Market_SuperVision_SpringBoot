@@ -96,7 +96,9 @@ public class InitController {
     @ResponseBody
     @RequestMapping("/searchUser")
     public List<UserInfo> searchUser(Model model, String search){
-        List<UserInfo> userInfos=initService.searchUser(search);
+        UserInfo userInfo=new UserInfo();
+        userInfo.setSearch(search);
+        List<UserInfo> userInfos=initService.searchUser(userInfo);
         return userInfos;
     }
 }

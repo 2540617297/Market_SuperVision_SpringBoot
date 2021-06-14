@@ -38,6 +38,7 @@
                 <th>发布人员</th>
                 <th>要求完成人员</th>
                 <th>要求完成时间</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
@@ -48,11 +49,12 @@
                 <td th:text="${backLog.addWhoName}">1</td>
                 <td th:text="${backLog.workWhoName}">1</td>
                 <td th:text="${backLog.workEndTime!=null?#strings.substring(backLog.workEndTime,0,10):backLog.workEndTime}">1</td>
+                <td ><button class="btn btn-danger" style="margin-right: 20px;">删除</button><button class="btn btn-primary">编辑</button></td>
             </tr>
 
             </tbody>
         </table>
-        <div class="text-center" th:if="${admin==null}">
+        <div class="text-center" th:if="${admin=='user'}">
             <ul class="pagination">
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=0)}" >首页</a></li>
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
@@ -60,7 +62,7 @@
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
             </ul>
         </div>
-        <div class="text-center" th:if="${admin!=null}">
+        <div class="text-center" th:if="${admin!='admin'}">
             <ul class="pagination">
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=0)}" >首页</a></li>
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>

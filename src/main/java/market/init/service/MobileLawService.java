@@ -1,9 +1,6 @@
 package market.init.service;
 
-import market.constant.CheckInfo;
-import market.constant.EnterPriseInfo;
-import market.constant.RecordQuestionInfo;
-import market.constant.RouteInfo;
+import market.constant.*;
 import market.init.dao.MobileLawDao;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +62,9 @@ public class MobileLawService {
 
     public int updateRecordQuestion(RecordQuestionInfo recordQuestionInfo){
         return mobileLawDao.updateRecordQuestion(recordQuestionInfo);
+    }
+
+    public List<IAMatterClassify> getIAMatterClassify(){
+        return mobileLawDao.getIAMatterClassify();
     }
 }

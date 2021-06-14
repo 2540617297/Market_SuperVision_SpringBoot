@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<style>
+    #content {
+        padding: 15px 70px 15px 70px;
+        margin-bottom: 50px;
+
+    }
+    .search {
+        background-color: white;
+        padding: 20px;
+        margin-bottom: 5px;
+    }
+    .media-body a {
+        color: black !important;
+    }
+
+    .media-heading {
+        color: #9acfea;
+
+    }
+    .searchcontent {
+        height: 40px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .searchfoot {
+        margin-top: 15px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div id="content">
+        <div class="search">
+            <div class="media page-header">
+                <div class="media-body">
+                    <a href="../postController/postshow?postid=<%=postInformation.getPostid()%>&recordpage=../postController/postsearch?question=<%=question%>">
+                        <h3 class="media-heading">
+                        </h3>
+                    </a>
+                </div>
+            </div>
+
+            <div class="searchcontent">
+
+            </div>
+
+            <div class="searchfoot">作者：
+                发布时间： 浏览量：
+            </div>
+        </div>
+
+        <div class="search">
+            <div class="media page-header">
+                <div class="media-body">
+                    <a href="../postController/postshow?postid=<%=postInformation.getPostid()%>&recordpage=../postController/postsearch?question=<%=question%>">
+                        <h3 class="media-heading">
+                        </h3>
+                    </a>
+                </div>
+            </div>
+
+            <div class="searchcontent">
+
+            </div>
+
+            <div class="searchfoot">作者：
+                发布时间： 浏览量：
+            </div>
+        </div>
+
+
+        <div class="text-center">
+            <ul class="pagination">
+                <li><a class="btn btn-default"
+                       href="../postController/postsearch?getnowpage=0&question=<%=question%>">首页</a></li>
+                <li><a class="btn btn-default"
+                       href="../postController/postsearch?getnowpage=<%=nowpage-1%>&question=<%=question%>">上一页</a>
+                </li>
+                <li><a class="btn btn-default"
+                       href="../postController/postsearch?getnowpage=<%=nowpage+1%>&question=<%=question%>">下一页</a>
+                </li>
+                <li><a class="btn btn-default"
+                       href="../postController/postsearch?getnowpage=<%=allpagenum%>&question=<%=question%>">页尾</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

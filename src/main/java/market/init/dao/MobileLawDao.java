@@ -1,9 +1,6 @@
 package market.init.dao;
 
-import market.constant.CheckInfo;
-import market.constant.EnterPriseInfo;
-import market.constant.RecordQuestionInfo;
-import market.constant.RouteInfo;
+import market.constant.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -82,4 +79,7 @@ public interface MobileLawDao {
     @Select("SELECT * FROM `record_question` h1 LEFT JOIN market_user h2 ON h1.`recordName`=h2.`userId` where recordId=#{recordId}")
     @ResultMap(value = "RecordQuestion")
     public RecordQuestionInfo getRecordQuestion(@Param("recordId") String recordId);
+
+    @Select("SELECT * FROM iamatterclassify")
+    public List<IAMatterClassify> getIAMatterClassify();
 }

@@ -47,8 +47,17 @@ public interface InitDao {
     @Select({"<script>","select * from MARKET_USER h1 <where>" ,
             "<if test='search != null and search != \"\"'>",
             " or h1.userId like concat('%',#{search},'%') " ,
+            " or h1.userNameCN like concat('%',#{search},'%') " ,
+            " or h1.userName like concat('%',#{search},'%') ",
+            "LIMIT #{pageInfo.startpage},#{pageInfo.endpage}", "</if></where>", "</script>"})
+    public List<UserInfo> searchUser(UserInfo userInfo);
+
+    @Select({"<script>","select count(*) from MARKET_USER h1 <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or h1.userId like concat('%',#{search},'%') " ,
+            " or h1.userNameCN like concat('%',#{search},'%') " ,
             " or h1.userName like concat('%',#{search},'%') " , "</if></where>", "</script>"})
-    public List<UserInfo> searchUser(@Param("search")String search);
+    public int searchUserNum(UserInfo userInfo);
 
 
 }

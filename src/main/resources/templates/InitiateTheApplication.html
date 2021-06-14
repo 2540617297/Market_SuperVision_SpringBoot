@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../dateControls/WdatePicker.js"></script>
+    <link href="../dateControls/skin/WdatePicker.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 10px">立案申请</h1>
+        <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+    </div>
+
+    <form class="form-horizontal" role="form"  >
+        <div class="form-group">
+            <label for="IAName" class="col-xs-3 control-label">申请人</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" id="IAName"  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="IATime" class="col-xs-3 control-label">申请时间</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" id="IATime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="IAIDCard" class="col-xs-3 control-label">申请人身份证</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" name="IAIDCard" id="IAIDCard" ></input>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="IANational" class="col-xs-3 control-label">申请人民族</label>
+            <div class="col-xs-9">
+                <input  class="form-control"  name="IANational" id="IANational" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="IAIdentity" class="col-xs-3 control-label">申请人身份</label>
+            <div class="col-xs-9">
+                <input  class="form-control"  name="IAIdentity" id="IAIdentity" />
+            </div>
+        </div>
+        <input type="hidden" name="RecordId" />
+        <div class="form-group">
+            <label for="IAMatter" class="col-xs-3 control-label">申请事项</label>
+            <div class="col-xs-9">
+                <select class="form-control" name="IAMatter" id="IAMatter" >
+                    <option th:each="iaMatterClassIfy:${iaMatterClassifies}"   th:value="${iaMatterClassIfy.matterId}" th:text="${iaMatterClassIfy.matterName}">1</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="IACourt" class="col-xs-3 control-label">申请法院</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control"   id="IACourt" name="IACourt"  />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="IAReason" class="col-xs-3 control-label">申请原因</label>
+            <div class="col-xs-9">
+                <textarea type="input" rows="5" class="form-control"  id="IAReason" name="IAReason"  />
+            </div>
+        </div>
+        <div style="text-align: center">
+            <button type="submit" class=" btn btn-default">保存</button>
+            <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>

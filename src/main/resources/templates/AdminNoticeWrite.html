@@ -118,13 +118,34 @@
         .w-e-text-container{
             height: 430px !important;/*!important是重点，因为原div是行内样式设置的高度300px*/
         }
-
-
-
-
-
-
     </style>
+    <script>
+        function confirm() {
+            $.ajax({
+                type: "post",
+                url: '/market/admin/index/serviceAdd',
+                // data:{'userName':username,'userPassword':password},
+                data: $('#form').serialize(),
+                async: false,
+                success: function (data) {
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+                    if(obj.status==1){
+                        alert("保存成功");
+                        // window.location.href="http://localhost:12345/market/admin/index";
+                        // window.location.href ="/market/admin/index";
+                    }else{
+                        alert("保存失败");
+                    }
+                    // var obj = JSON.parse(o);
+                    // document.getElementById("Status").innerHTML=obj;
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div th:replace="CommonNav::nav"></div>
@@ -149,22 +170,21 @@
                 <div style="background-color: #ffffff;border-bottom: #F4F4F4 solid 1px; padding: 10px;">
                     <h4>列表</h4>
                 </div>
-
-                <form action="serviceadd" class="form-group-lg" method="post">
+                <form  id="form" class="form-group-lg" >
                     <div class="row posttitle">
                         <div class="input-group input-group-lg">
                             <span class="input-group-addon">标题</span>
                             <input  class="form-control" type="text" name="servicetitle" />
                             <span class="input-group-btn">
-						                    <button class="btn btn-danger" type="submit" >公告发布</button>
+						                    <button class="btn btn-danger" type="button" onclick="confirm();" >公告发布</button>
 					                    </span>
                         </div>
                     </div>
 
                     <div id="editor">
-                        <p>欢迎使用IT社区！</p>
+                        <p>欢迎使用市场监管行政执法卫士！</p>
                     </div>
-                    <input type="hidden" name="serviceuser" value=""/>
+                    <input type="hidden" name="serviceuser" th:value="${userId}"/>
 
                     <textarea  id="postcontent" name="servicecontent" style="display: none"></textarea>
                 </form>
@@ -191,21 +211,21 @@
     // editor.customConfig.uploadFileName = 'myFileName'
     // editor.customConfig.uploadImgShowBase64 = true;
     this.editor.customConfig = this.editor.customConfig ? this.editor.customConfig : this.editor.config;
-    editor.customConfig.uploadImgServer = 'http://test91.ykmimi.com/upload/newspic/0';
-    editor.customConfig.uploadImgMaxSize = 3 * 1024 * 1024
+    // editor.customConfig.uploadImgServer = 'http://test91.ykmimi.com/upload/newspic/0';
+    editor.config.uploadImgShowBase64 = true
+    editor.config.uploadImgMaxSize = 3 * 1024 * 1024
     editor.config.height = 1500
-    editor.customConfig.height = 1500
     // editor.customConfig.uploadImgTimeout = 30000   //默认10秒
     // 关闭粘贴样式的过滤
-    editor.customConfig.pasteFilterStyle = false
+    editor.config.pasteFilterStyle = false
     // 忽略粘贴内容中的图片
-    editor.customConfig.pasteIgnoreImg = true
+    editor.config.pasteIgnoreImg = true
     // 自定义处理粘贴的文本内容
-    editor.customConfig.pasteTextHandle = function (content) {
+    editor.config.pasteTextHandle = function (content) {
         // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
         return content
     }
-    editor.customConfig.onchange = function (html) {
+    editor.config.onchange = function (html) {
         // 监控变化，同步更新到 textarea
         $postcontent.val(html)
     }

@@ -8,6 +8,39 @@ public class UserInfo {
     private String roleId;
     private String phoneNo;
     private String userNameCN;
+    private PageInfo pageInfo;
+    private String search;
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId='" + userId + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", email='" + email + '\'' +
+                ", roleId='" + roleId + '\'' +
+                ", phoneNo='" + phoneNo + '\'' +
+                ", userNameCN='" + userNameCN + '\'' +
+                ", pageInfo=" + pageInfo +
+                ", search='" + search + '\'' +
+                '}';
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
 
     public String getUserNameCN() {
         return userNameCN;
@@ -65,16 +98,4 @@ public class UserInfo {
         this.phoneNo = phoneNo;
     }
 
-    @Override
-    public String toString() {
-        return "UserInfo{" +
-                "userId='" + userId + '\'' +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", email='" + email + '\'' +
-                ", roleId='" + roleId + '\'' +
-                ", phoneNo='" + phoneNo + '\'' +
-                ", userNameCN='" + userNameCN + '\'' +
-                '}';
-    }
 }

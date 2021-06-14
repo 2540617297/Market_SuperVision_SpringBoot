@@ -17,8 +17,8 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
-    <div class="row" style="margin-bottom: 10px;margin-top: 10px">
+    <div class="container" th:class="${admin=='user'}?'container':''" th:style="${admin=='user'}?'':'padding:20px'" th:fragment="enterPrise">
+    <div class="row" style="margin-bottom: 10px;margin-top: 10px" th:if="${admin=='user'}">
         <form th:action="@{/synQuery/enterPriseList}" th:method="post">
             <div class="col-xs-7"></div>
             <div class="col-xs-3 right" style="margin-left: 0;padding-right: 0">
@@ -45,17 +45,25 @@
             <!--            <td ><a th:text="${backLog.workName}"  target="_blank" th:href="@{/work/WorkDetail(workId=${backLog.workId},userId=${userId})}">1</a></td>-->
             <td th:text="${enterPriseInfo.epName}">1</td>
             <td th:text="${enterPriseInfo.epLegalName}">1</td>
-            <td><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/enterPrisePost(epId=${enterPriseInfo.epId},userId=${userId})}">详情</a></td>
+            <td><a th:if="${admin=='admin'}" style="margin-right: 20px;" class="btn btn-danger btn-xs">删除</a><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/enterPrisePost(epId=${enterPriseInfo.epId},userId=${userId})}">详情</a></td>
         </tr>
 
         </tbody>
     </table>
-    <div class="text-center">
+    <div class="text-center"  th:if="${admin=='user'}">
         <ul class="pagination">
             <li><a class="btn btn-default" href="" th:href="@{/synQuery/enterPriseList(getnowpage=0)}" >首页</a></li>
             <li><a class="btn btn-default" href="" th:href="@{/synQuery/enterPriseList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
             <li><a class="btn btn-default" href="" th:href="@{/synQuery/enterPriseList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
             <li><a class="btn btn-default" href="" th:href="@{/synQuery/enterPriseList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+        </ul>
+    </div>
+    <div class="text-center"  th:if="${admin=='admin'}">
+        <ul class="pagination">
+            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=0)}" >首页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
         </ul>
     </div>
 </div>

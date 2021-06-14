@@ -239,4 +239,12 @@ public class MobileLawController {
         is.close();
     }
 
+    @RequestMapping("/initiateApplication")
+    public String iA(Model model,String userId){
+        List<IAMatterClassify> iaMatterClassifies = mobileLawService.getIAMatterClassify();
+        model.addAttribute("iaMatterClassifies",iaMatterClassifies);
+        model.addAttribute("userId",userId);
+        return "InitiateTheApplication";
+    }
+
 }
