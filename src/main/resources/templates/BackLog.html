@@ -62,12 +62,12 @@
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
             </ul>
         </div>
-        <div class="text-center" th:if="${admin!='admin'}">
+        <div class="text-center" th:if="${admin=='admin'}">
             <ul class="pagination">
-                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=0)}" >首页</a></li>
-                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
-                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
-                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/backlog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/backlog(getnowpage=0)}" >首页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/backlog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/backlog(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/backlog(getnowpage=${pageInfo.allpage})}">页尾</a></li>
             </ul>
         </div>
 

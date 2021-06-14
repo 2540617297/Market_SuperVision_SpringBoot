@@ -60,10 +60,10 @@
     </div>
     <div class="text-center"  th:if="${admin=='admin'}">
         <ul class="pagination">
-            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=0)}" >首页</a></li>
-            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
-            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
-            <li><a class="btn btn-default" href="" th:href="@{/admin/enterPriseList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/index/enterPriseList(getnowpage=0)}" >首页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/index/enterPriseList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/index/enterPriseList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+            <li><a class="btn btn-default" href="" th:href="@{/admin/index/enterPriseList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
         </ul>
     </div>
 </div>
