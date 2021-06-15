@@ -94,14 +94,14 @@
     </style>
 
     <script>
-        function del(workId){
+        function del(routeId){
             if(!confirm('确定要删除该信息吗？删除将不能恢复！')){
                 return false;
             }
             $.ajax({
                 type: "post",
-                url: '/market/admin/index/deleteBackLog',
-                data:{'workId':workId},
+                url: '/market/admin/index/deletePatrolRecord',
+                data:{'routeId':routeId},
                 // data: $('#form').serialize(),
                 async: false,
                 success: function (data) {
@@ -163,7 +163,7 @@
                         </div>
                     </form>
 
-                    <div th:replace="BackLog::backlog"></div>
+                    <div th:replace="PatrolRecord::patrolRecord" ></div>
 
                 </div>
 

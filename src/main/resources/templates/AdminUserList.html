@@ -92,6 +92,38 @@
 
 
     </style>
+
+    <script>
+        function deleteUser(userId){
+            if(!confirm('确定要删除该信息吗？删除将不能恢复！')){
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: '/market/admin/index/deleteUser',
+                data:{'userId':userId},
+                // data: $('#form').serialize(),
+                async: false,
+                success: function (data) {
+                    var o = JSON.stringify(data);
+                    var obj = JSON.parse(o);
+                    // if(obj.login==1){
+                    //     // alert("登录成功");
+                    //     // window.location.href="http://localhost:12345/market/admin/index";
+                    //     window.location.href ="/market/admin/index";
+                    // }else{
+                    alert(obj.data);
+                    window.location.reload()
+                    // }
+                    // var obj = JSON.parse(o);
+                    // document.getElementById("Status").innerHTML=obj;
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div th:replace="CommonNav::nav"></div>
@@ -151,7 +183,7 @@
                                 <td th:text="${userInfo.userNameCN}">1</td>
                                 <td th:text="${userInfo.phoneNo}">1</td>
                                 <td th:text="${userInfo.roleId=='1'?'管理员':'用户'}">1</td>
-                                <td ><button class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-xs btn-primary">编辑</button></td>
+                                <td ><button th:onclick="|deleteUser(${userInfo.userId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-xs btn-primary">编辑</button></td>
                             </tr>
 
                             </tbody>

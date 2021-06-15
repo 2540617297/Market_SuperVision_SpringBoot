@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<style>
+.postTitle{
+    background: white;
+    width: 300px;
+    height: 30px;
+    font-size: x-small ;
+    padding-left: 10px;
+    padding-top: 10px;
+    margin:0 auto
+}
+</style>
+</head>
+<body style="background-color: #ECECEC">
+<div class="container">
+    <div id="content" class="text-center">
+
+        <div id="postdisplay" >
+
+            <div   style="width: 100%;height: 300px;margin-top: 15px">
+                <div onclick="alert('欢迎打开')">
+                    <img src="../images/system_notice.jpg" style="width: 300px;height: 120px;"></img>
+                        <div class="postTitle text-left" >重要通知！</div>
+                </div>
+            </div>
+
+            <div id="displaymore" ><a id="displaymorea">加载更多</a></div>
+            <input type="hidden" id="startpage" value="0"/>
+            <input type="hidden" id="endpage" value="5"/>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

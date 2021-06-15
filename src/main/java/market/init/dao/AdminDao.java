@@ -3,6 +3,7 @@ package market.init.dao;
 import market.constant.NavF;
 import market.constant.NavS;
 import market.constant.PostInformation;
+import market.constant.UserInfo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -43,4 +44,42 @@ public interface AdminDao {
 
     @Insert("insert into service(service_title,service_content,service_time,service_admin) values(#{posttitle},#{postcontent},#{posttime},#{postuser})")
     public int serviceAdd(PostInformation postInformation);
+
+    @Select({"<script>","SELECT * FROM service h1 LEFT JOIN market_user h2 ON service_admin = userId <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or h1.service_title like concat('%',#{search},'%') " ,
+            " or h2.userNameCN like concat('%',#{search},'%') " ,
+            " or h2.userName like concat('%',#{search},'%') ",
+            "LIMIT #{pageInfo.startpage},#{pageInfo.endpage}", "</if></where>", "</script>"})
+    @Results(id="service",value = {
+            @Result(column = "service_id",property = "postid"),
+            @Result(column = "service_title",property = "posttitle"),
+            @Result(column = "service_time",property = "posttime"),
+            @Result(column = "service_content",property = "postcontent"),
+            @Result(column = "userNameCN",property = "userInfo.userNameCN"),
+            @Result(column = "service_viewnum",property = "postview"),
+    })
+    public List<PostInformation> getService(PostInformation postInformation);
+
+    @Select({"<script>","SELECT count(*) FROM service h1 LEFT JOIN market_user h2 ON service_admin = userId <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or h1.service_title like concat('%',#{search},'%') " ,
+            " or h2.userNameCN like concat('%',#{search},'%') " ,
+             "</if></where>", "</script>"})
+    public int getServiceNum(PostInformation postInformation);
+
+    @Delete("DELETE FROM market_user WHERE userId=#{userId}")
+    public int deleteUser(@Param("userId") String userId);
+
+    @Delete("DELETE FROM `market_supervision`.`enterprise_info` WHERE epId=#{epId}")
+    public int deleteEnterprise(@Param("epId") String epId);
+
+    @Delete("DELETE FROM `market_supervision`.`service` WHERE `service_id` =#{service_id}")
+    public int deleteService(@Param("service_id") String service_id);
+
+    @Delete("DELETE FROM `market_supervision`.`back_log` WHERE `workId` =#{workId}")
+    public int deleteBackLog(@Param("workId") String workId);
+
+    @Delete("DELETE FROM `market_supervision`.`route_info` WHERE `routeId` =#{routeId}")
+    public int deletePatrolRecord(@Param("routeId") String routeId);
 }

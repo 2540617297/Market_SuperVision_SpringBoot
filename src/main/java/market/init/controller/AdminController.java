@@ -1,15 +1,11 @@
 package market.init.controller;
 
 import market.constant.*;
-import market.init.service.AdminService;
-import market.init.service.InitService;
-import market.init.service.SynthesizeQueryService;
-import market.init.service.WorkService;
+import market.init.service.*;
 import market.util.Calpage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +29,8 @@ public class AdminController {
     private AdminService adminService;
     @Autowired
     private SynthesizeQueryService synthesizeQueryService;
+    @Autowired
+    private MobileLawService mobileLawService;
 
 
     @RequestMapping("/begin")
@@ -113,6 +111,20 @@ public class AdminController {
         return status;
     }
 
+    @RequestMapping("/index/deleteBackLog")
+    @ResponseBody
+    public Map<String,String> deleteBackLog(String workId){
+        HashMap<String,String> hashMap=new HashMap<>();
+        int deleteNum=adminService.deleteBackLog(workId);
+
+        if(deleteNum>0){
+            hashMap.put("data","删除成功");
+        }else{
+            hashMap.put("data","删除失败");
+        }
+        return hashMap;
+    }
+
     @RequestMapping("/index/userList")
     public String userList(HttpSession httpSession,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
                            @RequestParam(value = "search", required = false) String search){
@@ -131,6 +143,20 @@ public class AdminController {
         model.addAttribute("userInfos",userInfos);
         model.addAttribute("userId",httpSession.getAttribute("userId"));
         return "AdminUserList";
+    }
+
+    @RequestMapping("/index/deleteUser")
+    @ResponseBody
+    public Map<String,String> deleteUser(String userId){
+        HashMap<String,String> hashMap=new HashMap<>();
+        int deleteNum=adminService.deleteUser(userId);
+
+        if(deleteNum>0){
+            hashMap.put("data","删除成功");
+        }else{
+            hashMap.put("data","删除失败");
+        }
+        return hashMap;
     }
 
     @RequestMapping("/index/enterPriseList")
@@ -154,4 +180,124 @@ public class AdminController {
         return "AdminEnterPriseList";
     }
 
+    @RequestMapping("/index/deleteEnterprise")
+    @ResponseBody
+    public Map<String,String> deleteEnterprise(String epId){
+        HashMap<String,String> hashMap=new HashMap<>();
+        int deleteNum=adminService.deleteEnterprise(epId);
+
+        if(deleteNum>0){
+            hashMap.put("data","删除成功");
+        }else{
+            hashMap.put("data","删除失败");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/index/patrolRecord")
+    public String patrolRecord(HttpSession session,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                               @RequestParam(value = "search", required = false) String search){
+        //菜单
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+
+        RouteInfo routeInfo=new RouteInfo();
+        routeInfo.setSearch(search);
+        //分页查询
+        int allNum=mobileLawService.getRouteNum(routeInfo);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        routeInfo.setPageInfo(pageInfo);
+
+        List<RouteInfo> routeInfos=mobileLawService.getRouteInfo(routeInfo);
+        model.addAttribute("routeInfos",routeInfos);
+        System.out.println(routeInfos);
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("admin","admin");
+        return "AdminPatrolRecord";
+    }
+
+    @RequestMapping("/index/deletePatrolRecord")
+    @ResponseBody
+    public Map<String,String> deletePatrolRecord(String routeId){
+        HashMap<String,String> hashMap=new HashMap<>();
+        int deleteNum=adminService.deletePatrolRecord(routeId);
+
+        if(deleteNum>0){
+            hashMap.put("data","删除成功");
+        }else{
+            hashMap.put("data","删除失败");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/index/checkInfoList")
+    public String checkInfoList(HttpSession session,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                                @RequestParam(value = "search", required = false) String search){
+        //菜单
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+
+        CheckInfo checkInfo=new CheckInfo();
+        checkInfo.setSearch(search);
+        //分页查询
+        int allNum=synthesizeQueryService.allNum(search);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        checkInfo.setPageInfo(pageInfo);
+
+        List<CheckInfo> checkInfos=synthesizeQueryService.getCheck(checkInfo);
+        model.addAttribute("admin","admin");
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("checkInfos",checkInfos);
+        return "AdminCheckList";
+    }
+
+    @RequestMapping("/index/serviceList")
+    public String serviceList(HttpSession session,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                              @RequestParam(value = "search", required = false) String search){
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+
+        PostInformation postInformation=new PostInformation();
+        postInformation.setSearch(search);
+
+        //分页查询
+        int allNum=adminService.getServiceNum(postInformation);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        postInformation.setPageInfo(pageInfo);
+
+        List<PostInformation> postInformations=adminService.getService(postInformation);
+
+        model.addAttribute("admin","admin");
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("postInformations",postInformations);
+        return "AdminServiceList";
+    }
+
+    @RequestMapping("/index/deleteService")
+    @ResponseBody
+    public Map<String,String> deleteService(String service_id){
+        HashMap<String,String> hashMap=new HashMap<>();
+        int deleteNum=adminService.deleteService(service_id);
+
+        if(deleteNum>0){
+            hashMap.put("data","删除成功");
+        }else{
+            hashMap.put("data","删除失败");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/postShowList")
+    public String postShowList(Model model){
+
+        return "PostShowList";
+    }
+
+    @RequestMapping("/postShow")
+    public String postShow(){
+        return "PostShow";
+    }
 }

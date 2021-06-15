@@ -15,6 +15,7 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <div class="container" th:class="${admin=='user'}?'container':''" th:style="${admin=='user'}?'':'padding:20px'" th:fragment="enterPrise">
@@ -45,7 +46,7 @@
             <!--            <td ><a th:text="${backLog.workName}"  target="_blank" th:href="@{/work/WorkDetail(workId=${backLog.workId},userId=${userId})}">1</a></td>-->
             <td th:text="${enterPriseInfo.epName}">1</td>
             <td th:text="${enterPriseInfo.epLegalName}">1</td>
-            <td><a th:if="${admin=='admin'}" style="margin-right: 20px;" class="btn btn-danger btn-xs">删除</a><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/enterPrisePost(epId=${enterPriseInfo.epId},userId=${userId})}">详情</a></td>
+            <td><a th:if="${admin=='admin'}" th:onclick="|del(${enterPriseInfo.epId})|" style="margin-right: 20px;" class="btn btn-danger btn-xs">删除</a><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/enterPrisePost(epId=${enterPriseInfo.epId},userId=${userId})}">详情</a></td>
         </tr>
 
         </tbody>

@@ -13,38 +13,6 @@ public class CheckInfo {
     private PageInfo pageInfo;
     private String search;
 
-    public String getSearch() {
-        return search;
-    }
-
-    public void setSearch(String search) {
-        this.search = search;
-    }
-
-    public PageInfo getPageInfo() {
-        return pageInfo;
-    }
-
-    public void setPageInfo(PageInfo pageInfo) {
-        this.pageInfo = pageInfo;
-    }
-
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
-
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
-
-    public EnterPriseInfo getEnterPriseInfo() {
-        return enterPriseInfo;
-    }
-
-    public void setEnterPriseInfo(EnterPriseInfo enterPriseInfo) {
-        this.enterPriseInfo = enterPriseInfo;
-    }
-
     @Override
     public String toString() {
         return "CheckInfo{" +
@@ -55,15 +23,11 @@ public class CheckInfo {
                 ", checkOpion='" + checkOpion + '\'' +
                 ", checkUser='" + checkUser + '\'' +
                 ", checkTime='" + checkTime + '\'' +
+                ", userInfo=" + userInfo +
+                ", enterPriseInfo=" + enterPriseInfo +
+                ", pageInfo=" + pageInfo +
+                ", search='" + search + '\'' +
                 '}';
-    }
-
-    public String getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(String checkTime) {
-        this.checkTime = checkTime;
     }
 
     public String getCheckId() {
@@ -112,5 +76,45 @@ public class CheckInfo {
 
     public void setCheckUser(String checkUser) {
         this.checkUser = checkUser;
+    }
+
+    public String getCheckTime() {
+        return checkTime;
+    }
+
+    public void setCheckTime(String checkTime) {
+        this.checkTime = checkTime;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public EnterPriseInfo getEnterPriseInfo() {
+        return enterPriseInfo;
+    }
+
+    public void setEnterPriseInfo(EnterPriseInfo enterPriseInfo) {
+        this.enterPriseInfo = enterPriseInfo;
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }

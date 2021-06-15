@@ -17,7 +17,7 @@
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div class="container">
+    <div class="container" th:class="${admin==null}?'container':''">
     <div class="row" style="margin-bottom: 10px;margin-top: 10px">
         <form th:action="@{/synQuery/getCheck}" th:method="post">
             <div class="col-xs-7"></div>
@@ -29,37 +29,46 @@
             </div>
         </form>
     </div>
-    <table class="table table-bordered">
-        <thead>
-        <tr>
-            <th>编号</th>
-            <th>检查企业</th>
-            <th>检查人员</th>
-            <th>检查时间</th>
-            <th>详情</th>
-        </tr>
-        </thead>
-        <tbody>
+        <div th:style="${admin==null}?'':'padding:20px'" th:fragment="checkInfoList">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>检查企业</th>
+                    <th>检查人员</th>
+                    <th>检查时间</th>
+                    <th>详情</th>
+                </tr>
+                </thead>
+                <tbody>
 
-        <tr th:each="checkInfo:${checkInfos}">
-            <td th:text="${checkInfo.checkId}">1</td>
-<!--            <td ><a th:text="${backLog.workName}"  target="_blank" th:href="@{/work/WorkDetail(workId=${backLog.workId},userId=${userId})}">1</a></td>-->
-            <td th:text="${checkInfo.enterPriseInfo.epName}">1</td>
-            <td th:text="${checkInfo.userInfo.userNameCN}">1</td>
-            <td th:text="${checkInfo.checkTime!=null?#strings.substring(checkInfo.checkTime,0,10):checkInfo.checkTime}">1</td>
-            <td><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/checkPost(checkId=${checkInfo.checkId})}">详情</a></td>
-        </tr>
+                <tr th:each="checkInfo:${checkInfos}">
+                    <td th:text="${checkInfo.checkId}">1</td>
+                    <td th:text="${checkInfo.enterPriseInfo.epName}">1</td>
+                    <td th:text="${checkInfo.userInfo.userNameCN}">1</td>
+                    <td th:text="${checkInfo.checkTime!=null?#strings.substring(checkInfo.checkTime,0,10):checkInfo.checkTime}">1</td>
+                    <td><button th:if="${admin!=null}" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/checkPost(checkId=${checkInfo.checkId})}">详情</a></td>
+                </tr>
 
-        </tbody>
-    </table>
-    <div class="text-center">
-        <ul class="pagination">
-            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=0)}" >首页</a></li>
-            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
-            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
-            <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.allpage})}">页尾</a></li>
-        </ul>
-    </div>
+                </tbody>
+            </table>
+            <div class="text-center">
+                <ul class="pagination" th:if="${admin==null}">
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=0)}" >首页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/synQuery/getCheck(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+                </ul>
+            </div>
+            <div class="text-center" th:if="${admin!=null}">
+                <ul class="pagination">
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/checkInfoList(getnowpage=0)}" >首页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/checkInfoList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/checkInfoList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/checkInfoList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+                </ul>
+            </div>
+        </div>
 </div>
 
 </body>

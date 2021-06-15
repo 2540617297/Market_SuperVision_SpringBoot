@@ -94,14 +94,14 @@
     </style>
 
     <script>
-        function del(workId){
+        function del(postId){
             if(!confirm('确定要删除该信息吗？删除将不能恢复！')){
                 return false;
             }
             $.ajax({
                 type: "post",
-                url: '/market/admin/index/deleteBackLog',
-                data:{'workId':workId},
+                url: '/market/admin/index/deleteService',
+                data:{'service_id':postId},
                 // data: $('#form').serialize(),
                 async: false,
                 success: function (data) {
@@ -137,10 +137,10 @@
         <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
             <div id="content-header">
                 <h3 style="margin:0px;" class="page-header">
-                    任务管理
+                    Post管理
                     <small>管理</small>
                     <a href="#" class="pull-right" style="font-size: xx-small"><span
-                            class="glyphicon glyphicon-tag"></span>任务管理</a>
+                            class="glyphicon glyphicon-tag"></span>Post管理</a>
                 </h3>
             </div>
 
@@ -163,7 +163,39 @@
                         </div>
                     </form>
 
-                    <div th:replace="BackLog::backlog"></div>
+                    <div  th:style="${admin!=null}?'padding:20px':''" >
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>公告名称</th>
+                                <th>发布人员</th>
+                                <th>发布时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="postInformation:${postInformations}">
+                                <td th:text="${postInformationStat.count}">1</td>
+                                <td th:text="${postInformation.posttitle}"></td>
+                                <td th:text="${postInformation.userInfo.userNameCN}">1</td>
+                                <td th:text="${postInformation.posttime}">1</td>
+                                <td ><button th:onclick="|del(${postInformation.postid})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-xs btn-primary">编辑</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="text-center" >
+                            <ul class="pagination">
+                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/serviceList(getnowpage=0)}" >首页</a></li>
+                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/serviceList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/serviceList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/serviceList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
 
                 </div>
 

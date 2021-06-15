@@ -26,8 +26,8 @@
     </script>
 </head>
 <body>
-    <div class="container">
-        <div class="row" style="margin-bottom: 10px;margin-top: 10px">
+    <div class="container" th:class="${admin==null}?'container':''"  >
+        <div class="row" style="margin-bottom: 10px;margin-top: 10px" th:if="${admin==null}">
             <form th:action="@{/mobileLaw/patrolRecord}" th:method="post">
                 <div class="col-xs-7"></div>
                 <div class="col-xs-3 right" style="margin-left: 0;padding-right: 0">
@@ -38,12 +38,14 @@
                 </div>
             </form>
         </div>
+        <div th:fragment="patrolRecord" th:style="${admin==null}?'':'padding:20px'">
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>巡查编号</th>
                 <th>巡查人员</th>
                 <th>巡查时间</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
@@ -53,12 +55,13 @@
                 <td th:text="${routeInfo.userNameCN}"></td>
 <!--                <td th:text="${routeInfo.addTime}">1</td>-->
                 <td th:text="${routeInfo.addTime!=null?#strings.substring(routeInfo.addTime,0,10):routeInfo.addTime}">1</td>
-
+                <td th:if="${admin!=null}"><button th:onclick="|del(${routeInfo.routeId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-primary btn-xs">编辑</button></td>
             </tr>
 
             </tbody>
         </table>
-        <div class="text-center">
+
+        <div class="text-center" th:if="${admin==null}">
             <ul class="pagination">
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/patrolRecord(getnowpage=0)}" >首页</a></li>
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/patrolRecord(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
@@ -66,6 +69,16 @@
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/mobileLaw/patrolRecord(getnowpage=${pageInfo.allpage})}">页尾</a></li>
             </ul>
         </div>
+        <div class="text-center" th:if="${admin!=null}">
+            <ul class="pagination">
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/patrolRecord(getnowpage=0)}" >首页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/patrolRecord(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/patrolRecord(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/patrolRecord(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+            </ul>
+        </div>
+        </div>
     </div>
+
 </body>
 </html>

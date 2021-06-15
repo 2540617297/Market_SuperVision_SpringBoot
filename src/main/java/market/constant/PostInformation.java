@@ -12,6 +12,42 @@ public class PostInformation {
     private NavS navS;
     private UserInfo userInfo;
     private String postcontenttext;
+    private String search;
+    private PageInfo pageInfo;
+
+    @Override
+    public String toString() {
+        return "PostInformation{" +
+                "postid=" + postid +
+                ", posttitle='" + posttitle + '\'' +
+                ", postcontent='" + postcontent + '\'' +
+                ", posttime='" + posttime + '\'' +
+                ", postuser=" + postuser +
+                ", postview=" + postview +
+                ", postnavs=" + postnavs +
+                ", navS=" + navS +
+                ", userInfo=" + userInfo +
+                ", postcontenttext='" + postcontenttext + '\'' +
+                ", search='" + search + '\'' +
+                ", pageInfo=" + pageInfo +
+                '}';
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
+    }
 
     public String getPostcontenttext() {
         return postcontenttext;
@@ -93,19 +129,4 @@ public class PostInformation {
         this.postview = postview;
     }
 
-    @Override
-    public String toString() {
-        return "PostInformation{" +
-                "postid=" + postid +
-                ", posttitle='" + posttitle + '\'' +
-                ", postcontent='" + postcontent + '\'' +
-                ", posttime='" + posttime + '\'' +
-                ", postuser=" + postuser +
-                ", postview=" + postview +
-                ", postnavs=" + postnavs +
-                ", navS=" + navS +
-                ", userInfo=" + userInfo +
-                ", postcontenttext='" + postcontenttext + '\'' +
-                '}';
-    }
 }

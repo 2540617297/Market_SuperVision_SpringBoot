@@ -49,12 +49,12 @@
                 <td th:text="${backLog.addWhoName}">1</td>
                 <td th:text="${backLog.workWhoName}">1</td>
                 <td th:text="${backLog.workEndTime!=null?#strings.substring(backLog.workEndTime,0,10):backLog.workEndTime}">1</td>
-                <td ><button class="btn btn-danger" style="margin-right: 20px;">删除</button><button class="btn btn-primary">编辑</button></td>
+                <td ><button th:onclick="|del(${backLog.workId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-primary btn-xs">编辑</button></td>
             </tr>
 
             </tbody>
         </table>
-        <div class="text-center" th:if="${admin=='user'}">
+        <div class="text-center" th:if="${admin==null}">
             <ul class="pagination">
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=0)}" >首页</a></li>
                 <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/work/BackLog(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>

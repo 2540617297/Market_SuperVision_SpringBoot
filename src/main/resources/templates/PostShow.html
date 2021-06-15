@@ -15,93 +15,190 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<style>
-    #content {
-        padding: 15px 70px 15px 70px;
-        margin-bottom: 50px;
+    <style>
+        .panel-group {
+            border: none;
+        }
 
-    }
-    .search {
-        background-color: white;
-        padding: 20px;
-        margin-bottom: 5px;
-    }
-    .media-body a {
-        color: black !important;
-    }
+        a, a:hover {
+            color: #B8C7CE;
+            text-decoration: none;
+        }
 
-    .media-heading {
-        color: #9acfea;
+        .panel-heading, .panel-body {
+            color: #B8C7CE;
+            background-color: #222D32;
+        }
 
-    }
-    .searchcontent {
-        height: 40px;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-    .searchfoot {
-        margin-top: 15px;
-    }
-</style>
+        .panel-heading, #mya a {
+            text-decoration: none;
+            display: block;
+            height: 40px;
+            width: 100%;
+            padding: 10px 15px;
+        }
+
+        .mypanel a:hover, a:focus, .nav li a:hover, a:focus, #mya a:hover, a:focus, a:active {
+            background-color: #1A2226;
+            color: #ffffff;
+        }
+
+        #loginimg {
+            position: absolute;
+            top: 20px;
+            left: 80px;
+            color: #ffffff;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        #content-header, #content {
+            margin: 0px;
+            padding: 15px 15px 15px 15px;
+        }
+
+        .col-lg-10 {
+            background-color: #DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+
+        footer {
+            height: 50px;
+            border-top: #B8C7CE solid 1px;
+            position: absolute;
+            width: 100%;
+            padding-right: 15px;
+            bottom: 0;
+            background-color: #ffffff;
+            line-height: 50px;
+        }
+
+        .carousel-inner img {
+            margin: 0 auto;
+        }
+
+        .carousel-inner a {
+
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        .caption p {
+            height: 80px;
+        }
+
+        .title {
+            background-color: #ECECEC;
+            line-height: 34px;
+            padding: 3px 12px;
+            border: #B8C7CE 1px solid;
+            text-align: center;
+        }
+
+        .col-lg-10 {
+            background-color: #DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+
+        .data {
+            padding: 3px 12px;
+            border: #B8C7CE 1px solid;
+        }
+
+        label {
+            height: 29px;
+        }
+
+        .col-md-1 {
+            height: 42px;
+        }
+
+        .headline {
+            text-align: center;
+        }
+
+        .headline p {
+            font-size: xx-large;
+            margin-top: 32px;
+            margin-bottom: 32px;
+        }
+
+        .media {
+            border-bottom: 1px solid #eee;
+        }
+
+        textarea {
+            height: 100px !important;
+        }
+
+
+    </style>
 </head>
-<body>
+<body style="background-color: #ECECEC">
 <div class="container">
-    <div id="content">
-        <div class="search">
-            <div class="media page-header">
-                <div class="media-body">
-                    <a href="../postController/postshow?postid=<%=postInformation.getPostid()%>&recordpage=../postController/postsearch?question=<%=question%>">
-                        <h3 class="media-heading">
-                        </h3>
-                    </a>
-                </div>
-            </div>
+    <div id="content" style="margin-bottom: 40px">
+        <div style="background-color: #ffffff; padding:10px;height:auto" class="container">
+            <h1 style="text-align: center;margin-top: 50px">
+                <span style="font-weight: bold;">posttile</span>
+            </h1>
+            <h5 style="text-align: center" class="page-header">
+                <span>
+                发布时间：2021-1-1&nbsp;&nbsp;&nbsp;&nbsp;
+                浏览数：25
+                </span>
+            </h5>
+            <h5 style="margin:0px">&nbsp;</h5>
 
-            <div class="searchcontent">
-
-            </div>
-
-            <div class="searchfoot">作者：
-                发布时间： 浏览量：
-            </div>
+            postcontent
         </div>
 
-        <div class="search">
-            <div class="media page-header">
-                <div class="media-body">
-                    <a href="../postController/postshow?postid=<%=postInformation.getPostid()%>&recordpage=../postController/postsearch?question=<%=question%>">
-                        <h3 class="media-heading">
-                        </h3>
-                    </a>
+        <div style="background-color: #ffffff; padding:10px;height:auto;margin-top: 10px" class="container">
+            <form action="../replyController/addreply" method="post">
+                <input type="hidden" name="userid" value=""/>
+                <input type="hidden" name="postid" value=""/>
+                <input type="hidden" name="recordpage" value=""/>
+                <input type="hidden" id="lastid" name="lastid"/>
+                <div class="page-header" style="padding-bottom: 50px;margin: 0;">
+                    <div class="media ">
+                        <a class="pull-left" href="#">
+                            <img src="${pageContext.request.contextPath}/images/loginimg.jpg"/>
+                        </a>
+                        <div class="media-body">
+                                    <textarea id="replycontent" name="replycontent" class="form-control"
+                                              cols="15"></textarea>
+                        </div>
+                    </div>
+                    <button class="pull-right btn btn-danger btn-sm" type="submit" style="margin-top: 10px">
+                        发表评论/回复
+                    </button>
                 </div>
+            </form>
+
+            <div class="media"  >
+
+            <a class="pull-left" href="#">
+                <img src="${pageContext.request.contextPath}/images/loginimg.jpg"/>
+            </a>
+            <div class="media-body">
+                <h4 class="media-heading">usrname
+
+                    <button style="margin-right: 50px;font-size: 10px;"
+                            class="btn btn-default pull-right reply"
+                            onclick="">
+                        回复
+                    </button>
+                </h4>
+                <h5>时间：回复时间
+                </h5>
             </div>
-
-            <div class="searchcontent">
-
-            </div>
-
-            <div class="searchfoot">作者：
-                发布时间： 浏览量：
-            </div>
-        </div>
-
-
-        <div class="text-center">
-            <ul class="pagination">
-                <li><a class="btn btn-default"
-                       href="../postController/postsearch?getnowpage=0&question=<%=question%>">首页</a></li>
-                <li><a class="btn btn-default"
-                       href="../postController/postsearch?getnowpage=<%=nowpage-1%>&question=<%=question%>">上一页</a>
-                </li>
-                <li><a class="btn btn-default"
-                       href="../postController/postsearch?getnowpage=<%=nowpage+1%>&question=<%=question%>">下一页</a>
-                </li>
-                <li><a class="btn btn-default"
-                       href="../postController/postsearch?getnowpage=<%=allpagenum%>&question=<%=question%>">页尾</a>
-                </li>
-            </ul>
         </div>
     </div>
+
+</div>
 </div>
 </body>
 </html>

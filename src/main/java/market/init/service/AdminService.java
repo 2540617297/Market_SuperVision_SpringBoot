@@ -48,4 +48,32 @@ public class AdminService {
     public int searchUserNum(UserInfo userInfo){
         return initDao.searchUserNum(userInfo);
     }
+
+    public List<PostInformation> getService(PostInformation postInformation){
+        return adminDao.getService(postInformation);
+    }
+
+    public int getServiceNum(PostInformation postInformation){
+        return adminDao.getServiceNum(postInformation);
+    }
+
+    public int deleteUser( String userId){
+        return adminDao.deleteUser(userId);
+    }
+
+    public int deleteEnterprise( String epId){
+        return adminDao.deleteEnterprise(epId);
+    }
+
+    public int deleteService(String service_id){
+        return adminDao.deleteService(service_id);
+    }
+
+    public int deleteBackLog( String workId){
+        return adminDao.deleteBackLog(workId);
+    }
+
+    public int deletePatrolRecord( String routeId){
+        return adminDao.deletePatrolRecord(routeId);
+    }
 }
