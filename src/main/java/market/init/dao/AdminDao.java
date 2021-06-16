@@ -42,7 +42,7 @@ public interface AdminDao {
     })
     public List<NavS> findKind(int nfid);
 
-    @Insert("insert into service(service_title,service_content,service_time,service_admin) values(#{posttitle},#{postcontent},#{posttime},#{postuser})")
+    @Insert("insert into service(service_title,service_content,service_time,service_admin,img_fileurl) values(#{posttitle},#{postcontent},#{posttime},#{postuser},#{postfileurl})")
     public int serviceAdd(PostInformation postInformation);
 
     @Select({"<script>","SELECT * FROM service h1 LEFT JOIN market_user h2 ON service_admin = userId <where>" ,
@@ -50,7 +50,7 @@ public interface AdminDao {
             " or h1.service_title like concat('%',#{search},'%') " ,
             " or h2.userNameCN like concat('%',#{search},'%') " ,
             " or h2.userName like concat('%',#{search},'%') ",
-            "LIMIT #{pageInfo.startpage},#{pageInfo.endpage}", "</if></where>", "</script>"})
+             "</if></where>","order by service_time desc ","LIMIT #{pageInfo.startpage},#{pageInfo.endpage}", "</script>"})
     @Results(id="service",value = {
             @Result(column = "service_id",property = "postid"),
             @Result(column = "service_title",property = "posttitle"),
@@ -58,8 +58,15 @@ public interface AdminDao {
             @Result(column = "service_content",property = "postcontent"),
             @Result(column = "userNameCN",property = "userInfo.userNameCN"),
             @Result(column = "service_viewnum",property = "postview"),
+            @Result(column = "img_fileurl",property = "postfileurl"),
     })
     public List<PostInformation> getService(PostInformation postInformation);
+
+    @Select({"<script>","SELECT * FROM service h1 LEFT JOIN market_user h2 ON service_admin = userId where h1.service_id=#{postid}" ,
+             "</script>"})
+    @ResultMap(value = "service")
+    public PostInformation getServiceById(@Param("postid") int postid);
+
 
     @Select({"<script>","SELECT count(*) FROM service h1 LEFT JOIN market_user h2 ON service_admin = userId <where>" ,
             "<if test='search != null and search != \"\"'>",

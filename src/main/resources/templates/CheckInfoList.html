@@ -47,7 +47,7 @@
                     <td th:text="${checkInfo.enterPriseInfo.epName}">1</td>
                     <td th:text="${checkInfo.userInfo.userNameCN}">1</td>
                     <td th:text="${checkInfo.checkTime!=null?#strings.substring(checkInfo.checkTime,0,10):checkInfo.checkTime}">1</td>
-                    <td><button th:if="${admin!=null}" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/checkPost(checkId=${checkInfo.checkId})}">详情</a></td>
+                    <td><button th:if="${admin=='admin'}" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><a href="#" class="btn btn-primary btn-xs" th:href="@{/synQuery/checkPost(checkId=${checkInfo.checkId})}">详情</a></td>
                 </tr>
 
                 </tbody>

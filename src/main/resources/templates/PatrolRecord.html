@@ -45,7 +45,7 @@
                 <th>巡查编号</th>
                 <th>巡查人员</th>
                 <th>巡查时间</th>
-                <th>操作</th>
+                <th th:if="${admin!=null}">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -55,7 +55,7 @@
                 <td th:text="${routeInfo.userNameCN}"></td>
 <!--                <td th:text="${routeInfo.addTime}">1</td>-->
                 <td th:text="${routeInfo.addTime!=null?#strings.substring(routeInfo.addTime,0,10):routeInfo.addTime}">1</td>
-                <td th:if="${admin!=null}"><button th:onclick="|del(${routeInfo.routeId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-primary btn-xs">编辑</button></td>
+                <td th:if="${admin!=null}"><button  th:onclick="|del(${routeInfo.routeId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button></td>
             </tr>
 
             </tbody>

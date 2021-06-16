@@ -143,60 +143,18 @@
     <div id="content" style="margin-bottom: 40px">
         <div style="background-color: #ffffff; padding:10px;height:auto" class="container">
             <h1 style="text-align: center;margin-top: 50px">
-                <span style="font-weight: bold;">posttile</span>
+                <span style="font-weight: bold;" th:text="${postInformation.posttitle}"></span>
             </h1>
             <h5 style="text-align: center" class="page-header">
                 <span>
-                发布时间：2021-1-1&nbsp;&nbsp;&nbsp;&nbsp;
-                浏览数：25
+                    发布时间：<span th:text="${postInformation.posttime}"></span><br/>&nbsp;
+                浏览数：<span th:text="${postInformation.postview}" style="padding-top: 20px"></span>
                 </span>
             </h5>
             <h5 style="margin:0px">&nbsp;</h5>
 
-            postcontent
+            <div th:utext="${postInformation.postcontent}"> </div>
         </div>
-
-        <div style="background-color: #ffffff; padding:10px;height:auto;margin-top: 10px" class="container">
-            <form action="../replyController/addreply" method="post">
-                <input type="hidden" name="userid" value=""/>
-                <input type="hidden" name="postid" value=""/>
-                <input type="hidden" name="recordpage" value=""/>
-                <input type="hidden" id="lastid" name="lastid"/>
-                <div class="page-header" style="padding-bottom: 50px;margin: 0;">
-                    <div class="media ">
-                        <a class="pull-left" href="#">
-                            <img src="${pageContext.request.contextPath}/images/loginimg.jpg"/>
-                        </a>
-                        <div class="media-body">
-                                    <textarea id="replycontent" name="replycontent" class="form-control"
-                                              cols="15"></textarea>
-                        </div>
-                    </div>
-                    <button class="pull-right btn btn-danger btn-sm" type="submit" style="margin-top: 10px">
-                        发表评论/回复
-                    </button>
-                </div>
-            </form>
-
-            <div class="media"  >
-
-            <a class="pull-left" href="#">
-                <img src="${pageContext.request.contextPath}/images/loginimg.jpg"/>
-            </a>
-            <div class="media-body">
-                <h4 class="media-heading">usrname
-
-                    <button style="margin-right: 50px;font-size: 10px;"
-                            class="btn btn-default pull-right reply"
-                            onclick="">
-                        回复
-                    </button>
-                </h4>
-                <h5>时间：回复时间
-                </h5>
-            </div>
-        </div>
-    </div>
 
 </div>
 </div>

@@ -62,23 +62,14 @@ public class Socket {
      */
     @SuppressWarnings("unused")
     public void onMessage(String message, Session session) throws Exception {
-//        if (message != null){
-//            switch (message) {
-//                case "start":
-//                    System.out.println("接收到数据"+message);
-//                    sendMessage("哈哈哈哈哈哈哈哈");
-//                    break;
-//                case "question":
-//                case "close":
-//                    System.out.println("关闭连接");
-//                    onClose();
-//                default:
-//                    break;
-//            }
-//        }
+
         sendToUser(message);
     }
 
+    /**
+     * 发送消息给用户
+     * @param message
+     */
     @OnMessage
     public void sendToUser(String message) {
         System.out.println("++++++++"+message);
@@ -125,12 +116,12 @@ public class Socket {
   }
 
 
-  public static synchronized void addOnlineCount() {
+    public static synchronized void addOnlineCount() {
     Socket.onlineCount++;
   }
 
 
-  public static synchronized void subOnlineCount() {
+    public static synchronized void subOnlineCount() {
     Socket.onlineCount--;
   }
 }

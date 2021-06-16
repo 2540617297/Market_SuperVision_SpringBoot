@@ -38,7 +38,7 @@
                 <th>发布人员</th>
                 <th>要求完成人员</th>
                 <th>要求完成时间</th>
-                <th>操作</th>
+                <th th:if="${admin!=null}">操作</th>
             </tr>
             </thead>
             <tbody>
@@ -49,7 +49,7 @@
                 <td th:text="${backLog.addWhoName}">1</td>
                 <td th:text="${backLog.workWhoName}">1</td>
                 <td th:text="${backLog.workEndTime!=null?#strings.substring(backLog.workEndTime,0,10):backLog.workEndTime}">1</td>
-                <td ><button th:onclick="|del(${backLog.workId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-primary btn-xs">编辑</button></td>
+                <td th:if="${admin!=null}"><button th:if="${admin!=null}" th:onclick="|del(${backLog.workId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-primary btn-xs">编辑</button></td>
             </tr>
 
             </tbody>

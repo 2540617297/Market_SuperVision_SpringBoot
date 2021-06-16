@@ -9,11 +9,28 @@ public class PostInformation {
     private int postuser;
     private int postview;
     private int postnavs;
+    private String postfileurl;
     private NavS navS;
     private UserInfo userInfo;
-    private String postcontenttext;
+    private String postImage1;
     private String search;
     private PageInfo pageInfo;
+
+    public String getPostfileurl() {
+        return postfileurl;
+    }
+
+    public void setPostfileurl(String postfileurl) {
+        this.postfileurl = postfileurl;
+    }
+
+    public String getPostImage1() {
+        return postImage1;
+    }
+
+    public void setPostImage1(String postImage1) {
+        this.postImage1 = postImage1;
+    }
 
     @Override
     public String toString() {
@@ -25,9 +42,10 @@ public class PostInformation {
                 ", postuser=" + postuser +
                 ", postview=" + postview +
                 ", postnavs=" + postnavs +
+                ", postfileurl='" + postfileurl + '\'' +
                 ", navS=" + navS +
                 ", userInfo=" + userInfo +
-                ", postcontenttext='" + postcontenttext + '\'' +
+                ", postImage1='" + postImage1 + '\'' +
                 ", search='" + search + '\'' +
                 ", pageInfo=" + pageInfo +
                 '}';
@@ -49,13 +67,6 @@ public class PostInformation {
         this.pageInfo = pageInfo;
     }
 
-    public String getPostcontenttext() {
-        return postcontenttext;
-    }
-
-    public void setPostcontenttext(String postcontenttext) {
-        this.postcontenttext = postcontenttext;
-    }
 
     public UserInfo getUserInfo() {
         return userInfo;

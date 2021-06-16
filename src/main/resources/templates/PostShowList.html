@@ -15,17 +15,20 @@
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<style>
-.postTitle{
-    background: white;
-    width: 300px;
-    height: 30px;
-    font-size: x-small ;
-    padding-left: 10px;
-    padding-top: 10px;
-    margin:0 auto
-}
-</style>
+    <style>
+    .postTitle{
+        background: white;
+        width: 300px;
+        height: 30px;
+        font-size: x-small ;
+        padding-left: 10px;
+        padding-top: 10px;
+        margin:0 auto
+    }
+    .postImage img{
+        width: 300px;height: 130px;
+    }
+    </style>
 </head>
 <body style="background-color: #ECECEC">
 <div class="container">
@@ -33,10 +36,15 @@
 
         <div id="postdisplay" >
 
-            <div   style="width: 100%;height: 300px;margin-top: 15px">
-                <div onclick="alert('欢迎打开')">
-                    <img src="../images/system_notice.jpg" style="width: 300px;height: 120px;"></img>
-                        <div class="postTitle text-left" >重要通知！</div>
+
+            <div   style="width: 100%;height: 170px;margin-top: 15px" th:each="postInformation:${postInformations}">
+                <div class="postShow" >
+                    <input type="hidden" th:value="${postInformation.postid}"></input>
+                    <div th:if="${postInformation.postImage1==null}">
+                        <img src="../images/system_notice.jpg" style="width: 300px;height: 120px;"></img>
+                    </div>
+                    <div class="postImage" th:if="${postInformation.postid!=null}" th:utext="${postInformation.postImage1}"> </div>
+                    <div class="postTitle text-left" th:text="${postInformation.posttitle}"></div>
                 </div>
             </div>
 
@@ -48,4 +56,58 @@
     </div>
 </div>
 </body>
+<script>
+    $('.postShow').click(function (){
+        window.location.href='/market/admin/postShow?postid='+$(this).children("input").val();
+    });
+</script>
+<script>
+    $("#displaymorea").click(function () {
+        var startpage = $("#startpage").val();
+        $("#startpage").val(parseInt(startpage) + 5);
+
+        function setDivtc(item) {
+            // alert("竟来了");
+            if(item.postImage1==null) {
+                var div = '<div   style="width: 100%;height: 170px;margin-top: 15px">\n' +
+                    '                <div onclick="">\n' +
+                    '                        <img src="../images/system_notice.jpg" style="width: 300px;height: 120px;"></img>\n' +
+                    '                    <div class="postTitle text-left" >'+ item.posttitle+'</div>\n' +
+                    '                </div>\n' +
+                    '            </div>'
+            }else{
+                var div = '<div   style="width: 100%;height: 170px;margin-top: 15px" >\n' +
+                    '                <div onclick="">\n' +
+                    '                    <div class="postImage"  > '+ item.postImage1+'</div>\n' +
+                    '                    <div class="postTitle text-left" >'+ item.posttitle+'</div>\n' +
+                    '                </div>\n' +
+                    '            </div>'
+            }
+            return div;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/market/admin/postShowListMore",
+            data: {"startpage": parseInt(startpage) + 5, "endpage": 5},
+            dataType: "json",
+            async: false,
+            success: function (postInformations) {
+                var html = '';
+                // alert(JSON.stringify(postInformations));
+                for (var list in postInformations) {
+                    html += setDivtc(postInformations[list]);
+                }
+                // alert(html);
+                $("#displaymore").before(html);
+
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    });
+
+
+</script>
 </html>

@@ -53,6 +53,10 @@ public class AdminService {
         return adminDao.getService(postInformation);
     }
 
+    public PostInformation getServiceById( int postid){
+        return adminDao.getServiceById(postid);
+    }
+
     public int getServiceNum(PostInformation postInformation){
         return adminDao.getServiceNum(postInformation);
     }

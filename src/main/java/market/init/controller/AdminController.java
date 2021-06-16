@@ -5,6 +5,7 @@ import market.init.service.*;
 import market.util.Calpage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,11 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -95,14 +94,54 @@ public class AdminController {
 
     @RequestMapping("/index/serviceAdd")
     @ResponseBody
-    public Map<String,String> serviceAdd(HttpSession httpSession, String servicetitle, String servicecontent, Integer serviceuser) {
+    public Map<String,String> serviceAdd(HttpSession httpSession, String servicetitle, String servicecontent, Integer serviceuser) throws IOException {
         //插入post数据
         Date nowtime = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         String servicetime = simpleDateFormat.format(nowtime);
+
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("YYYYMMdd");
+        String SAdir=simpleDateFormat1.format(nowtime);
+
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("YYYYMMddHHmmss");
+        String SAfile=simpleDateFormat2.format(nowtime);
+
         PostInformation postInformation = new PostInformation();
         postInformation.setPosttitle(servicetitle);
-        postInformation.setPostcontent(servicecontent);
+
+        StringBuilder builderServiceContent=new StringBuilder(servicecontent);
+        int indexStart=0;
+        int indexEnd= 0;
+        int index=0;
+        Map<String,String> base64Img=new HashMap<>();
+        while (true) {
+            index=index+1;
+            indexStart=builderServiceContent.indexOf("<img");
+            indexEnd= builderServiceContent.indexOf("contenteditable=\"false\"/>");
+            if(indexStart==-1){
+                break;
+            }
+            base64Img.put("imageSA"+index,builderServiceContent.substring(indexStart,indexEnd+25));
+            builderServiceContent.insert(indexEnd+25,"imageSA"+index);
+            builderServiceContent.delete(indexStart,indexEnd+25);
+        }
+        if(base64Img.size()>0) {
+            String dirURL = "C:\\Users\\Admin\\Pictures\\web\\SA" + SAdir;
+            File dir = new File(dirURL);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            String fileURL = dirURL + "\\" + SAfile + ".txt";
+
+            File file = new File(fileURL);
+            OutputStream outputStream = new FileOutputStream(file);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+            objectOutputStream.writeObject(base64Img);
+            objectOutputStream.close();
+            System.out.println(builderServiceContent);
+            postInformation.setPostfileurl(fileURL);
+        }
+        postInformation.setPostcontent(builderServiceContent+"");
         postInformation.setPosttime(servicetime);
         postInformation.setPostuser(serviceuser);
         adminService.serviceAdd(postInformation);
@@ -291,13 +330,84 @@ public class AdminController {
     }
 
     @RequestMapping("/postShowList")
-    public String postShowList(Model model){
-
+    public String postShowList(Model model) throws IOException, ClassNotFoundException {
+        PostInformation postInformation=new PostInformation();
+        PageInfo pageInfo=new PageInfo();
+        pageInfo.setStartpage(0);
+        pageInfo.setEndpage(5);
+        postInformation.setPageInfo(pageInfo);
+        List<PostInformation> postInformations=adminService.getService(postInformation);
+        for (PostInformation p :
+                postInformations) {
+            if (p.getPostfileurl() == null) {
+                p.setPostImage1(null);
+            }else{
+                File file=new File(p.getPostfileurl());
+                InputStream inputStream = new FileInputStream(file);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                HashMap<String,String> base64Img = (HashMap<String, String>) objectInputStream.readObject();
+                p.setPostImage1(base64Img.get("imageSA1"));
+                objectInputStream.close();
+            }
+        }
+        model.addAttribute("postInformations",postInformations);
         return "PostShowList";
     }
 
+    @ResponseBody
+    @RequestMapping("/postShowListMore")
+    public List<PostInformation> postShowListMore(String startpage,String endpage) throws IOException, ClassNotFoundException {
+        PageInfo pageInfo=new PageInfo();
+        pageInfo.setStartpage(Integer.parseInt(startpage));
+        pageInfo.setEndpage(Integer.parseInt(endpage));
+        PostInformation postInformation=new PostInformation();
+        postInformation.setPageInfo(pageInfo);
+        List<PostInformation> postInformations=adminService.getService(postInformation);
+        for (PostInformation p :
+                postInformations) {
+            if (p.getPostfileurl() == null) {
+                p.setPostImage1(null);
+            }else{
+                File file=new File(p.getPostfileurl());
+                InputStream inputStream = new FileInputStream(file);
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                HashMap<String,String> base64Img = (HashMap<String, String>) objectInputStream.readObject();
+                p.setPostImage1(base64Img.get("imageSA1"));
+//                for(int i=1;i<base64Img.size();i++){
+//                    String serviceContent=p.getPostcontent();
+//                    serviceContent.replace("imageSA"+i,base64Img.get("imageSA"+i));
+//                    p.setPostcontent(serviceContent);
+//                }
+                objectInputStream.close();
+            }
+        }
+
+        return postInformations;
+    }
+
     @RequestMapping("/postShow")
-    public String postShow(){
+    public String postShow(Model model,String postid) throws IOException, ClassNotFoundException {
+        PostInformation postInformation=adminService.getServiceById(Integer.parseInt(postid));
+        System.out.println(postInformation);
+        if(postInformation.getPostfileurl()!=null) {
+            File file = new File(postInformation.getPostfileurl());
+            InputStream inputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            HashMap<String, String> base64Img = (HashMap<String, String>) objectInputStream.readObject();
+            StringBuilder builderServiceContent = new StringBuilder(postInformation.getPostcontent());
+            System.out.println(base64Img.size());
+            int indexStart = 0;
+            for (int i = 1; i <= base64Img.size(); i++) {
+//            serviceContent.replace("imageSA"+i,base64Img.get("imageSA"+i));
+                String image = "imageSA" + i;
+                indexStart = builderServiceContent.indexOf(image);
+                builderServiceContent.insert(indexStart + image.length(), base64Img.get(image));
+                builderServiceContent.delete(indexStart, indexStart + image.length());
+
+            }
+            postInformation.setPostcontent(builderServiceContent + "");
+        }
+        model.addAttribute("postInformation",postInformation);
         return "PostShow";
     }
 }
