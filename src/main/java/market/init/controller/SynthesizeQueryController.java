@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -139,4 +140,16 @@ public class SynthesizeQueryController {
         return "更新信息成功！";
     }
 
+    @RequestMapping("/saveEnterprise")
+    @ResponseBody
+    public HashMap<String,String> saveEnterprise(EnterPriseInfo enterPriseInfo){
+        int saveNum=synthesizeQueryService.saveEnterprise(enterPriseInfo);
+        HashMap<String,String> hashMap=new HashMap<>();
+        if(saveNum>0){
+            hashMap.put("data","保存成功");
+        }else{
+            hashMap.put("data","保存失败");
+        }
+        return hashMap;
+    }
 }

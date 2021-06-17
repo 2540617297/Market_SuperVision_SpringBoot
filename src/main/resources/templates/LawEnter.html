@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>监督性检查单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="container" >
+    <div th:fragment="lasEnter">
+        <div>
+            <h1 style="text-align: center;margin-bottom: 10px">法律法规录入</h1>
+            <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+        </div>
+
+        <form class="form-horizontal" role="form"  id="form">
+        <div class="form-group">
+            <label for="lawKind" class="control-label col-xs-1">所属分类</label>
+            <div class="col-xs-11">
+                <select class="form-control" name="lawKind" id="lawKind" >
+                    <option value="刑事" th:selected="true">刑事</option>
+                    <option value="民事">民事</option>
+                    <option value="经济">经济</option>
+                    <option value="行政">行政</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lawSubKind" class="control-label col-xs-1">所属子分类</label>
+            <div class="col-xs-11">
+                <select class="form-control" name="lawSubKind" id="lawSubKind" >
+                    <option value="实体法" th:selected="true">实体法</option>
+                    <option value="程序法">程序法</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lawName" class="col-xs-1 control-label">法律名称</label>
+            <div class="col-xs-11">
+                <input type="input" class="form-control" name="lawName" id="lawName"  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lawContent" class="col-xs-1 control-label">详细内容</label>
+            <div class="col-xs-11">
+                <textarea rows="10" class="form-control" name="lawContent" id="lawContent" ></textarea>
+            </div>
+        </div>
+
+        <div style="text-align: center">
+            <button type="button" onclick="enterpriseInfo()" class=" btn btn-default">保存</button>
+        </div>
+
+    </form>
+    </div>
+</div>
+</body>
+<script>
+    function enterpriseInfo(){
+        $.ajax({
+            type: "post",
+            url: '/market/admin/index/insertLaw',
+            // data:{user:userid,post:postid},
+            data: $('#form').serialize(),
+            // data: {epName:enterpriseName},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                alert(obj.data);
+                window.location.reload()
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
+</html>

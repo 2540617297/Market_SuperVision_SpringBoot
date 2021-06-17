@@ -80,6 +80,12 @@ public interface MobileLawDao {
     @ResultMap(value = "RecordQuestion")
     public RecordQuestionInfo getRecordQuestion(@Param("recordId") String recordId);
 
+    @Select("select * from spotnotice where noticeId=#{noticeId}")
+    public SpotNoticeInfo getSpotNotice(@Param("noticeId")String noticeId);
+
     @Select("SELECT * FROM iamatterclassify")
     public List<IAMatterClassify> getIAMatterClassify();
+
+    @Insert("INSERT INTO `market_supervision`.`spotnotice` (`noticeId`, `noticeEP`, `noticeTime`, `noticeMatter`, `noticeLaw`, `noticeCorrectContent`, `noticeStipulate`, `addWho`) VALUES (#{noticeId}, #{noticeEP}, #{noticeTime}, #{noticeMatter}, #{noticeLaw}, #{noticeCorrectContent}, #{noticeStipulate}, #{addWho});")
+    public int saveSpotNotice(SpotNoticeInfo spotNoticeInfo);
 }

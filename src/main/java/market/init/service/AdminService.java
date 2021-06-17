@@ -1,5 +1,6 @@
 package market.init.service;
 
+import market.constant.Law;
 import market.constant.NavF;
 import market.constant.PostInformation;
 import market.constant.UserInfo;
@@ -80,4 +81,18 @@ public class AdminService {
     public int deletePatrolRecord( String routeId){
         return adminDao.deletePatrolRecord(routeId);
     }
+
+    public int insertLaw(Law law){
+        return adminDao.insertLaw(law);
+    }
+
+    public List<Law> searchLaw(Law law){
+        return adminDao.searchLaw(law);
+    }
+
+    public int searchLawNum(Law law){
+        return adminDao.searchLawNum(law);
+    }
+
+
 }

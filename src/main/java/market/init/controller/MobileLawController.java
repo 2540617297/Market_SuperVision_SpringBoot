@@ -247,4 +247,55 @@ public class MobileLawController {
         return "InitiateTheApplication";
     }
 
+    @RequestMapping("/spotNotice")
+    public String spotNotice(String userId,Model model){
+        UserInfo userInfo=initService.getUserInfo(userId);
+        model.addAttribute("userInfo",userInfo);
+        return "SpotNotice";
+    }
+
+    @RequestMapping("/saveSpotNotice")
+    @ResponseBody
+    public Map<String,String> saveSpotNotice(SpotNoticeInfo spotNoticeInfo){
+        HashMap<String,String> hashMap=new HashMap<>();
+        Date date=new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String noticeId = "SN"+simpleDateFormat.format(date);
+        spotNoticeInfo.setNoticeId(noticeId);
+
+        int saveNum=mobileLawService.saveSpotNotice(spotNoticeInfo);
+        if(saveNum>0){
+            hashMap.put("data","保存成功,通知编号:"+noticeId);
+        }else{
+            hashMap.put("data","保存失败");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/downloadSpotNotice")
+    public void downloadSpotNotice(String noticeId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        SpotNoticeInfo spotNoticeInfo=mobileLawService.getSpotNotice(noticeId);
+        String serverpath = ResourceUtils.getURL("static").getPath();
+        String templatePath = "D:\\IDEA\\IDEA-WorkSpace\\Practice\\Market_SuperVision_SpringBoot\\src\\main\\resources\\static"+"/fileTemplate/SpotNotice.doc";
+        System.out.println(templatePath);
+        InputStream is = new FileInputStream(templatePath);
+        HWPFDocument doc = new HWPFDocument(is);
+        Range range = doc.getRange();
+        //把range范围内的${reportDate}替换为当前的日期
+        range.replaceText("${noticeId}", spotNoticeInfo.getNoticeId());
+        range.replaceText("${noticeEP}", spotNoticeInfo.getNoticeEP());
+        range.replaceText("${noticeTime}", spotNoticeInfo.getNoticeTime());
+        range.replaceText("${noticeMatter}", spotNoticeInfo.getNoticeMatter());
+        range.replaceText("${noticeStipulate}", spotNoticeInfo.getNoticeStipulate());
+        range.replaceText("${noticeLaw}", spotNoticeInfo.getNoticeLaw());
+        range.replaceText("${noticeCorrectContent}", spotNoticeInfo.getNoticeCorrectContent());
+        OutputStream os =  response.getOutputStream();
+        response.setContentType("application/octet-stream; charset=utf-8");
+        response.setHeader("Content-Disposition", "attachment; filename=downloadSpotNotice.doc");
+        //把doc输出到输出流中
+        doc.write(os);
+        os.close();
+        is.close();
+    }
+
 }

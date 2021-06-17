@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>监督性检查单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../dateControls/WdatePicker.js"></script>
+    <link href="../dateControls/skin/WdatePicker.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 10px">现场通知单</h1>
+        <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+    </div>
+
+    <form class="form-horizontal" role="form"  id="form">
+        <div class="form-group">
+            <label for="noticeEP" class="col-xs-3 control-label" >被检查名称</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control " name="noticeEP" id="noticeEP"></input>
+            </div>
+
+            <input type="hidden" name="addWho" id="addWho" th:value="${userInfo.userId}"></input>
+        </div>
+        <div class="form-group">
+            <label for="noticeTime" class="col-xs-3 control-label">记录时间</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control" id="noticeTime" name="noticeTime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="noticeMatter" class="col-xs-3 control-label">记录事项</label>
+            <div class="col-xs-9">
+                <textarea rows="5" class="form-control" name="noticeMatter" id="noticeMatter" ></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="noticeStipulate" class="col-xs-3 control-label">触及规定</label>
+            <div class="col-xs-9">
+                <textarea  class="form-control" rows="5" name="noticeStipulate" id="noticeStipulate" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="noticeCorrectContent" class="col-xs-3 control-label">改正内容</label>
+            <div class="col-xs-9">
+                <textarea  class="form-control" rows="5" name="noticeCorrectContent" id="noticeCorrectContent" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="userName" class="col-xs-3 control-label">检查人</label>
+            <div class="col-xs-9">
+                <input type="input"  class="form-control" th:readonly="true" th:value="${userInfo.userNameCN}"  id="userName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="noticeLaw" class="col-xs-3 control-label">违反法律</label>
+            <div class="col-xs-9">
+                <input type="input" class="form-control"  id="noticeLaw" name="noticeLaw"  />
+            </div>
+        </div>
+        <div style="text-align: center">
+            <button type="button" onclick="saveSpotNotice()" class=" btn btn-default">保存</button>
+            <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+        </div>
+
+    </form>
+</div>
+</body>
+<script>
+    function saveSpotNotice(){
+        $.ajax({
+            type: "post",
+            url: '/market/mobileLaw/saveSpotNotice',
+            // data:{user:userid,post:postid},
+            data: $('#form').serialize(),
+            // data: {epName:enterpriseName},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                alert(obj.data);
+                window.location.reload()
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
+</html>

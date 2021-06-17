@@ -67,4 +67,12 @@ public class MobileLawService {
     public List<IAMatterClassify> getIAMatterClassify(){
         return mobileLawDao.getIAMatterClassify();
     }
+
+    public int saveSpotNotice(SpotNoticeInfo spotNoticeInfo){
+        return mobileLawDao.saveSpotNotice( spotNoticeInfo);
+    }
+
+    public SpotNoticeInfo getSpotNotice(String noticeId){
+        return mobileLawDao.getSpotNotice(noticeId);
+    }
 }

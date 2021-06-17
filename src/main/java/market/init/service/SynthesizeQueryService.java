@@ -42,4 +42,8 @@ public class SynthesizeQueryService {
     public int updateEnterPrise(EnterPriseInfo enterPriseInfo){
         return synthesizeQueryDao.updateEnterPrise(enterPriseInfo);
     }
+
+    public int saveEnterprise(EnterPriseInfo enterPriseInfo){
+        return synthesizeQueryDao.saveEnterprise(enterPriseInfo);
+    }
 }

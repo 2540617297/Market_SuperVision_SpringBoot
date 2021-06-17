@@ -80,4 +80,7 @@ public interface SynthesizeQueryDao {
 
     @Update("UPDATE `market_supervision`.`enterprise_info` SET `epCredit` = #{epCredit},epAddress=#{epAddress},epArea=#{epArea},epKind=#{epKind},epLegalName=#{epLegalName},epRegisterAssets=#{epRegisterAssets},epBusinessScop=#{epBusinessScop} ,epName=#{epName} WHERE `epId` = #{epId}; ")
     public int updateEnterPrise(EnterPriseInfo enterPriseInfo);
+
+    @Insert("INSERT INTO `market_supervision`.`enterprise_info` (`epId`, `epName`, `epAddress`, `epArea`, `epCredit`, `epKind`, `epLegalName`, `epRegisterAssets`, `epBusinessScop`) VALUES (null, #{epName}, #{epAddress}, #{epArea}, #{epCredit}, #{epKind}, #{epLegalName}, #{epRegisterAssets}, #{epBusinessScop});")
+    public int saveEnterprise(EnterPriseInfo enterPriseInfo);
 }

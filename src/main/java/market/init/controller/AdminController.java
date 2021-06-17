@@ -47,6 +47,7 @@ public class AdminController {
         if(resultUserInfo!=null){
             session.setAttribute("userInfo",resultUserInfo);
             session.setAttribute("userId",resultUserInfo.getUserId());
+            session.setAttribute("roleId",resultUserInfo.getRoleId());
             hashMap.put("login","1");
         }else{
             hashMap.put("login","0");
@@ -216,6 +217,7 @@ public class AdminController {
         model.addAttribute("enterPriseInfos",enterPriseInfos);
         model.addAttribute("userId",httpSession.getAttribute("userId"));
         model.addAttribute("admin","admin");
+        model.addAttribute("power",httpSession.getAttribute("roleId"));
         return "AdminEnterPriseList";
     }
 
@@ -410,4 +412,50 @@ public class AdminController {
         model.addAttribute("postInformation",postInformation);
         return "PostShow";
     }
+
+    @RequestMapping("/index/lawList")
+    public String lawEnter(HttpSession session,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
+                           @RequestParam(value = "search", required = false) String search){
+
+        List<List<NavF>> lists = adminService.findAll();
+        model.addAttribute("lists",lists);
+
+        Law law=new Law();
+        law.setSearch(search);
+
+        //分页查询
+        int allNum=adminService.searchLawNum(law);
+        Calpage calpage = new Calpage();
+        PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
+        law.setPageInfo(pageInfo);
+
+        List<Law> laws=adminService.searchLaw(law);
+
+        model.addAttribute("admin","admin");
+        model.addAttribute("pageInfo",pageInfo);
+        model.addAttribute("laws",laws);
+        return "AdminLawList";
+    }
+
+    @RequestMapping("/index/lawEnter")
+    public String LawEnter(){
+        return "LawEnter";
+    }
+
+    @RequestMapping("/index/insertLaw")
+    @ResponseBody
+    public Map<String,String > insertLaw(Law law){
+        System.out.println(law);
+        int insertNum=adminService.insertLaw(law);
+        HashMap<String,String> hashMap=new HashMap<>();
+        if(insertNum>0){
+            hashMap.put("data","新增成功");
+
+        }else{
+            hashMap.put("data","保存失败");
+        }
+        return hashMap;
+    }
+
+
 }

@@ -26,6 +26,7 @@
 </head>
 <body>
     <div class="container">
+        <div th:fragment="enterpriseEnter">
         <div>
             <h1 style="text-align: center;margin-bottom: 5px">企业信息</h1>
             <h3 style="color: red;text-align: center;margin-bottom: 10px" id="Status"></h3>
@@ -35,58 +36,59 @@
             <input type="hidden" name="userId" th:value="${userId}"></input>
             <input type="hidden" name="epId" th:value="${enterPriseInfo!=null&amp;&amp; enterPriseInfo.epId!=null}?${enterPriseInfo.epId}:''"></input>
             <div class="form-group">
-                <label for="epName" class="col-xs-3 control-label">企业名称</label>
-                <div class="col-xs-9">
+                <label for="epName" class="col-xs-1 control-label">企业名称</label>
+                <div class="col-xs-11">
                     <input type="input" class="form-control disabled" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" id="epName" th:value="${enterPriseInfo!=null&amp;&amp; enterPriseInfo.epName!=null}?${enterPriseInfo.epName}:''" name="epName"></input>
                 </div>
             </div>
             <div class="form-group">
-                <label for="epLegalName" class="col-xs-3 control-label" >法定代表人</label>
-                <div class="col-xs-9">
+                <label for="epLegalName" class="col-xs-1 control-label" >法定代表人</label>
+                <div class="col-xs-11">
                     <input class="form-control" id="epLegalName" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epLegalName!=null}?${enterPriseInfo.epLegalName}:''" name="epLegalName" ></input>
                 </div>
             </div>
             <div class="form-group">
-                <label for="epAddress" class="col-xs-3 control-label">企业地址</label>
-                <div class="col-xs-9">
+                <label for="epAddress" class="col-xs-1 control-label">企业地址</label>
+                <div class="col-xs-11">
                     <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epAddress!=null}?${enterPriseInfo.epAddress}:''" id="epAddress" name="epAddress" ></input>
                 </div>
             </div>
             <div class="form-group">
-                <label for="epArea" class="col-xs-3 control-label">企业面积</label>
-                <div class="col-xs-9">
+                <label for="epArea" class="col-xs-1 control-label">企业面积</label>
+                <div class="col-xs-11">
                     <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epArea!=null}?${enterPriseInfo.epArea}:''" id="epArea" name="epArea"></input>
                 </div>
             </div>
             <div class="form-group">
-                <label for="epCredit" class="col-xs-3 control-label">信誉登记</label>
-                <div class="col-xs-9">
+                <label for="epCredit" class="col-xs-1 control-label">信誉登记</label>
+                <div class="col-xs-11">
                     <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epCredit!=null}?${enterPriseInfo.epCredit}:''" id="epCredit" name="epCredit" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="epKind" class="col-xs-3 control-label">企业类型</label>
-                <div class="col-xs-9">
+                <label for="epKind" class="col-xs-1 control-label">企业类型</label>
+                <div class="col-xs-11">
                     <input  class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epKind!=null}?${enterPriseInfo.epKind}:''"  name="epKind" id="epKind" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="epRegisterAssets" class="col-xs-3 control-label">注册资本</label>
-                <div class="col-xs-9">
+                <label for="epRegisterAssets" class="col-xs-1 control-label">注册资本</label>
+                <div class="col-xs-11">
                     <input type="input" class="form-control" th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false" th:value="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epRegisterAssets!=null}?${enterPriseInfo.epRegisterAssets}:''" id="epRegisterAssets" name="epRegisterAssets" ></input>
                 </div>
             </div>
             <div class="form-group">
-                <label for="epBusinessScop" class="col-xs-3 control-label">经营范围</label>
-                <div class="col-xs-9">
+                <label for="epBusinessScop" class="col-xs-1 control-label">经营范围</label>
+                <div class="col-xs-11">
                     <textarea rows="5"  th:readonly="${power=='0'&amp;&amp;method=='get'}?true:false"  th:utext="${enterPriseInfo!=null&amp;&amp;enterPriseInfo.epBusinessScop!=null}?${enterPriseInfo.epBusinessScop}:''" class="form-control" id="epBusinessScop" name="epBusinessScop" ></textarea>
                 </div>
             </div>
             <div style="text-align: center">
                 <button type="button"  th:onclick="|saveEnterprise(${power})|" class=" btn btn-default">保存</button>
-                <button type="button" class=" btn btn-default" > 返回</button>
+                <button th:if="${admin==null}" type="button" class=" btn btn-default" > 返回</button>
             </div>
         </form>
+    </div>
     </div>
 </body>
 <script>

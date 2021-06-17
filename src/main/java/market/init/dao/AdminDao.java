@@ -1,9 +1,6 @@
 package market.init.dao;
 
-import market.constant.NavF;
-import market.constant.NavS;
-import market.constant.PostInformation;
-import market.constant.UserInfo;
+import market.constant.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -89,4 +86,23 @@ public interface AdminDao {
 
     @Delete("DELETE FROM `market_supervision`.`route_info` WHERE `routeId` =#{routeId}")
     public int deletePatrolRecord(@Param("routeId") String routeId);
+
+    @Insert("INSERT INTO `market_supervision`.`law` (`lawId`, `lawName`, `lawContent`, `lawKind`, `lawSubKind`) VALUES (NULL, #{lawName}, #{lawContent}, #{lawKind}, #{lawSubKind});  ")
+    public int insertLaw(Law law);
+
+    @Select({"<script>","SELECT * FROM law <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or lawName like concat('%',#{search},'%') " ,
+            " or lawKind like concat('%',#{search},'%') " ,
+            " or lawSubKind like concat('%',#{search},'%') ",
+            "</if></where>","LIMIT #{pageInfo.startpage},#{pageInfo.endpage}", "</script>"})
+    public List<Law> searchLaw(Law law);
+
+    @Select({"<script>","SELECT count(*) FROM law <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or lawName like concat('%',#{search},'%') " ,
+            " or lawKind like concat('%',#{search},'%') " ,
+            " or lawSubKind like concat('%',#{search},'%') ",
+            "</if></where>", "</script>"})
+    public int searchLawNum(Law law);
 }
