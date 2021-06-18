@@ -9,8 +9,11 @@ public class InitiateApplication {
     private String IAIdentity;
     private String IAMatter;
     private String IACourt;
-    private String RecordId;
+    private Integer RecordId;
     private String IAReason;
+    private IAMatterClassify iaMatterClassify;
+    private String search;
+    private PageInfo pageInfo;
 
     @Override
     public String toString() {
@@ -25,7 +28,34 @@ public class InitiateApplication {
                 ", IACourt='" + IACourt + '\'' +
                 ", RecordId='" + RecordId + '\'' +
                 ", IAReason='" + IAReason + '\'' +
+                ", iaMatterClassify=" + iaMatterClassify +
+                ", search='" + search + '\'' +
+                ", pageInfo=" + pageInfo +
                 '}';
+    }
+
+    public IAMatterClassify getIaMatterClassify() {
+        return iaMatterClassify;
+    }
+
+    public void setIaMatterClassify(IAMatterClassify iaMatterClassify) {
+        this.iaMatterClassify = iaMatterClassify;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public PageInfo getPageInfo() {
+        return pageInfo;
+    }
+
+    public void setPageInfo(PageInfo pageInfo) {
+        this.pageInfo = pageInfo;
     }
 
     public String getIAId() {
@@ -92,11 +122,11 @@ public class InitiateApplication {
         this.IACourt = IACourt;
     }
 
-    public String getRecordId() {
+    public Integer getRecordId() {
         return RecordId;
     }
 
-    public void setRecordId(String recordId) {
+    public void setRecordId(Integer recordId) {
         RecordId = recordId;
     }
 

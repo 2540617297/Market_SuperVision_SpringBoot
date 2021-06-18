@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <meta http-equiv="Content-Type: text/html;charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
@@ -147,6 +148,16 @@
             }
         }
     </script>
+
+    <script>
+        function toAdd(){
+            $("#enterpriseList").removeClass("in active")
+            $("#enterpriseEnter").addClass("in active");
+            $("#tab1").removeClass("active")
+            $("#tab2").addClass("active")
+
+        }
+    </script>
 </head>
 <body>
 <div th:replace="CommonNav::nav"></div>
@@ -160,8 +171,8 @@
         <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
             <div id="content-header">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#enterpriseList" data-toggle="tab">企业信息</a></li>
-                    <li><a href="#enterpriseEnter" data-toggle="tab">企业信息录入</a></li>
+                    <li id="tab1" class="active"><a href="#enterpriseList" data-toggle="tab">企业信息</a></li>
+                    <li id="tab2"><a href="#enterpriseEnter" data-toggle="tab">企业信息录入</a></li>
                 </ul>
             </div>
 
@@ -172,16 +183,16 @@
                     </div>
 
                     <div style="background-color: #ffffff;">
-                        <form action="../adminController/postlists" role="form" class="form-horizontal">
+                        <form th:action="@{/admin/index/enterPriseList}" method="post" accept-charset="UTF-8" role="form" class="form-horizontal">
                             <div style="padding: 10px;">
-                                <a href="../postController/post_write" class="btn btn-default alimit disabled">
+                                <a  class="btn btn-default alimit " onclick="toAdd()">
                                     <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;新建
                                 </a>
 
                                 <button type="submit" class="pull-right btn btn-default"><span
                                         class="glyphicon glyphicon-zoom-in"></span>&nbsp;搜索
                                 </button>
-                                <input style="width:200px;" class="pull-right form-control" type="text" name="question"/>
+                                <input style="width:200px;" class="pull-right form-control" type="text" name="search"/>
                             </div>
                         </form>
 

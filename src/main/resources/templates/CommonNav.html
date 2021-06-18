@@ -14,11 +14,11 @@
         <div class="navbar-right">
             <div class="dropdown " style="padding-top: 12px;">
                 <a class="dropdown-toggle navbar-link" data-toggle="dropdown"
-                   style="padding-top: 5px; font-size: 18px;">您好!&nbsp;</a>
+                   style="padding-top: 5px; font-size: 18px;" th:text="${session.userNameCN}">您好!&nbsp;</a>
                 <ul class="dropdown-menu">
                     <li><a href="">个人资料</a></li>
                     <li class="leave"><a href="../userController/login">切换账户</a></li>
-                    <li class="leave"><a href="../userController/login">退出登录</a></li>
+                    <li class="leave"><a th:href="@{/admin/begin}">退出登录</a></li>
                 </ul>
             </div>
         </div>

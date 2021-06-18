@@ -75,4 +75,8 @@ public class MobileLawService {
     public SpotNoticeInfo getSpotNotice(String noticeId){
         return mobileLawDao.getSpotNotice(noticeId);
     }
+
+    public int saveIA(InitiateApplication initiateApplication){
+        return mobileLawDao.saveIA(initiateApplication);
+    }
 }

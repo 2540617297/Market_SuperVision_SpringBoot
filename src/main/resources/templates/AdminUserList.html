@@ -137,10 +137,10 @@
         <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
             <div id="content-header">
                 <h3 style="margin:0px;" class="page-header">
-                    Post管理
+                    执法人员管理
                     <small>管理</small>
                     <a href="#" class="pull-right" style="font-size: xx-small"><span
-                            class="glyphicon glyphicon-tag"></span>Post管理</a>
+                            class="glyphicon glyphicon-tag"></span>执法人员管理</a>
                 </h3>
             </div>
 
@@ -150,7 +150,7 @@
                 </div>
 
                 <div style="background-color: #ffffff;">
-                    <form action="../adminController/postlists" role="form" class="form-horizontal">
+                    <form th:action="@{/admin/index/userList}" method="post" role="form" class="form-horizontal">
                         <div style="padding: 10px;">
                             <a href="../postController/post_write" class="btn btn-default alimit disabled">
                                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;新建
@@ -159,7 +159,7 @@
                             <button type="submit" class="pull-right btn btn-default"><span
                                     class="glyphicon glyphicon-zoom-in"></span>&nbsp;搜索
                             </button>
-                            <input style="width:200px;" class="pull-right form-control" type="text" name="question"/>
+                            <input style="width:200px;" class="pull-right form-control" type="text" name="search"/>
                         </div>
                     </form>
 

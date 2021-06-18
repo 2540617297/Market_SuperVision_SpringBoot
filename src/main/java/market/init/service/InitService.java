@@ -41,4 +41,12 @@ public class InitService {
     public UserInfo adminLogin(UserInfo userInfo){
         return initDao.adminLogin(userInfo);
     }
+
+    public int retrievePwd(String userName,String phoneNo){
+        return initDao.retrievePwd(userName,phoneNo);
+    }
+
+    public int resetPwd(String userName,String userPassword){
+        return initDao.resetPwd(userName, userPassword) ;
+    }
 }

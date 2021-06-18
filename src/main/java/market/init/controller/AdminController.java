@@ -33,8 +33,13 @@ public class AdminController {
 
 
     @RequestMapping("/begin")
-    public String begin(){
+    public String begin(HttpSession session){
+        session.removeAttribute("userId");
         return "/AdminLogin";
+    }
+    @RequestMapping("/retrievePwd")
+    public String retrievePwd(){
+        return "/AdminRetrievePwd";
     }
 
     @RequestMapping("/login")
@@ -48,6 +53,7 @@ public class AdminController {
             session.setAttribute("userInfo",resultUserInfo);
             session.setAttribute("userId",resultUserInfo.getUserId());
             session.setAttribute("roleId",resultUserInfo.getRoleId());
+            session.setAttribute("userNameCN",resultUserInfo.getUserNameCN());
             hashMap.put("login","1");
         }else{
             hashMap.put("login","0");
@@ -55,6 +61,48 @@ public class AdminController {
         return hashMap;
     }
 
+    @RequestMapping("/resetPwd")
+    @ResponseBody
+    public Map<String,String> resetPwd(HttpSession session,String userName,String userPassword){
+        int updateNum=initService.resetPwd(userName,userPassword);
+        HashMap<String,String> hashMap=new HashMap<>();
+        if(updateNum>0){
+            UserInfo userInfo=new UserInfo();
+            userInfo.setRoleId("1");
+            userInfo.setUserName(userName);
+            userInfo.setUserPassword(userPassword);
+            UserInfo resultUserInfo=initService.adminLogin(userInfo);
+            session.setAttribute("userInfo",resultUserInfo);
+            session.setAttribute("userId",resultUserInfo.getUserId());
+            session.setAttribute("roleId",resultUserInfo.getRoleId());
+            session.setAttribute("userNameCN",resultUserInfo.getUserNameCN());
+            hashMap.put("login","1");
+        }else{
+            hashMap.put("login","0");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/verify")
+    @ResponseBody
+    public Map<String,String> verify(String userName,String phoneNo){
+        Map<String,String> hashMap=new HashMap<>();
+        int searchNum=initService.retrievePwd(userName,phoneNo);
+        if(searchNum>0){
+            hashMap.put("data","验证成功，请重新输入密码");
+            hashMap.put("status","1");
+        }else {
+            hashMap.put("data","验证失败,请重新输入");
+            hashMap.put("status","0");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/adminExit")
+    public String adminExit(HttpSession session){
+        session.removeAttribute("userId");
+        return "/admin/begin";
+    }
 
     @RequestMapping("/index")
     public String index(Model model){
@@ -203,6 +251,7 @@ public class AdminController {
     public String enterPriseList(HttpSession httpSession,Model model,@RequestParam(value = "getnowpage", required = false) Integer getNowPage,
                            @RequestParam(value = "search", required = false) String search){
         List<List<NavF>> lists = adminService.findAll();
+        System.out.println(search);
         model.addAttribute("lists",lists);
         EnterPriseInfo enterPriseInfo=new EnterPriseInfo();
         enterPriseInfo.setSearch(search);
@@ -287,7 +336,7 @@ public class AdminController {
         PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
         checkInfo.setPageInfo(pageInfo);
 
-        List<CheckInfo> checkInfos=synthesizeQueryService.getCheck(checkInfo);
+        List<CheckInfo> checkInfos=synthesizeQueryService.searchCheck(checkInfo);
         model.addAttribute("admin","admin");
         model.addAttribute("pageInfo",pageInfo);
         model.addAttribute("checkInfos",checkInfos);

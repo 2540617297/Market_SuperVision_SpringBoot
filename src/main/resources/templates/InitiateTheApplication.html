@@ -22,20 +22,20 @@
 <div class="container">
     <div>
         <h1 style="text-align: center;margin-bottom: 10px">立案申请</h1>
-        <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+        <h3 style="text-align: center;margin-bottom: 5px;color: red" id="status" th:text="${data==null}?'':'保存成功'"></h3>
     </div>
 
-    <form class="form-horizontal" role="form"  >
+    <form class="form-horizontal" role="form"  id="form">
         <div class="form-group">
             <label for="IAName" class="col-xs-3 control-label">申请人</label>
             <div class="col-xs-9">
-                <input type="input" class="form-control" id="IAName"  />
+                <input type="input" class="form-control" name="IAName" id="IAName"  />
             </div>
         </div>
         <div class="form-group">
             <label for="IATime" class="col-xs-3 control-label">申请时间</label>
             <div class="col-xs-9">
-                <input type="input" class="form-control" id="IATime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
+                <input type="input" class="form-control" name="IATime" id="IATime" onclick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />
             </div>
         </div>
         <div class="form-group">
@@ -51,12 +51,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="IAIdentity" class="col-xs-3 control-label">申请人身份</label>
+            <label for="IAIdentity" class="col-xs-3 control-label">被申请对象</label>
             <div class="col-xs-9">
                 <input  class="form-control"  name="IAIdentity" id="IAIdentity" />
             </div>
         </div>
-        <input type="hidden" name="RecordId" />
+        <input type="hidden" name="RecordId" th:value="${userId}"/>
         <div class="form-group">
             <label for="IAMatter" class="col-xs-3 control-label">申请事项</label>
             <div class="col-xs-9">
@@ -80,11 +80,36 @@
             </div>
         </div>
         <div style="text-align: center">
-            <button type="submit" class=" btn btn-default">保存</button>
-            <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+            <button type="button" onclick="saveInitiateApplication()" class=" btn btn-default">保存</button>
         </div>
 
     </form>
 </div>
 </body>
+<script>
+    function toast(msg){
+
+    }
+    function saveInitiateApplication(){
+        $.ajax({
+            type: "post",
+            url: '/market/mobileLaw/saveInitiateApplication',
+            // data:{user:userid,post:postid},
+            data: $('#form').serialize(),
+            async: true,
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                activity.toast(obj.data);
+                alert(obj.data);
+                // $('#status').val(obj.data);
+                // window.location.reload()
+            },
+            error: function () {
+                activity.toast("错误");
+                alert("错误");
+            }
+        });
+    }
+</script>
 </html>

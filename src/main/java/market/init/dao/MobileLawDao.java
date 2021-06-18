@@ -88,4 +88,7 @@ public interface MobileLawDao {
 
     @Insert("INSERT INTO `market_supervision`.`spotnotice` (`noticeId`, `noticeEP`, `noticeTime`, `noticeMatter`, `noticeLaw`, `noticeCorrectContent`, `noticeStipulate`, `addWho`) VALUES (#{noticeId}, #{noticeEP}, #{noticeTime}, #{noticeMatter}, #{noticeLaw}, #{noticeCorrectContent}, #{noticeStipulate}, #{addWho});")
     public int saveSpotNotice(SpotNoticeInfo spotNoticeInfo);
+
+    @Insert("INSERT INTO `market_supervision`.`initiate_application` (`IAId`, `IAName`, `IATime`, `IANational`, `IAIDCard`, `IAIdentity`, `IAMatter`, `IACourt`, `RecordId`, `IAReason`) VALUES (#{IAId}, #{IAName}, #{IATime}, #{IANational}, #{IAIDCard}, #{IAIdentity}, #{IAMatter}, #{IACourt}, #{RecordId}, #{IAReason}); ")
+    public int saveIA(InitiateApplication initiateApplication);
 }

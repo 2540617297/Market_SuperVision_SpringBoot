@@ -61,7 +61,9 @@ public class MobileLawController {
     }
 
     @RequestMapping("/saveCheckList")
-    public String saveCheckList(CheckInfo checkInfo,@RequestParam(name = "faceimage", required = false) MultipartFile faceimage) throws IOException {
+    public String saveCheckList(CheckInfo checkInfo,@RequestParam(required = false,value = "image") MultipartFile image,
+                                @RequestParam(required = false,value = "vedio") MultipartFile vedio
+                                ) throws IOException {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String time = dateFormat.format(date);
@@ -71,31 +73,31 @@ public class MobileLawController {
         checkInfo.setCheckId(checkId);
         System.out.println(checkInfo);
         int saveInfo=mobileLawService.saveCheckList(checkInfo);
-        String name = faceimage.getName();
-        String filename = faceimage.getOriginalFilename();
-        InputStream inputStream = faceimage.getInputStream();
-        /**
-         * 输出控件的名称,faceimage
-         */
-        System.out.println("name = " + name);
-        /**
-         * 文件的名称
-         */
-        System.out.println("filename = " + filename);
-
-        /**
-         * 获取文件流
-         */
-        System.out.println("inputStream = " + inputStream);
-        String uploadDir = "C:\\Users\\Admin\\Pictures\\android\\"+checkId.substring(0,8);
-//        String uploadDir = context.getRealPath("/uploadfiles");
-        System.out.println(uploadDir);
-        File dirFile=new File(uploadDir);
-        if(!dirFile.exists()){
-            dirFile.mkdir();
+        String uploadDir = "C:\\Users\\Admin\\Pictures\\android\\" + checkId.substring(0, 8);
+        if(image!=null) {
+            System.out.println("image"+image.getSize());
+            System.out.println("image"+image.isEmpty());
+            String imageS = image.getOriginalFilename();
+            System.out.println(uploadDir);
+            File dirFile = new File(uploadDir);
+            if (!dirFile.exists()) {
+                dirFile.mkdir();
+            }
+            File imageFile = new File(uploadDir + "/" + checkId + "." + imageS.substring(imageS.lastIndexOf(".") + 1));
+            image.transferTo(imageFile);
         }
-        File destFile = new File(uploadDir + "/" + checkId+"."+filename.substring(filename.lastIndexOf(".")+1));
-        faceimage.transferTo(destFile);
+        if(vedio!=null){
+            System.out.println("vedio"+vedio.getSize());
+            System.out.println("vedio"+vedio.isEmpty());
+            String vedioS = vedio.getOriginalFilename();
+            File dirFile = new File(uploadDir);
+            if (!dirFile.exists()) {
+                dirFile.mkdir();
+            }
+            File vedioFile = new File(uploadDir + "/" + checkId + "." + vedioS.substring(vedioS.lastIndexOf(".") + 1));
+            vedio.transferTo(vedioFile);
+        }
+
         return "forward:/mobileLaw/checkList?userId="+checkInfo.getCheckUser()+"&saveInfo="+saveInfo;
     }
 
@@ -245,6 +247,24 @@ public class MobileLawController {
         model.addAttribute("iaMatterClassifies",iaMatterClassifies);
         model.addAttribute("userId",userId);
         return "InitiateTheApplication";
+    }
+
+    @ResponseBody
+    @RequestMapping("/saveInitiateApplication")
+    public Map<String,String> saveIA(InitiateApplication initiateApplication){
+        HashMap<String,String> hashMap=new HashMap<>();
+        Date date=new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String iaId = "IA"+simpleDateFormat.format(date);
+        initiateApplication.setIAId(iaId);
+
+        int saveNum=mobileLawService.saveIA(initiateApplication);
+        if(saveNum>0){
+            hashMap.put("data","保存成功");
+        }else{
+            hashMap.put("data","保存失败");
+        }
+        return hashMap;
     }
 
     @RequestMapping("/spotNotice")

@@ -68,12 +68,19 @@
         </div>
 
         <div class="form-group">
-            <label for="userName" class="col-xs-3 control-label">检查人</label>
+            <label for="image" class="col-xs-3 control-label">选择图片</label>
             <div class="col-xs-9">
-                <input type="file"  accept="image/*" capture="camera" id="faceimage" name="faceimage"  />
-                <input type="file"  accept="video/*" capture="camera" id="video" name="video"  />
+                <input type="file"  accept="image/*" capture="camera" id="image" name="image" ></input>
+
             </div>
         </div>
+        <div class="form-group">
+            <label for="vedio" class="col-xs-3 control-label">选择视频</label>
+            <div class="col-xs-9">
+                <input type="file"  accept="video/*" capture="camera" id="vedio" name="vedio"  ></input>
+            </div>
+        </div>
+
         <div style="text-align: center">
             <button type="submit" class=" btn btn-default">保存</button>
             <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>

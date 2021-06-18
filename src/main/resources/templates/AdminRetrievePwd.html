@@ -81,33 +81,39 @@
 
 
     </style>
+
     <script>
+
         function check() {
             var username=$('#userName').val();
-            var password=$('#userPassword').val();
+            var phoneNo=$('#phoneNo').val();
             if(username == null || username==''){
                 alert("请输入用户名");
                 return false;
             }
-            if (password == null || password=='') {
-                alert("请输入密码");
+            if (phoneNo == null || phoneNo=='') {
+                alert("请输入手机号");
                 return false;
             }
             $.ajax({
                 type: "post",
-                url: '/market/admin/login',
-                data:{'userName':username,'userPassword':password},
+                url: '/market/admin/verify',
+                data:{'userName':username,'phoneNo':phoneNo},
                 // data: $('#form').serialize(),
                 async: false,
                 success: function (data) {
                     var o = JSON.stringify(data);
                     var obj = JSON.parse(o);
-                    if(obj.login==1){
-                        // alert("登录成功");
+                    if(obj.status==1){
+                        alert(obj.data);
+                        $("#status").val(obj.status)
+                        $("#userPassword").removeAttr("readonly");
+                        $("#affirm").removeAttr("disabled");
                         // window.location.href="http://localhost:12345/market/admin/index";
-                        window.location.href ="/market/admin/index";
+                        // window.location.href ="/market/admin/index";
                     }else{
-                        alert("登录失败");
+                        alert(obj.data);
+                        $("#status").val(obj.status)
                     }
                     // var obj = JSON.parse(o);
                     // document.getElementById("Status").innerHTML=obj;
@@ -166,20 +172,26 @@
 
     <div class="tab">
         <form  name="form" id="form" role="form" class="form-group-lg" method="post" >
-            <label id="label" style="padding-top:30px; letter-spacing: 10px;">管理员登陆</label>
+            <label id="label" style="padding-top:30px; letter-spacing: 10px;">找回密码</label>
             <div class="form-group  form-inline text1" style="margin-top: 50px;">
                 <label for="userName"><span class="glyphicon glyphicon-user"></span></label>
                 <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名" style="width: 300px; height: 50px;"></input>
             </div>
 
             <div class="form-group form-inline text2 " style="margin-top: 30px;">
-                <label for="userPassword"><span class="glyphicon glyphicon-lock"></span></label>
-                <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="请输入密码" style="width: 300px; height: 50px;"></input>
+                <label for="phoneNo"><span class="glyphicon glyphicon-lock"></span></label>
+                <input type="text" name="phoneNo" class="form-control" id="phoneNo" placeholder="请输入注册手机号" style="width: 300px; height: 50px;"></input>
             </div>
-            <button class="btn btn-default btn-lg" type="button" onclick="check();" style="width: 150px; font-weight: bolder;">登陆</button>
+            <input type="hidden" id="status" name="status"></input>
+            <div class="form-group form-inline text2 " style="margin-top: 30px;">
+                <label for="userPassword"><span class="glyphicon glyphicon-lock"></span></label>
+                <input type="userPassword" name="userPassword" class="form-control" readonly="true"  id="userPassword" placeholder="重置密码" style="width: 300px; height: 50px;"></input>
+            </div>
+            <button class="btn btn-default btn-lg" type="button" onclick="check();" style="width: 150px; font-weight: bolder;">验证</button>
+            <button class="btn btn-default btn-lg " disabled="disabled" id="affirm" type="button" onclick="resetPWD();" style="width: 150px; font-weight: bolder;">确认</button>
 
-            <div class="form-group" style="margin-top: 60px;">
-                <p><a th:href="@{/admin/retrievePwd}" > 忘记密码</a>
+            <div class="form-group" style="margin-top: 10px;">
+                <p><a href="@{/admin/begin}" > 登录</a>
 
                     <!--<a href="../userController/register"> 用户注册</a>--></p>
             </div>
@@ -200,6 +212,48 @@
 </div>
 
 </body>
+<script>
+    function resetPWD(){
+        var username=$('#userName').val();
+        var password=$('#userPassword').val();
+        if(username == null || username==''){
+            alert("请输入用户名");
+            return false;
+        }
+        if (password == null || password=='') {
+            alert("请输入密码");
+            return false;
+        }
+        $.ajax({
+            type: "post",
+            url: '/market/admin/resetPwd',
+            data:{'userName':username,'userPassword':password},
+            // data: $('#form').serialize(),
+            async: false,
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                if(obj.login==1){
+
+                    if(confirm('重置密码成功，是否现在登录？')){
+                        window.location.href ="/market/admin/index";
+                    }else{
+                        alert("重置密码成功");
+                    }
+                    // window.location.href="http://localhost:12345/market/admin/index";
+
+                }else{
+                    alert("重置密码失败");
+                }
+                // var obj = JSON.parse(o);
+                // document.getElementById("Status").innerHTML=obj;
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
 <script>
 
     $("document").ready(function () {

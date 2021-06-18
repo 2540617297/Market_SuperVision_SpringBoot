@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>监督性检查单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.3.0/jquery.form.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div>
+        <h1 style="text-align: center;margin-bottom: 10px">文件上传</h1>
+        <h3 style="text-align: center;margin-bottom: 5px;color: red" th:text="${saveInfo==null}?'':'保存成功'"></h3>
+    </div>
+
+    <form class="form-horizontal" role="form" id="form" th:action="@{/synQuery/saveFileChoose}" enctype="multipart/form-data" th:method="post">
+        <div class="form-group">
+            <label for="fileKind" class="control-label col-xs-3">选择上传文件类型</label>
+            <div class="col-xs-9">
+                <select class="form-control" name="fileKind" id="fileKind" >
+                    <option value="check">监督性检查单</option>
+                    <option value="notice">现场通知单</option>
+                    <option value="IA">立案申请书</option>
+                    <option value="record">询问笔录</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="key" class="col-xs-3 control-label" >关键字</label>
+            <div class="col-xs-7">
+                <input type="input" class="form-control" name="key" id="key"></input>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-info" onclick="search();">搜索</button>
+            </div>
+        </div>
+
+        <div class="form-group hidden" style="margin-left:5px" id="table">
+           <div style="overflow:scroll; width:auto; height:300px;">
+               <table class="table table-bordered">
+                   <thead>
+                   <tr>
+                       <th>编号</th>
+                       <th>对象</th>
+                       <th>执法人员</th>
+                       <th>时间</th>
+                       <th>操作</th>
+                   </tr>
+                   </thead>
+                   <tbody id="tbody">
+
+                   </tbody>
+               </table>
+           </div>
+        </div>
+
+        <div class="form-group hidden" id="choose">
+            <label for="ids" class="col-xs-3 control-label">编号</label>
+            <div class="col-xs-9">
+                <input type="input"  class="form-control" readonly="readonly" id="ids" name="id" ></input>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="image" class="col-xs-3 control-label">选择图片</label>
+            <div class="col-xs-9">
+                <input type="file"  accept="image/*" capture="camera" id="image" name="image" ></input>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="vedio" class="col-xs-3 control-label">选择视频</label>
+            <div class="col-xs-9">
+                <input type="file"  accept="video/*" capture="camera" id="vedio" name="vedio"  ></input>
+            </div>
+        </div>
+
+        <div style="text-align: center">
+            <button type="button"  onclick="saveFile()" class=" btn btn-default">保存</button>
+            <button class=" btn btn-default"><a th:href="@{/work/BackLog}"> 返回</a></button>
+        </div>
+
+
+
+    </form>
+</div>
+</body>
+<script>
+    function saveFile(){
+        var option={
+            type: "post",
+            url: '/market/synQuery/saveFileChoose',
+            // data:{user:userid,post:postid},
+            dataType: 'json',
+            headers : {"ClientCallMode" : "ajax"},
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                activity.toast(obj.data);
+                // alert(obj.data);
+                // $('#status').val(obj.data);
+                // window.location.reload()
+            },
+            error: function () {
+                activity.toast("错误");
+                // alert("错误");
+            }
+        };
+        $("#form").ajaxSubmit(option);
+        return false;
+        // $.ajax({
+        //     type: "post",
+        //     url: '/market/synQuery/saveFileChoose',
+        //     // data:{user:userid,post:postid},
+        //     data: $('#form').serialize(),
+        //     async: true,
+        //     dataType: JSON,
+        //     success: function (data) {
+        //         var o = JSON.stringify(data);
+        //         var obj = JSON.parse(o);
+        //         activity.toast(obj.data);
+        //         alert(obj.data);
+        //         // $('#status').val(obj.data);
+        //         // window.location.reload()
+        //     },
+        //     error: function () {
+        //         activity.toast("错误");
+        //         alert("错误");
+        //     }
+        // });
+    }
+    function choose(id){
+        $("#choose").removeClass("hidden").addClass("show");
+        $("#ids").val(id);
+    }
+    function setDivtc(item) {
+        var div = '<tr >\n' +
+            '                           <td >'+item.id+'</td>\n' +
+            '                           <td >'+item.obj+'</td>\n' +
+            '                           <td >'+item.userNameCN+'</td>\n' +
+            '                           <td > '+item.dateTime+'</td>\n' +
+            '                           <td > <button class="btn btn-primary btn-xs" type="button" onclick="choose( &quot;'+ item.id +'&quot; )">选择</button></td>\n' +
+            '                       </tr>'
+        return div;
+    }
+    function search(){
+        $("#tbody").empty();
+        $("#table").removeClass("hidden").addClass("show");
+        var fileKind=$("#fileKind option:selected").val();
+        var key=document.getElementById("key").value;
+        $.ajax({
+            type: "post",
+            url: '/market/synQuery/fileChoose',
+            // data:{user:userid,post:postid},
+            data: {"key":key,"fileKind":fileKind},
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                var html = '';
+                // alert(JSON.stringify(postInformations));
+                for (var list in data) {
+                    html += setDivtc(data[list]);
+                }
+                // alert(html);
+                $("#tbody").append(html);
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+    }
+</script>
+</html>

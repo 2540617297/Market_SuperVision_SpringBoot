@@ -14,12 +14,14 @@ import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +45,7 @@ public class SynthesizeQueryController {
         PageInfo pageInfo=calpage.getPageInfo(allNum,getNowPage);
         checkInfo.setPageInfo(pageInfo);
 
-        List<CheckInfo> checkInfos=synthesizeQueryService.getCheck(checkInfo);
+        List<CheckInfo> checkInfos=synthesizeQueryService.searchCheck(checkInfo);
         model.addAttribute("pageInfo",pageInfo);
         model.addAttribute("checkInfos",checkInfos);
         return "/CheckInfoList";
@@ -146,6 +148,103 @@ public class SynthesizeQueryController {
         int saveNum=synthesizeQueryService.saveEnterprise(enterPriseInfo);
         HashMap<String,String> hashMap=new HashMap<>();
         if(saveNum>0){
+            hashMap.put("data","保存成功");
+        }else{
+            hashMap.put("data","保存失败");
+        }
+        return hashMap;
+    }
+
+    @RequestMapping("/fileManage")
+    public String fileManage(){
+        return "FileManage";
+    }
+
+    @ResponseBody
+    @RequestMapping("/fileChoose")
+    public List<FileChoose> fileChoose(String key,String fileKind){
+        List<FileChoose> fileChooses=new ArrayList<>();
+        if("check".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getCheck(key,null);
+        }else if("notice".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getNotice(key,null);
+        }else if("IA".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getIA(key,null);
+        }else if("record".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getRecord(key,null);
+        }
+        return fileChooses;
+    }
+
+    @RequestMapping("/saveFileChoose")
+    @ResponseBody
+    public HashMap<String,String> saveFileChoose(String id,String fileKind,@RequestParam(required = false,value = "image") MultipartFile image,
+                                @RequestParam(required = false,value = "vedio") MultipartFile vedio) throws IOException {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String time = dateFormat.format(date);
+//        checkInfo.setCheckTime(time);
+        SimpleDateFormat checkIddateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        String fileOrDir = checkIddateFormat.format(date);
+
+        List<FileChoose> fileChooses=new ArrayList<>();
+        String fileUrl="";
+        if("check".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getCheck(null,id);
+            fileUrl=fileChooses.get(0).getFileUrl();
+        }else if("notice".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getNotice(null,id);
+            fileUrl=fileChooses.get(0).getFileUrl();
+        }else if("IA".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getIA(null,id);
+            fileUrl=fileChooses.get(0).getFileUrl();
+        }else if("record".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getRecord(null,id);
+            fileUrl=fileChooses.get(0).getFileUrl();
+        }
+
+        String uploadDir = "C:\\Users\\Admin\\Pictures\\android\\" + fileOrDir.substring(0, 8);
+        String imageUrl;
+        String vedioUrl;
+        if(image!=null&&image.getSize()!=0) {
+            System.out.println("image"+image.getSize());
+            System.out.println("image"+image.isEmpty());
+            String imageS = image.getOriginalFilename();
+            System.out.println(uploadDir);
+            File dirFile = new File(uploadDir);
+            if (!dirFile.exists()) {
+                dirFile.mkdir();
+            }
+            imageUrl=uploadDir + "/" + fileOrDir + "." + imageS.substring(imageS.lastIndexOf(".") + 1);
+            fileUrl=fileUrl+";"+imageUrl;
+            File imageFile = new File(imageUrl);
+            image.transferTo(imageFile);
+        }
+        if(vedio!=null&&vedio.getSize()!=0){
+            System.out.println("vedio"+vedio.getSize());
+            System.out.println("vedio"+vedio.isEmpty());
+            String vedioS = vedio.getOriginalFilename();
+            File dirFile = new File(uploadDir);
+            if (!dirFile.exists()) {
+                dirFile.mkdir();
+            }
+            vedioUrl=uploadDir + "/" + fileOrDir + "." + vedioS.substring(vedioS.lastIndexOf(".") + 1);
+            fileUrl=fileUrl+";"+vedioUrl;
+            File vedioFile = new File(vedioUrl);
+            vedio.transferTo(vedioFile);
+        }
+        int updateNum=0;
+        if("check".equals(fileKind)){
+            updateNum=synthesizeQueryService.updateCheck(id,fileUrl);
+        }else if("notice".equals(fileKind)){
+            updateNum=synthesizeQueryService.updateNotice(id,fileUrl);
+        }else if("IA".equals(fileKind)){
+            updateNum=synthesizeQueryService.updateIA(id,fileUrl);
+        }else if("record".equals(fileKind)){
+            updateNum=synthesizeQueryService.updateRecord(id,fileUrl);
+        }
+        HashMap<String,String> hashMap=new HashMap<>();
+        if(updateNum>0){
             hashMap.put("data","保存成功");
         }else{
             hashMap.put("data","保存失败");
