@@ -79,6 +79,14 @@ public class SynthesizeQueryService {
         return  synthesizeQueryDao.updateRecord(id, fileUrl);
     }
 
+    public List<FileChoose> getBacklog(@Param("search") String search,@Param("id") String id){
+        return synthesizeQueryDao.getBacklog(search, id);
+    }
+
+    public int updateBacklog(@Param("id")String id,@Param("fileUrl")String fileUrl){
+        return synthesizeQueryDao.updateBacklog(id, fileUrl);
+    }
+
 
 
 }

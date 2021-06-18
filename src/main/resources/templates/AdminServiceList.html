@@ -150,7 +150,7 @@
                 </div>
 
                 <div style="background-color: #ffffff;">
-                    <form action="../adminController/postlists" role="form" class="form-horizontal">
+                    <form th:action="@{/admin/index/serviceList}" method="post" role="form" class="form-horizontal">
                         <div style="padding: 10px;">
                             <a href="../postController/post_write" class="btn btn-default alimit disabled">
                                 <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;新建
@@ -159,7 +159,7 @@
                             <button type="submit" class="pull-right btn btn-default"><span
                                     class="glyphicon glyphicon-zoom-in"></span>&nbsp;搜索
                             </button>
-                            <input style="width:200px;" class="pull-right form-control" type="text" name="question"/>
+                            <input style="width:200px;" class="pull-right form-control" type="text" name="search"/>
                         </div>
                     </form>
 

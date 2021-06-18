@@ -83,6 +83,25 @@ public class AdminController {
         return hashMap;
     }
 
+    @ResponseBody
+    @RequestMapping("/getUserInfo")
+    public UserInfo getUserInfo(String userId){
+        return initService.getUserInfo(userId);
+    }
+
+    @ResponseBody
+    @RequestMapping("/updateUser")
+    public Map<String,String> updateUser(UserInfo userInfo){
+        int updateNum= initService.updateUserInfo(userInfo);
+        Map<String,String> map=new HashMap<>();
+        if(updateNum>0){
+            map.put("data","更新成功");
+        }else{
+            map.put("data","更新失败");
+        }
+        return map;
+    }
+
     @RequestMapping("/verify")
     @ResponseBody
     public Map<String,String> verify(String userName,String phoneNo){

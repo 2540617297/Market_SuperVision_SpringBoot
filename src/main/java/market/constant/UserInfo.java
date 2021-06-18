@@ -7,6 +7,7 @@ public class UserInfo {
     private String email;
     private String roleId;
     private String phoneNo;
+    private String gender;
     private String userNameCN;
     private PageInfo pageInfo;
     private String search;
@@ -24,6 +25,14 @@ public class UserInfo {
                 ", pageInfo=" + pageInfo +
                 ", search='" + search + '\'' +
                 '}';
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public PageInfo getPageInfo() {

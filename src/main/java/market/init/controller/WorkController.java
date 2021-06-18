@@ -55,6 +55,9 @@ public class WorkController {
     @RequestMapping(value="/WorkDetail",produces="text/html; charset=UTF-8")
     public String workDetails(Model model, String workId,
                               @RequestParam(required = false,value="saveStatus")String saveStatus,String userId){
+        List<UserInfo> userInfos=initService.findUser(null);
+        model.addAttribute("userInfos",userInfos);
+
         System.out.println(workId);
         WorkDetails workDetail=new WorkDetails();
         workDetail.setWorkId(workId);
@@ -85,6 +88,9 @@ public class WorkController {
     public String taskDistribution(Model model,@RequestParam(required = false,value="userId")String userId,
                                    @RequestParam(required = false,value="saveStatus")String saveStatus,
                                    HttpServletRequest request) throws UnsupportedEncodingException {
+        List<UserInfo> userInfos=initService.findUser(null);
+        model.addAttribute("userInfos",userInfos);
+
         UserInfo userInfo=initService.getUserInfo(userId);
         List<WorkStatus> workStatuses=workService.getWorkStatus();
         model.addAttribute("workStatuses",workStatuses);
@@ -138,7 +144,7 @@ public class WorkController {
             if(!backLogs.isEmpty()){
                 workDetail=backLogs.get(0);
             }
-            if(workDetail.getWorkStatus().equals("3")){
+            if("3".equals(workDetail.getWorkStatus())||"4".equals(workDetail.getWorkStatus())){
                 if("0".equals(pow)){
                     saveStatus="1";
                 }else{
@@ -146,6 +152,11 @@ public class WorkController {
                     if(status!=null){
                         saveStatus="2";
                     }
+                }
+            }else{
+                status=workService.updateTask(workDetails);
+                if(status!=null){
+                    saveStatus="2";
                 }
             }
             return "redirect:WorkDetail?workId="+workDetails.getWorkId()+"&saveStatus="+saveStatus;

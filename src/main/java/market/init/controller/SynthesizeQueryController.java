@@ -172,6 +172,8 @@ public class SynthesizeQueryController {
             fileChooses=synthesizeQueryService.getIA(key,null);
         }else if("record".equals(fileKind)){
             fileChooses=synthesizeQueryService.getRecord(key,null);
+        }else if("backlog".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getBacklog(key,null);
         }
         return fileChooses;
     }
@@ -200,6 +202,9 @@ public class SynthesizeQueryController {
             fileUrl=fileChooses.get(0).getFileUrl();
         }else if("record".equals(fileKind)){
             fileChooses=synthesizeQueryService.getRecord(null,id);
+            fileUrl=fileChooses.get(0).getFileUrl();
+        }else if("backlog".equals(fileKind)){
+            fileChooses=synthesizeQueryService.getBacklog(null,id);
             fileUrl=fileChooses.get(0).getFileUrl();
         }
 
@@ -242,6 +247,8 @@ public class SynthesizeQueryController {
             updateNum=synthesizeQueryService.updateIA(id,fileUrl);
         }else if("record".equals(fileKind)){
             updateNum=synthesizeQueryService.updateRecord(id,fileUrl);
+        }else if("backlog".equals(fileKind)){
+            updateNum=synthesizeQueryService.updateBacklog(id,fileUrl);
         }
         HashMap<String,String> hashMap=new HashMap<>();
         if(updateNum>0){

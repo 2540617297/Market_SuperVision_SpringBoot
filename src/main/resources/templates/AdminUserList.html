@@ -89,6 +89,25 @@
         h1, h2, h3, h4, p {
             margin: 0;
         }
+        .title{
+            background-color: #ECECEC;
+            line-height: 34px;
+            padding: 3px 12px;
+            border: #B8C7CE 1px solid;
+            text-align: center;
+        }
+        .col-lg-10{
+            background-color:#DEE1E6;
+            padding: 0px;
+            position: relative;
+        }
+        .data{
+            padding:3px 12px;
+            border: #B8C7CE 1px solid;
+        }
+        label{
+            height: 29px;
+        }
 
 
     </style>
@@ -136,69 +155,146 @@
 
         <div class="col-lg-10" id="content-right" style="height: auto ;position: relative">
             <div id="content-header">
-                <h3 style="margin:0px;" class="page-header">
-                    执法人员管理
-                    <small>管理</small>
-                    <a href="#" class="pull-right" style="font-size: xx-small"><span
-                            class="glyphicon glyphicon-tag"></span>执法人员管理</a>
-                </h3>
+                <ul class="nav nav-tabs" id="mytab">
+                    <li id="tab1" class="active"><a id="atab1" href="#tabContent1" data-toggle="tab">执法人员管理</a></li>
+                    <li id="tab2"><a id="atab2" href="#tabContent2" data-toggle="tab">添加执法人员</a></li>
+                </ul>
             </div>
 
-            <div id="content" style="margin-bottom: 50px;height: 1056px;">
-                <div style="background-color: #ffffff;border-bottom: #F4F4F4 solid 1px; padding: 10px;">
-                    <h4>列表</h4>
-                </div>
+            <div id="content" class="tab-content" style="margin-bottom: 50px;height: 1056px;">
+                <div id="tabContent1" class="tab-pane fade in active">
+                    <div style="background-color: #ffffff;border-bottom: #F4F4F4 solid 1px; padding: 10px;">
+                        <h4>列表</h4>
+                    </div>
 
-                <div style="background-color: #ffffff;">
-                    <form th:action="@{/admin/index/userList}" method="post" role="form" class="form-horizontal">
-                        <div style="padding: 10px;">
-                            <a href="../postController/post_write" class="btn btn-default alimit disabled">
-                                <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;新建
-                            </a>
+                    <div style="background-color: #ffffff;">
+                        <form th:action="@{/admin/index/userList}" method="post" role="form" class="form-horizontal">
+                            <div style="padding: 10px;">
+                                <a href="../postController/post_write" class="btn btn-default alimit disabled">
+                                    <span class="glyphicon glyphicon-folder-open"></span>&nbsp;&nbsp;新建
+                                </a>
 
-                            <button type="submit" class="pull-right btn btn-default"><span
-                                    class="glyphicon glyphicon-zoom-in"></span>&nbsp;搜索
-                            </button>
-                            <input style="width:200px;" class="pull-right form-control" type="text" name="search"/>
-                        </div>
-                    </form>
+                                <button type="submit" class="pull-right btn btn-default"><span
+                                        class="glyphicon glyphicon-zoom-in"></span>&nbsp;搜索
+                                </button>
+                                <input style="width:200px;" class="pull-right form-control" type="text" name="search"/>
+                            </div>
+                        </form>
 
-                    <div  th:style="${admin==null}?'padding:20px':''" >
-                        <table class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>编号</th>
-                                <th>用户名</th>
-                                <th>姓名</th>
-                                <th>联系方式</th>
-                                <th>角色</th>
-                                <th>操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div  th:style="${admin==null}?'padding:20px':''" >
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>编号</th>
+                                    <th>用户名</th>
+                                    <th>姓名</th>
+                                    <th>联系方式</th>
+                                    <th>角色</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
 
-                            <tr th:each="userInfo:${userInfos}">
-                                <td th:text="${userInfoStat.count}">1</td>
-                                <td th:text="${userInfo.userName}"></td>
-                                <td th:text="${userInfo.userNameCN}">1</td>
-                                <td th:text="${userInfo.phoneNo}">1</td>
-                                <td th:text="${userInfo.roleId=='1'?'管理员':'用户'}">1</td>
-                                <td ><button th:onclick="|deleteUser(${userInfo.userId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button><button class="btn btn-xs btn-primary">编辑</button></td>
-                            </tr>
+                                <tr th:each="userInfo:${userInfos}">
+                                    <td th:text="${userInfoStat.count}">1</td>
+                                    <td th:text="${userInfo.userName}"></td>
+                                    <td th:text="${userInfo.userNameCN}">1</td>
+                                    <td th:text="${userInfo.phoneNo}">1</td>
+                                    <td th:text="${userInfo.roleId=='1'?'管理员':'用户'}">1</td>
+                                    <td ><button th:onclick="|deleteUser(${userInfo.userId})|" class="btn btn-danger btn-xs" style="margin-right: 20px;">删除</button>
+                                        <button th:onclick="|editUser(${userInfo.userId})|" class="btn btn-xs btn-primary">编辑</button></td>
+                                </tr>
 
-                            </tbody>
-                        </table>
-                        <div class="text-center" >
-                            <ul class="pagination">
-                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=0)}" >首页</a></li>
-                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
-                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
-                                <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
-                            </ul>
+                                </tbody>
+                            </table>
+                            <div class="text-center" >
+                                <ul class="pagination">
+                                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=0)}" >首页</a></li>
+                                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.nowpage}-1)}">上一页</a></li>
+                                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.nowpage}+1)}">下一页</a></li>
+                                    <li><a class="btn btn-default" href="../adminController/menulists?" th:href="@{/admin/index/userList(getnowpage=${pageInfo.allpage})}">页尾</a></li>
+                                </ul>
+                            </div>
+
                         </div>
 
                     </div>
+                </div>
 
+                <div id="tabContent2" class="tab-pane fade">
+                    <div style="background-color: #ffffff; padding:10px;height: 715px">
+                        <form  id="form"  method="post">
+                            <div style="padding: 10px;">
+                                <div class="headline" style="margin-bottom: 30px">
+                                    <h1 style="text-align: center">用户管理</h1>
+                                </div>
+
+                                <input name="userId" id="userId" type="hidden" />
+                                <div class="row">
+                                    <div class="col-md-2 title" >用户名</div>
+                                    <div class="col-md-10 data">
+                                        <input  class="form-control" type="text" id="userName" name="userName" value=""/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >密码</div>
+                                    <div class="col-md-10 data">
+                                        <input  class="form-control" type="text" id="userPassword" name="userPassword" value=""/>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >姓名</div>
+                                    <div class="col-md-10 data">
+                                        <input  class="form-control" type="text" id="userNameCN" name="userNameCN" value=""/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >性别</div>
+                                    <div class="col-md-10 data">
+                                        <label><input  type="radio" name="gender" value="男" />男</label>
+                                        <label><input  type="radio" name="gender" value="女"/>女</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >电话号码</div>
+                                    <div class="col-md-10 data">
+                                        <input  class="form-control" type="text" id="phoneNo" name="phoneNo" value=""/>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >邮箱</div>
+                                    <div class="col-md-10 data">
+                                        <input  class="form-control" type="text" id="email" name="email" value=""/>
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-2 title" >身份</div>
+                                    <div class="col-md-10 data">
+                                        <select class="form-control" name="roleId" id="roleId" >
+                                            <option   value="1">管理员</option>
+                                            <option   value="0">用户</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="margin-top:30px;">
+                                    <div class="col-md-12" style="text-align: center">
+                                        <button type="button" onclick="addUser()" class="btn btn-danger">保存</button>
+                                        <button type="reset" class="btn btn-default">重置</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -213,6 +309,118 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('#tab1').click(function () {
+            $("button[type='reset']").trigger("click");
+
+        })
+        $("#tab2").click(function () {
+            $("button[type='reset']").trigger("click");
+        })
+    });
+    function editUser(userId){
+
+        $("#tabContent1").removeClass("in active")
+        $("#tabContent2").addClass("in active");
+        $("#tab1").removeClass("active")
+        $("#tab2").addClass("active")
+        $.ajax({
+            type: "post",
+            url: '/market/admin/getUserInfo',
+            data:{'userId':userId},
+            // data: $('#form').serialize(),
+            async: false,
+            success: function (data) {
+                var o = JSON.stringify(data);
+                var obj = JSON.parse(o);
+                $("#userId").val(obj.userId);
+                $("#userName").val(obj.userName);
+                $("#userPassword").val(obj.userPassword);
+                $("#userNameCN").val(obj.userNameCN);
+                $("#email").val(obj.email);
+                $("#phoneNo").val(obj.phoneNo);
+                if(obj.gender=='男'){
+                    $("input[name='gender']").get(0).checked=true;
+                }
+                if(obj.gender=='女'){
+                    $("input[name='gender']").get(1).checked=true;
+                }
+                $("#roleId").val(obj.roleId);
+                // alert(obj.userNameCN)
+                // window.location.reload()
+            },
+            error: function () {
+                alert("错误");
+            }
+        });
+
+
+    }
+</script>
+<script>
+    function addUser(){
+        var userId=$("#userId").val();
+        if(userId==null) {
+            if (!confirm('是否确认添加用户')) {
+                return false;
+            }
+            $.ajax({
+                type: "post",
+                url: '/market/init/register',
+                // data:{'service_id':postId},
+                data: $('#form').serialize(),
+                async: false,
+                success: function (data) {
+                    var o = JSON.stringify(data);
+                    alert(o)
+                    // var obj = JSON.parse(o);
+                    // alert(obj)
+                    // // if(obj.login==1){
+                    // //     // alert("登录成功");
+                    // //     // window.location.href="http://localhost:12345/market/admin/index";
+                    // //     window.location.href ="/market/admin/index";
+                    // // }else{
+                    // alert(obj.data);
+                    window.location.reload()
+                    // }
+                    // var obj = JSON.parse(o);
+                    // document.getElementById("Status").innerHTML=obj;
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }else{
+            $.ajax({
+                type: "post",
+                url: '/market/admin/updateUser',
+                // data:{'service_id':postId},
+                data: $('#form').serialize(),
+                async: false,
+                success: function (data) {
+                    var o = JSON.stringify(data);
+                    // alert(o)
+                    var obj = JSON.parse(o);
+                    // alert(obj)
+                    // // if(obj.login==1){
+                    // //     // alert("登录成功");
+                    // //     // window.location.href="http://localhost:12345/market/admin/index";
+                    // //     window.location.href ="/market/admin/index";
+                    // // }else{
+                    alert(obj.data);
+                    // window.location.reload()
+                    // }
+                    // var obj = JSON.parse(o);
+                    // document.getElementById("Status").innerHTML=obj;
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }
+    }
+</script>
 <script>
     $(document).ready(function () {
         var rowheight = $("#row").height();

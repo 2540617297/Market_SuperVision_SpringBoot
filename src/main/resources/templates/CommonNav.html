@@ -8,13 +8,13 @@
 <nav class="navbar navbar-inverse " style="background-color: #1A2226; margin: 0px; padding:0px;" th:fragment="nav">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="all_admin_index">市场监管系统</a>
+            <a class="navbar-brand" th:href="@{/admin/index}">市场监管系统</a>
         </div>
 
         <div class="navbar-right">
             <div class="dropdown " style="padding-top: 12px;">
                 <a class="dropdown-toggle navbar-link" data-toggle="dropdown"
-                   style="padding-top: 5px; font-size: 18px;" th:text="${session.userNameCN}">您好!&nbsp;</a>
+                   style="padding-top: 5px; font-size: 18px;" th:text="'你好！'+${session.userNameCN}">您好!&nbsp;</a>
                 <ul class="dropdown-menu">
                     <li><a href="">个人资料</a></li>
                     <li class="leave"><a href="../userController/login">切换账户</a></li>
@@ -23,13 +23,13 @@
             </div>
         </div>
 
-        <form action="../postController/postsearch" method="post" class="navbar-form navbar-right visible-lg"
-              role="search">
-            <div class="form-group">
-                <input type="text" class="form-control" name="question" placeholder="Search"></input>
-            </div>
-            <button type="submit" class="btn btn-default">提交</button>
-        </form>
+<!--        <form action="../postController/postsearch" method="post" class="navbar-form navbar-right visible-lg"-->
+<!--              role="search">-->
+<!--            <div class="form-group">-->
+<!--                <input type="text" class="form-control" name="question" placeholder="Search"></input>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn btn-default">提交</button>-->
+<!--        </form>-->
 
     </div>
 </nav>

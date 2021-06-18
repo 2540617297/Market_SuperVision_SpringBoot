@@ -28,7 +28,7 @@ public interface InitDao {
             "and userPassword=#{userPassword}","</if></where>","</script>"})
     public UserInfo adminLogin(UserInfo userInfo);
 
-    @Insert("INSERT INTO `market_supervision`.`market_user` (`userId`, `userName`, `userPassword`, `roleId`, `phoneNo`, `email`,'userNameCN') VALUES (#{userId}, #{userName}, #{userPassword}, #{roleId}, #{phoneNo}, #{email},#{userNameCN});")
+    @Insert("INSERT INTO `market_supervision`.`market_user` (`userId`, `userName`, `userPassword`, `roleId`, `phoneNo`, `email`,`userNameCN`,gender) VALUES (null, #{userName}, #{userPassword}, #{roleId}, #{phoneNo}, #{email},#{userNameCN},#{gender});")
     public int register(UserInfo userInfo);
 
     //根据用户Id查找用户信息
@@ -38,7 +38,7 @@ public interface InitDao {
     @Select("select count(*) from MARKET_USER where userName=#{userName} AND phoneNo=#{phoneNo}")
     public int retrievePwd(@Param("userName")String userName,@Param("phoneNo")String phoneNo);
 
-    @Update("UPDATE `market_supervision`.`market_user` SET `phoneNo` = #{phoneNo}, `userName`=#{userName}, `userPassword`=#{userPassword}, `roleId`=#{roleId}, `email`=#{email},`userNameCN`=#{userNameCN} WHERE `userId` = #{userId};")
+    @Update("UPDATE `market_supervision`.`market_user` SET `phoneNo` = #{phoneNo}, `userName`=#{userName}, `userPassword`=#{userPassword}, `roleId`=#{roleId},gender=#{gender}, `email`=#{email},`userNameCN`=#{userNameCN} WHERE `userId` = #{userId};")
     public int updateUserInfo(UserInfo userInfo);
 
     @Select({"<script>","select * from MARKET_USER where 1=1 " ,

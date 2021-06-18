@@ -180,4 +180,30 @@ public interface SynthesizeQueryDao {
 
     @Update("update record_question set fileUrl=#{fileUrl} where recordId=#{id}")
     public int updateRecord(@Param("id")String id,@Param("fileUrl")String fileUrl);
+
+    @Select({"<script>","SELECT h1.workId,h1.addWho,h1.workSaveTime,h1.solveDetails,h1.workDetails,h1.workEndTime,h3.userNameCN AS addWhoName,h2.userNameCN AS workWhoName,h1.workName,h1.workWho,h1.workStatus " ,
+            "FROM back_log h1 LEFT JOIN market_user h2 ON h1.workWho = h2.userId " ,
+            "LEFT JOIN  market_user h3 ON h1.addWho = h3.userId <where>" ,
+            "<if test='search != null and search != \"\"'>",
+            " or workId like concat('%',#{search},'%') " ,
+            " or workDetails like concat('%',#{search},'%') " ,
+            " or h2.userNameCN like concat('%',#{search},'%') " ,
+            " or h3.userNameCN like concat('%',#{search},'%') " ,
+            "or workName like concat('%',#{search},'%')","</if>",
+            "<if test='id != null and id != \"\"'>",
+            "and h1.workId=#{id}",
+            "</if>" ,
+            "</where>",
+            "LIMIT 10","</script>"})
+    @Results(id = "getbacklog" , value = {
+            @Result(column="workId", property="id"),
+            @Result(column="workSaveTime", property="dateTime"),
+            @Result(column="workDetails", property="obj"),
+            @Result(column="addWhoName", property="userNameCN"),
+            @Result(column="fileUrl", property="fileUrl"),
+    })
+    public List<FileChoose> getBacklog(@Param("search") String search,@Param("id") String id);
+
+    @Update("update back_log set fileUrl=#{fileUrl} where workId=#{id}")
+    public int updateBacklog(@Param("id")String id,@Param("fileUrl")String fileUrl);
 }

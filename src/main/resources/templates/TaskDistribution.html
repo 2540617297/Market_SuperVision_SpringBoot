@@ -59,8 +59,12 @@
             <div class="form-group">
                 <label for="workWho" class="col-xs-3 control-label">主要负责人</label>
                 <div class="col-xs-9">
-                    <input type="input" class="form-control" id="workWho" name="workWho" th:text="${workDetails?.workWhoName}"></input>
+<!--                    <input type="input" class="form-control" id="workWho" name="workWho" th:text="${workDetails?.workWhoName}"></input>-->
+                    <select class="form-control" name="workWho" id="workWho" >
+                        <option th:each="selUserInfo:${userInfos}"   th:value="${selUserInfo.userId}" th:text="${selUserInfo.userNameCN}">1</option>
+                    </select>
                 </div>
+
             </div>
             <div class="form-group">
                 <label for="workEndTime" class="col-xs-3 control-label">任务结束时间</label>
